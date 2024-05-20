@@ -1,0 +1,27 @@
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/interact.css' }}" type="text/css">
+{{ endblock }}
+
+{% block global_scripts %}
+<script src="{{ ducksoupJsUrl }}"></script>
+<script src="{{ static 'global/scripts/listeners-LSXNKGQD.js' }}"></script>
+<script src="{{ static 'global/scripts/player-SY6WYYCH.js' }}"></script>
+{% endblock %}
+
+{{ block content }}
+<div id="stopped" class="d-none">
+  <p id="stopped-message">Conversation ended</p>
+</div>
+<div id="failed" class="d-none">
+  <p>Error</p>
+</div>
+<div class="ducksoup-container">
+  <div class="d-none" id="ducksoup-root"></div>
+  <div class="overlay connecting d-none"><div>Connecting...</div></div>
+  <div class="overlay ending strong d-none"><div>Conversation over in 15 seconds</div></div>
+</div>
+{{ include '_pages/partials/prolific-help-modal.en.html' }}
+<form id="form" class="d-none">
+  <input type="hidden" id="inspect_visibility" name="inspect_visibility" />
+</form>
+{{ endblock }}

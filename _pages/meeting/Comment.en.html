@@ -1,0 +1,238 @@
+{{ block title }}
+Your opinion
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+<link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
+{{ endblock }}
+
+{{ block content }}
+<form>
+  <div class="app-survey">
+    <!-- New Question-->
+    <div class="mb-5">
+
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            Please respond to the following questions based on the interaction you just had. Please be very precise but also quick (the other participants are waiting for you). If you were not able to hear or see the other person respond 1 to all questions. <br /> <br />
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            <strong>To what extent do you think the other person had a good time talking to you?</strong>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col app-range">
+          <div class="app-range-item">
+            <label for="other_liked_me_1" class="app-range-label-up">1</label>
+            <input id="other_liked_me_1" type="radio" name="other_liked" value="1" required>
+                <div class="app-range-label-down">Not a good time</div>
+          </div>
+          <div class="app-range-item">
+            <label for="other_liked_me_2" class="app-range-label-up">2</label>
+            <input id="other_liked_me_2" type="radio" name="other_liked" value="2">
+          </div>
+          <div class="app-range-item">
+            <label for="other_liked_me_3" class="app-range-label-up">3</label>
+            <input id="other_liked_me_3" type="radio" name="other_liked" value="3">
+          </div>
+          <div class="app-range-item">
+            <label for="other_liked_me_4" class="app-range-label-up">4</label>
+            <input id="other_liked_me_4" type="radio" name="other_liked" value="4">
+            <div class="app-range-label-down">neutral</div>
+          </div>
+          <div class="app-range-item">
+            <label for="other_liked_me_5" class="app-range-label-up">5</label>
+            <input id="other_liked_me_5" type="radio" name="other_liked" value="5">
+          </div>
+          <div class="app-range-item">
+            <label for="other_liked_me_6" class="app-range-label-up">6</label>
+            <input id="other_liked_me_6" type="radio" name="other_liked" value="6">
+          </div>
+          <div class="app-range-item">
+            <label for="other_liked_me_7" class="app-range-label-up">7</label>
+            <input id="other_liked_me_7" type="radio" name="other_liked" value="7">
+              <!--  <div class="app-range-label-down">A lot</div> -->
+              <div class="app-range-label-down">A very good time.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Question-->
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            <!-- To what extent did you like the other person? -->
+            <strong>To what extent did you have a good time talking with the other person?</strong>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col app-range">
+          <div class="app-range-item">
+            <label for="liked_1" class="app-range-label-up">1</label>
+            <input id="liked_1" type="radio" name="liked" value="1" required>
+            <!-- <div class="app-range-label-down">Not at all</div> -->
+            <div class="app-range-label-down">Not a good time</div>
+          </div>
+          <div class="app-range-item">
+            <label for="liked_2" class="app-range-label-up">2</label>
+            <input id="liked_2" type="radio" name="liked" value="2">
+          </div>
+          <div class="app-range-item">
+            <label for="liked_3" class="app-range-label-up">3</label>
+            <input id="liked_3" type="radio" name="liked" value="3">
+          </div>
+          <div class="app-range-item">
+            <label for="liked_4" class="app-range-label-up">4</label>
+            <input id="liked_4" type="radio" name="liked" value="4">
+            <div class="app-range-label-down">neutral</div>
+          </div>
+          <div class="app-range-item">
+            <label for="liked_5" class="app-range-label-up">5</label>
+            <input id="liked_5" type="radio" name="liked" value="5">
+          </div>
+          <div class="app-range-item">
+            <label for="liked_6" class="app-range-label-up">6</label>
+            <input id="liked_6" type="radio" name="liked" value="6">
+          </div>
+          <div class="app-range-item">
+            <label for="liked_7" class="app-range-label-up">7</label>
+            <input id="liked_7" type="radio" name="liked" value="7">
+            <!-- <div class="app-range-label-down">A lot</div> -->
+            <div class="app-range-label-down">A very good time</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conversation quality question-->
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            <strong>To what extent was the conversation pleasant and interesting? </strong>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col app-range">
+          <div class="app-range-item">
+            <label for="conversation_quality_1" class="app-range-label-up">1</label>
+            <input id="conversation_quality_1" type="radio" name="conversation_quality" value="1" required>
+            <div class="app-range-label-down">Not at all</div>
+          </div>
+          <div class="app-range-item">
+            <label for="conversation_quality_2" class="app-range-label-up">2</label>
+            <input id="conversation_quality_2" type="radio" name="conversation_quality" value="2">
+          </div>
+          <div class="app-range-item">
+            <label for="conversation_quality_3" class="app-range-label-up">3</label>
+            <input id="conversation_quality_3" type="radio" name="conversation_quality" value="3">
+          </div>
+          <div class="app-range-item">
+            <label for="conversation_quality_4" class="app-range-label-up">4</label>
+            <input id="conversation_quality_4" type="radio" name="conversation_quality" value="4">
+            <div class="app-range-label-down">neutral</div>
+          </div>
+          <div class="app-range-item">
+            <label for="conversation_quality_5" class="app-range-label-up">5</label>
+            <input id="conversation_quality_5" type="radio" name="conversation_quality" value="5">
+          </div>
+          <div class="app-range-item">
+            <label for="conversation_quality_6" class="app-range-label-up">6</label>
+            <input id="conversation_quality_6" type="radio" name="conversation_quality" value="6">
+          </div>
+          <div class="app-range-item">
+            <label for="conversation_quality_7" class="app-range-label-up">7</label>
+            <input id="conversation_quality_7" type="radio" name="conversation_quality" value="7">
+            <div class="app-range-label-down">Very interesting</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Question-->
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            <strong>Was the quality of the videoconference call good? </strong> If you could not see or talk to the other person because of a technical problem please respond 1.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col app-range">
+          <div class="app-range-item">
+            <label for="video_conf_quality_1" class="app-range-label-up">1</label>
+            <input id="video_conf_quality_1" type="radio" name="video_conf_quality" value="1" required>
+            <div class="app-range-label-down">Not at all</div>
+          </div>
+          <div class="app-range-item">
+            <label for="video_conf_quality_2" class="app-range-label-up">2</label>
+            <input id="video_conf_quality_2" type="radio" name="video_conf_quality" value="2">
+          </div>
+          <div class="app-range-item">
+            <label for="video_conf_quality_3" class="app-range-label-up">3</label>
+            <input id="video_conf_quality_3" type="radio" name="video_conf_quality" value="3">
+          </div>
+          <div class="app-range-item">
+            <label for="video_conf_quality_4" class="app-range-label-up">4</label>
+            <input id="video_conf_quality_4" type="radio" name="video_conf_quality" value="4">
+            <div class="app-range-label-down">neutral</div>
+          </div>
+          <div class="app-range-item">
+            <label for="video_conf_quality_5" class="app-range-label-up">5</label>
+            <input id="video_conf_quality_5" type="radio" name="video_conf_quality" value="5">
+          </div>
+          <div class="app-range-item">
+            <label for="video_conf_quality_6" class="app-range-label-up">6</label>
+            <input id="video_conf_quality_6" type="radio" name="video_conf_quality" value="6">
+          </div>
+          <div class="app-range-item">
+            <label for="video_conf_quality_7" class="app-range-label-up">7</label>
+            <input id="video_conf_quality_7" type="radio" name="video_conf_quality" value="7">
+            <div class="app-range-label-down">Very good</div>
+          </div>
+        </div>
+      </div>
+    </div>  
+    
+    <!-- Share prolific Ids-->
+    <div class="mb-1">
+      <div class="row">
+        <p style="margin-bottom: 0;">
+          Would you like to see the other person again? (If you both say yes, we will share your Prolific-IDs so you can contact each other).
+        </p>
+      </div>
+    </div>
+    <div class="mb-4">
+      <div class="row">
+        <div class="col">
+          <div class="form-check">
+            <input class="form-check-input" id="post_second_date_yes" type="radio" name="second_date"
+              value="yes" required>
+            <label class="form-check-label" for="post_second_date_yes">Yes</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" id="post_second_date_no" type="radio" name="second_date"
+              value="no" required>
+            <label class="form-check-label" for="post_second_date_no">No</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="otree-btn-next btn btn-primary">Next</button>
+  </div>
+</form>
+{{ endblock }}

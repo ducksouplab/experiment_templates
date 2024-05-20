@@ -1,0 +1,46 @@
+.otree-timer.alert.alert-warning {
+  display: none;
+}
+
+.ducksoup-container, #ducksoup-root, .help-container {
+  width: 800px;
+  margin: 0 auto;
+}
+
+.ducksoup-container, #ducksoup-root {
+  height: 600px;
+  background-color: #f9f9f9;
+}
+
+.ducksoup-container {
+  position: relative;
+}
+
+.ducksoup-container .overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 1.5em;
+}
+
+.ducksoup-container .overlay div {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+  color:white;
+  background: #aaa;
+  padding: 5px 20px;
+  opacity: 0.8;
+}
+
+.ducksoup-container .overlay.strong div {
+  color:rgb(255, 237, 203);
+  background: #aaa;
+  padding: 10px 20px;
+  font-size: 1.4em;
+  opacity: 0.8;
+}

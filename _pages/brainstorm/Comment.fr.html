@@ -1,0 +1,89 @@
+{{ block title }}
+Votre avis
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+<link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
+{{ endblock }}
+
+{{ block content }}
+<form>
+  <div class="app-survey">
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            Dans quelle mesure avez-vous apprécié votre interlocuteur ?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col app-range">
+          <div class="app-range-item">
+            <label for="liked_1" class="app-range-label-up">1</label>
+            <input id="liked_1" type="radio" name="liked" value="1" required>
+            <div class="app-range-label-down">peu</div>
+          </div>
+          <div class="app-range-item">
+            <label for="liked_2" class="app-range-label-up">2</label>
+            <input id="liked_2" type="radio" name="liked" value="2">
+          </div>
+          <div class="app-range-item">
+            <label for="liked_3" class="app-range-label-up">3</label>
+            <input id="liked_3" type="radio" name="liked" value="3">
+          </div>
+          <div class="app-range-item">
+            <label for="liked_4" class="app-range-label-up">4</label>
+            <input id="liked_4" type="radio" name="liked" value="4">
+            <div class="app-range-label-down">neutre</div>
+          </div>
+          <div class="app-range-item">
+            <label for="liked_5" class="app-range-label-up">5</label>
+            <input id="liked_5" type="radio" name="liked" value="5">
+          </div>
+          <div class="app-range-item">
+            <label for="liked_6" class="app-range-label-up">6</label>
+            <input id="liked_6" type="radio" name="liked" value="6">
+          </div>
+          <div class="app-range-item">
+            <label for="liked_7" class="app-range-label-up">7</label>
+            <input id="liked_7" type="radio" name="liked" value="7">
+            <div class="app-range-label-down">beaucoup</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            Qualité de la conversation : dans quelle mesure cette conversation était-elle agréable et intéressante ?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="quality_comment" class="form-control large" required></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            Dans quelle mesure avez-vous eu l'impression que vous et votre partenaire aviez une bonne communication ?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="nice_comment" class="form-control large" required></textarea>
+        </div>
+      </div>
+    </div>
+    <button class="otree-btn-next btn btn-primary">Suivant</button>
+  </div>
+</form>
+{{ endblock }}

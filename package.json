@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "js:watch": "APP_ENV=DEV yarn js:build"
+  },
+  "license": "MIT",
+  "version": "0.0.0",
+  "devDependencies": {
+    "esbuild": "^0.20.2"
+  }
+}

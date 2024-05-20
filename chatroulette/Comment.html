@@ -1,0 +1,44 @@
+{{ block title }}
+Questionnaire
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+<link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
+{{ endblock }}
+
+{{ block content }}
+<form>
+  <div class="app-survey">
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+          Pouvez-vous décrire la qualité des interactions (audio, vidéo) que vous venez d'avoir, ainsi que les éventuels problèmes/bugs rencontrés ?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="quality_comment" class="form-control large" required></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+          Commentaire libre
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="free_comment" class="form-control large" required></textarea>
+        </div>
+      </div>
+    </div>
+    <button class="otree-btn-next btn btn-primary">Suivant</button>
+  </div>
+</form>
+{{ endblock }}

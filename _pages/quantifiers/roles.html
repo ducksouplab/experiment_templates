@@ -1,0 +1,22 @@
+{{ block content }}
+{{ if player.role ==  'Guesser'}}
+    <p>
+    In the next trial you will be a <strong>Guesser</strong>. Please try to guess the exact number of items there is on the picture. The other person will not use any numbers.
+    </p>
+
+{{ endif }}
+
+{{ if player.role ==  'Describer'}}
+    <p>
+    In the next trial you will be a Describer.
+
+    Please describe the number of items in the pictures but <strong> without saying any numbers</strong>. 
+
+    </p>
+{{ endif }}
+
+<div class="float-end mt-4">
+    <button class="otree-btn-next btn btn-primary">Next</button>
+</div>
+
+{{ endblock }}

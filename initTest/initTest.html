@@ -1,0 +1,69 @@
+{{ extends 'otree/Page.html' }}
+{{ block title }}
+Settings
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/settings.css' }}" type="text/css">
+{{ endblock }}
+
+{% block global_scripts %}
+<script src="{{ static 'global/scripts/settings-5X6DVK3O.js' }}"></script>
+{% endblock %}
+
+{{ block content }}
+<div class="row">
+  <div class="col-5">
+    <div class="mb-5">
+      <label for="video-source" class="form-label"><strong> Choose webcam: </strong></label>
+      <select id="video-source" class="form-select form-select-sm"></select>
+    </div>
+    <div class="mb-3">
+      <label for="audio-source" class="form-label">
+        <strong> Choose microphone: </strong> 
+        <div class="progress">
+          <div id="meter" class="progress-bar bg-info" role="progressbar" style="width: 0%"></div> ← This should move
+        </div>
+      </label>
+      <select id="audio-source" class="form-select form-select-sm"></select>
+    </div>
+  </div>
+  <div class="col-7">
+    <h3>⚠️ Important</h3>
+    <p>
+      <ul>
+        <h5>Please configure your camera and microphone.</h5>
+        <li><strong>Microphone: </strong> Make sure the audio input is configured properly . 
+          You should see <strong>the blue meter on the left side of the screen move when you speak</strong>. 
+          If it doesn't move, try changing the microphone in the dropdown menue below the meter. 
+          Alternatively, if you are using an external microphone, disconnect and reconnect your microphone and then reload the page. 
+          Ensure you are in a quiet room to facilitate clear communication with your chat partner.</li>
+        <li><strong>Webcam: </strong> Below, you should see a video of yourself. 
+          This is the view your chat partner will have of you. 
+          If you're unable to see yourself, try selecting a different camera from the dropdown menu located at the top left of the screen. 
+          Once the video stream is functioning smoothly, find a comfortable position and ensure your surroundings are adequately lit.
+          Keep your position <strong>centered in front of the camera</strong>. </li>
+      </ul>
+    </p>
+    <div id="selfie">
+      <video playsinline autoplay id="stream"></video>
+    </div>
+    <div id="selfie-ux">
+      <button class="btn btn-primary float-end d-none" id="ok">test complete</button>
+    </div>
+    <p class="mt-5">If you encounter difficulties configuring the video and/or audio stream that cannot be resolved, please return your submission on Prolific.</p>
+
+      <button onclick="location.href='https://app.prolific.com/submissions/complete?cc=CP5KY6A9';" type="button">
+        return submission
+      </button>
+    </ul>
+  </div>
+</div>
+
+<div class="d-none">
+  <form>
+    <input type="hidden" id="audio_source_id" name="audio_source_id" />
+    <input type="hidden" id="video_source_id" name="video_source_id" />
+  </form>
+</div>
+{{ endblock }}

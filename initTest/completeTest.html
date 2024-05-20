@@ -1,0 +1,23 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+<style>
+    p {text-align: center;
+       font-size: 30px;
+    }
+    div {text-align: center;
+        font-size: 30px;}
+    .tab {
+        display: none;
+        font-size: 30px;
+    }
+</style>
+
+    <!-- <p>Thank you for completing the video and audio test.
+        <br><b>Please close this tab and return to the consent form.</b> 
+    </p>  -->
+    <script type="text/javascript">
+        window.location.href = 'https://socialxp.psy.gla.ac.uk/mastok/join/calsoup_test3';
+    </script>
+{% endblock %}

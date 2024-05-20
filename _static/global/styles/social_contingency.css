@@ -1,0 +1,96 @@
+body {
+  background-color: #000;
+  color: #fff;
+  font-size: 1.5em;
+}
+
+.otree-title, .otree-timer {
+  display: none;
+}
+
+.vertical-container {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+.btn-main {
+  background-color: #fff;
+}
+
+.introduction {
+  text-align: justify;
+}
+
+.introduction .btn-main {
+  margin-top: 8px;
+}
+
+.container-sm {
+  margin-top: -20%;
+}
+
+.otree-wait-page .card:first-child {
+  background-color: #000;
+  border: 0;
+  box-shadow: none;
+}
+
+.otree-wait-page .card:first-child h4 {
+  display: none;
+}
+
+.otree-wait-page .card:first-child .progress {
+  display: none;
+}
+
+/* interact */
+
+.fixation-contents {
+  font-size: 7rem;
+}
+
+.speaker-contents {
+  position: relative;
+}
+
+.instructions {
+  position: absolute;
+  top: -150px;
+  width: 800px;
+}
+
+.instructions p.small {
+  margin-bottom: 0;
+}
+
+.instructions p.quote {
+  font-size: 2rem;
+  font-style: italic;
+}
+
+#ducksoup {
+  position: relative;
+  background-color: #666;
+  width: 800px;
+  height: 600px;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  font-size: 2rem;
+}
+
+#ducksoup p {
+  width: 100%;
+}
+
+#ducksoup video {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}

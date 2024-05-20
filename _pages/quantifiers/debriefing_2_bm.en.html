@@ -1,0 +1,121 @@
+{{ block title }}
+Final questionnaire
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
+{{ endblock }}
+
+{{ block content }}
+<form>
+  <div class="app-survey">
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            Possibility of a smile manipulation
+          </p>
+          <p class="fw-lighter">
+            For some of the participants in the experiment (randomly selected), the video they saw of their conversation partner was filtered to make the person appear either more smiling or less smiling than they actually were. These participants interacted with a real person who was unaware that we had enhanced or reduced the smiles on their face. This digital manipulation, for the participants for whom it occurred, is quite realistic. However, a certain number of participants had completely normal interactions without any faces being filtered.
+          </p>
+          <p class="fw-lighter">
+            Based on the memory of the interactions you had, to what extent do you think you were among the participants who saw a person whose smile was digitally altered?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col app-range">
+          <div class="app-range-item">
+            <label for="final_manipulation_1" class="app-range-label-up">1</label>
+            <input id="final_manipulation_1" type="radio" name="final_manipulation" value="1" required>
+            <div class="app-range-label-down">certain that there was no manipulation
+            </div>
+          </div>
+          <div class="app-range-item">
+            <label for="final_manipulation_2" class="app-range-label-up">2</label>
+            <input id="final_manipulation_2" type="radio" name="final_manipulation" value="2">
+          </div>
+          <div class="app-range-item">
+            <label for="final_manipulation_3" class="app-range-label-up">3</label>
+            <input id="final_manipulation_3" type="radio" name="final_manipulation" value="3">
+          </div>
+          <div class="app-range-item">
+            <label for="final_manipulation_4" class="app-range-label-up">4</label>
+            <input id="final_manipulation_4" type="radio" name="final_manipulation" value="4">
+            <div class="app-range-label-down">I don't know</div>
+          </div>
+          <div class="app-range-item">
+            <label for="final_manipulation_5" class="app-range-label-up">5</label>
+            <input id="final_manipulation_5" type="radio" name="final_manipulation" value="5">
+          </div>
+          <div class="app-range-item">
+            <label for="final_manipulation_6" class="app-range-label-up">6</label>
+            <input id="final_manipulation_6" type="radio" name="final_manipulation" value="6">
+          </div>
+          <div class="app-range-item">
+            <label for="final_manipulation_7" class="app-range-label-up">7</label>
+            <input id="final_manipulation_7" type="radio" name="final_manipulation" value="7">
+            <div class="app-range-label-down">Certain that there was a manipulation
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            What allows you to respond this way?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="final_manipulation_comment" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            Please enter your prolific-ID in the following box:
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="prolific_id" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Share prolific Ids-->
+    <div class="mb-1">
+      <div class="row">
+        <p style="margin-bottom: 0;">
+          After knowing all the specificities of the experiment, would you still like to share your prolific-ID with the participants with whom you matched?
+        </p>
+      </div>
+    </div>
+    <div class="mb-4">
+      <div class="row">
+        <div class="col">
+          <div class="form-check">
+            <input class="form-check-input" id="share_prolific_id_yes" type="radio" name="share_prolific_id" value="yes" required>
+            <label class="form-check-label" for="share_prolific_id_yes">Yes</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" id="share_prolific_id_no" type="radio" name="share_prolific_id" value="no">
+            <label class="form-check-label" for="share_prolific_id_no">No</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="otree-btn-next btn btn-primary">Next</button>
+  </div>
+</form>
+{{ endblock }}

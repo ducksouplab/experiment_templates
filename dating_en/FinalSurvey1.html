@@ -1,0 +1,159 @@
+{{ block title }}
+Questionnaire final
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
+{{ endblock }}
+
+{{ block content }}
+<p>  
+  You just had a certain number of video-conference interactions, similar to the ones you may have experiencd previously with services such as Skype, FaceTime, zoom, or Hangouts, which you may be familiar with. This setup is, of course, less natural than having a face-to-face interaction. In this questionnaire, we ask you to evaluate to what extent you think your interaction may have been influenced by the fact that you were on a video-conference interaction.
+</p>
+
+<form>
+  <div class="app-survey">
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            Image and sound quality
+          </p>
+          <p class="fw-lighter">
+            Please assess the quality of the image and sound during the conversations you had, comparing them to what you are used to with services like Skype, FaceTime, Zoom, or Hangouts. Poor image quality, for example, may include issues like being pixelated, distorted, blurry, or hard to see. Poor sound quality may involve noise, interruptions, distortion, or difficulty in understanding.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col app-range">
+          <div class="app-range-item">
+            <label for="final_quality_1" class="app-range-label-up">1</label>
+            <input id="final_quality_1" type="radio" name="final_quality" value="1" required>
+            <div class="app-range-label-down">Much worse than Skype. </div>
+          </div>
+          <div class="app-range-item">
+            <label for="final_quality_2" class="app-range-label-up">2</label>
+            <input id="final_quality_2" type="radio" name="final_quality" value="2">
+          </div>
+          <div class="app-range-item">
+            <label for="final_quality_3" class="app-range-label-up">3</label>
+            <input id="final_quality_3" type="radio" name="final_quality" value="3">
+          </div>
+          <div class="app-range-item">
+            <label for="final_quality_4" class="app-range-label-up">4</label>
+            <input id="final_quality_4" type="radio" name="final_quality" value="4">
+            <div class="app-range-label-down">Just as Skype</div>
+          </div>
+          <div class="app-range-item">
+            <label for="final_quality_5" class="app-range-label-up">5</label>
+            <input id="final_quality_5" type="radio" name="final_quality" value="5">
+          </div>
+          <div class="app-range-item">
+            <label for="final_quality_6" class="app-range-label-up">6</label>
+            <input id="final_quality_6" type="radio" name="final_quality" value="6">
+          </div>
+          <div class="app-range-item">
+            <label for="final_quality_7" class="app-range-label-up">7</label>
+            <input id="final_quality_7" type="radio" name="final_quality" value="7">
+            <div class="app-range-label-down">Much better than Skype.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            Quel genre de défaut avez-vous pu observer/entendre ?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="final_quality_comment" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            Conversation fidelity
+          </p>
+          <p class="fw-lighter">
+            Some video-conference conversations give us the impression that the other person couldn't really form a 'fair' opinion of us, for example, because the video quality didn't present us in the best light or because they couldn't really hear what we were saying. To what extent do you think the video setup influenced the impression your conversation partners had of you, and the impression you had of them?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col app-range">
+          <div class="app-range-item">
+            <label for="final_accuracy_1" class="app-range-label-up">1</label>
+            <input id="final_accuracy_1" type="radio" name="final_accuracy" value="1" required>
+            <div class="app-range-label-down">Much less faithful to reality than Skype</div>
+          </div>
+          <div class="app-range-item">
+            <label for="final_accuracy_2" class="app-range-label-up">2</label>
+            <input id="final_accuracy_2" type="radio" name="final_accuracy" value="2">
+          </div>
+          <div class="app-range-item">
+            <label for="final_accuracy_3" class="app-range-label-up">3</label>
+            <input id="final_accuracy_3" type="radio" name="final_accuracy" value="3">
+          </div>
+          <div class="app-range-item">
+            <label for="final_accuracy_4" class="app-range-label-up">4</label>
+            <input id="final_accuracy_4" type="radio" name="final_accuracy" value="4">
+            <div class="app-range-label-down">just as Skype</div>
+          </div>
+          <div class="app-range-item">
+            <label for="final_accuracy_5" class="app-range-label-up">5</label>
+            <input id="final_accuracy_5" type="radio" name="final_accuracy" value="5">
+          </div>
+          <div class="app-range-item">
+            <label for="final_accuracy_6" class="app-range-label-up">6</label>
+            <input id="final_accuracy_6" type="radio" name="final_accuracy" value="6">
+          </div>
+          <div class="app-range-item">
+            <label for="final_accuracy_7" class="app-range-label-up">7</label>
+            <input id="final_accuracy_7" type="radio" name="final_accuracy" value="7">
+            <div class="app-range-label-down">Much more faithful to reality than Skype</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            In your opinion, which aspects were the most impacted by the video setup?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="final_accuracy_comment" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            In your opinion, what was the purpose of this experiment?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="final_xp_goal" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>
+    <button class="otree-btn-next btn btn-primary">Next</button>
+  </div>
+</form>
+{{ endblock }}

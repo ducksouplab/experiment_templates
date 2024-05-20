@@ -1,0 +1,30 @@
+FROM debian:buster-slim
+
+RUN apt-get update && apt-get upgrade -y
+
+RUN apt-get update && apt-get install -y python3-pip git
+RUN apt-get update && apt-get install -y libpq-dev
+RUN apt-get update && apt-get install -y python3-venv
+RUN apt-get update && apt-get install -y python3-wheel 
+RUN apt-get update && apt-get install -y python3-dev
+
+WORKDIR /app
+
+ARG appuser
+ARG appgroup
+
+RUN mkdir -p /app/.cache
+RUN chown -R $appuser:$appgroup /app
+
+USER $appuser:$appgroup
+
+ENV VIRTUAL_ENV=/app/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+COPY --chown=$appuser:$appgroup . .
+
+RUN pip3 --cache-dir .cache install -U pip setuptools
+RUN pip3 --cache-dir .cache install -r requirements.txt
+
+CMD otree devserver

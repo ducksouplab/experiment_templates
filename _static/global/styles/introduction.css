@@ -1,0 +1,17 @@
+.img-good {
+  border: 6px solid #5B5;
+}
+
+.img-bad {
+  position: relative;
+}
+
+.img-caution {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 3px;
+  right: 7px;
+  color: red;
+  text-align: center;
+}

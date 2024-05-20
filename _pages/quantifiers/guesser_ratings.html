@@ -1,0 +1,122 @@
+{{ block title }}
+Ratings
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+<link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
+{{ endblock }}
+
+{{ block content }}
+
+<!-- Describer BLOCK -->
+{{ if player.role ==  'Guesser'}}
+
+<p>For each item below, please write the exact number of items you think the other was seeing in the picture. Please use only numbers (e.g. : 25).</p>
+
+<form>
+  <div class="app-survey">
+    <!-- New Question-->
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            <strong>How many brocolis were in the picture? </strong>
+            
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="brocolis_rating" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Question-->
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            <!-- To what extent did you like the other person? -->
+            <strong>How many apples were in the picture?</strong>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="apples_rating" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Question-->
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            <strong>How many bananas were in the picture?</strong>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="bananas_rating" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Question-->
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            <strong>How many mushrooms were in the picture?</strong>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="mushroom_rating" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>
+    
+    <!-- New Question-->
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            <strong>How many Oranges were in the picture?</strong>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="oranges_rating" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>    
+
+    <!-- New Question-->
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            <strong>How many Fish were in the picture?</strong>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="fish_rating" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>
+
+
+    <button class="otree-btn-next btn btn-primary">Next</button>
+  </div>
+</form>
+  {{ endif }}
+{{ endblock }}

@@ -1,0 +1,55 @@
+{{ block title }}
+Réglages
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/settings.css' }}" type="text/css">
+{{ endblock }}
+
+{% block global_scripts %}
+<script src="{{ static 'global/scripts/settings-5X6DVK3O.js' }}"></script>
+{% endblock %}
+
+{{ block content }}
+<div class="row">
+  <div class="col-5">
+    <div class="mb-3">
+      <label for="video-source" class="form-label">Choix de la source vidéo </label>
+      <select id="video-source" class="form-select form-select-sm"></select>
+    </div>
+    <div class="mb-3">
+      <label for="audio-source" class="form-label">
+        Choix de l'entrée audio
+        <div class="progress">
+          <div id="meter" class="progress-bar bg-info" role="progressbar" style="width: 0%"></div>
+        </div>
+      </label>
+      <select id="audio-source" class="form-select form-select-sm"></select>
+    </div>
+  </div>
+  <div class="col-7">
+    <p>Assurez-vous que l'entrée audio est bien configurée, c'est-à-dire que vous voyez le voyant bleu (sur la gauche) bouger quand vous parlez.</p>
+    <p>Les autres participant(e)s vous verront comme ci-dessous. Gardez une position <strong>centrée face caméra</strong> et trouvez un réglage de luminosité adéquat.
+    </p>
+    <div id="selfie">
+      <video playsinline autoplay id="stream"></video>
+    </div>
+    <div id="selfie-ux">
+      <button class="btn btn-primary float-end d-none" id="ok">Démarrer</button>
+    </div>
+    <p class="mt-5">En cas de problème durant l'expérience :</p>
+    <ul>
+      <li>Assurez-vous que vous utilisez le navigateur Chrome et que vous êtes bien connecté à internet</li>
+      <li>Attendez quelques secondes et rechargez la page</li>
+      <li>Si le problème persiste envoyez un SMS au 0684921627</li>
+    </ul>
+  </div>
+</div>
+
+<div class="d-none">
+  <form>
+    <input type="hidden" id="audio_source_id" name="audio_source_id" />
+    <input type="hidden" id="video_source_id" name="video_source_id" />
+  </form>
+</div>
+{{ endblock }}

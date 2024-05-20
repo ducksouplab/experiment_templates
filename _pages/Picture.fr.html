@@ -1,0 +1,59 @@
+{{ block title }}
+Réglages et selfie
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/picture.css' }}" type="text/css">
+{{ endblock }}
+
+{% block global_scripts %}
+<script src="{{ static 'global/scripts/picture-NW76BAAA.js' }}"></script>
+{% endblock %}
+
+{{ block content }}
+<div class="row">
+  <div class="col-5">
+    <div class="mb-3">
+      <label for="video-source" class="form-label">Choix de la source vidéo </label>
+      <select id="video-source" class="form-select form-select-sm"></select>
+    </div>
+    <div class="mb-3">
+      <label for="audio-source" class="form-label">
+        Choix de l'entrée audio
+        <div class="progress">
+          <div id="meter" class="progress-bar bg-info" role="progressbar" style="width: 0%"></div>
+        </div>
+      </label>
+      <select id="audio-source" class="form-select form-select-sm"></select>
+    </div>
+  </div>
+  <div class="col-7">
+    <p>Avant d'échanger avec vous, les autres participant(e)s verront la photo prise ci-dessous.</p>
+    <p>Profitez-en pour préparer de bonnes conditions pour l'expérience : gardez une position <strong>centrée face caméra</strong> et trouvez un réglage de luminosité adéquat.</p>
+    <p>Assurez-vous également que l'entrée audio est bien configurée, c'est-à-dire que vous voyez le voyant bleu (sur la gauche) bouger quand vous parlez.</p>
+    <div id="selfie-to-take">
+      <video playsinline autoplay id="stream"></video>
+      <button class="btn btn-warning" id="take-snapshot">Prendre une photo</button>
+    </div>
+    <div id="selfie-taken" class="d-none">
+      <canvas id="selfie"></canvas>
+      <button class="btn btn-light" id="cancel">Prendre une autre photo</button>
+      <button class="btn btn-primary float-end d-none" id="ok">Démarrer avec cette photo</button>
+    </div>
+    <p class="mt-5">En cas de problème durant l'expérience :</p>
+    <ul>
+      <li>Assurez-vous que vous utilisez le navigateur Chrome et que vous êtes bien connecté à internet</li>
+      <li>Attendez quelques secondes et rechargez la page</li>
+      <li>Si le problème persiste envoyez un SMS au 0684921627</li>
+    </ul>
+  </div>
+</div>
+
+<div class="d-none">
+  <form>
+    <input type="hidden" id="audio_source_id" name="audio_source_id" />
+    <input type="hidden" id="video_source_id" name="video_source_id" />
+    <input type="hidden" id="image_data" name="image_data" />
+  </form>
+</div>
+{{ endblock }}

@@ -1,0 +1,13 @@
+#selfie-to-take, #selfie-taken {
+  width: 100%;
+  position: relative;
+}
+#stream, #selfie {
+  width: 100%;
+}
+
+#take-snapshot {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+}

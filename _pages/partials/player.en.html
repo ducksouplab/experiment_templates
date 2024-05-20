@@ -1,0 +1,15 @@
+<div id="stopped" class="d-none">
+  <p id="stopped-message">Conversation ended</p>
+</div>
+<div id="failed" class="d-none">
+  <p>Error</p>
+</div>
+<div class="ducksoup-container">
+  <div class="d-none" id="ducksoup-root"></div>
+  <div class="overlay connecting d-none"><div>Connecting...</div></div>
+  <div class="overlay ending strong d-none"><div>Conversation over in 15 seconds</div></div>
+</div>
+{{ include_sibling 'help-modal.en.html' }}
+<form id="form" class="d-none">
+  <input type="hidden" id="inspect_visibility" name="inspect_visibility" />
+</form>

@@ -1,0 +1,233 @@
+{{ block title }}
+Post-meeting questionnaire.
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
+{{ endblock }}
+
+{{ block content }}
+<form>
+  <div class="app-survey">
+    <div class="mb-1">
+      <div class="row">
+        <p class="fw-bold">
+          Would you like to meet this person again?
+        </p>
+      </div>
+    </div>
+    <div class="mb-4">
+      <div class="row">
+        <div class="col">
+          <div class="form-check">
+            <input class="form-check-input" id="post_second_date_1" type="radio" name="post_second_date"
+              value="yes" required>
+            <label class="form-check-label" for="post_second_date_1">Oui</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" id="post_second_date_0" type="radio" name="post_second_date"
+              value="no">
+            <label class="form-check-label" for="post_second_date_0">Non</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mb-1">
+      <div class="row">
+        <p class="fw-bold">
+          Rate on a scale from 1 to 7.
+        </p>
+      </div>
+    </div>
+    <div class="app-question">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            To what extent was this a high quality conversation?
+          </p>
+          <p class="fw-lighter">
+            (A good quality conversation is enjoyable, interesting, interactive, and dynamic. A conversation of poor quality is unpleasant, monotonous, one of the participants contributes little, and the exchange lacks dynamism.)
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col app-range">
+          <div class="app-range-item">
+            <label for="post_good_conversation_1" class="app-range-label-up">1</label>
+            <input id="post_good_conversation_1" type="radio" name="post_good_conversation" value="1"
+              required>
+            <div class="app-range-label-down">Bad quality</div>
+          </div>
+          <div class="app-range-item">
+            <label for="post_good_conversation_2" class="app-range-label-up">2</label>
+            <input id="post_good_conversation_2" type="radio" name="post_good_conversation" value="2">
+          </div>
+          <div class="app-range-item">
+            <label for="post_good_conversation_3" class="app-range-label-up">3</label>
+            <input id="post_good_conversation_3" type="radio" name="post_good_conversation" value="3">
+          </div>
+          <div class="app-range-item">
+            <label for="post_good_conversation_4" class="app-range-label-up">4</label>
+            <input id="post_good_conversation_4" type="radio" name="post_good_conversation" value="4">
+            <div class="app-range-label-down">neutral</div>
+          </div>
+          <div class="app-range-item">
+            <label for="post_good_conversation_5" class="app-range-label-up">5</label>
+            <input id="post_good_conversation_5" type="radio" name="post_good_conversation" value="5">
+          </div>
+          <div class="app-range-item">
+            <label for="post_good_conversation_6" class="app-range-label-up">6</label>
+            <input id="post_good_conversation_6" type="radio" name="post_good_conversation" value="6">
+          </div>
+          <div class="app-range-item">
+            <label for="post_good_conversation_7" class="app-range-label-up">7</label>
+            <input id="post_good_conversation_7" type="radio" name="post_good_conversation" value="7">
+            <div class="app-range-label-down">very good quality</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-question">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            To what extent would you like to see the other person again?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col app-range">
+          <div class="app-range-item">
+            <label for="post_seeing_again_1" class="app-range-label-up">1</label>
+            <input id="post_seeing_again_1" type="radio" name="post_seeing_again" value="1" required>
+            <div class="app-range-label-down">not at all</div>
+          </div>
+          <div class="app-range-item">
+            <label for="post_seeing_again_2" class="app-range-label-up">2</label>
+            <input id="post_seeing_again_2" type="radio" name="post_seeing_again" value="2">
+          </div>
+          <div class="app-range-item">
+            <label for="post_seeing_again_3" class="app-range-label-up">3</label>
+            <input id="post_seeing_again_3" type="radio" name="post_seeing_again" value="3">
+          </div>
+          <div class="app-range-item">
+            <label for="post_seeing_again_4" class="app-range-label-up">4</label>
+            <input id="post_seeing_again_4" type="radio" name="post_seeing_again" value="4">
+            <div class="app-range-label-down">neutral</div>
+          </div>
+          <div class="app-range-item">
+            <label for="post_seeing_again_5" class="app-range-label-up">5</label>
+            <input id="post_seeing_again_5" type="radio" name="post_seeing_again" value="5">
+          </div>
+          <div class="app-range-item">
+            <label for="post_seeing_again_6" class="app-range-label-up">6</label>
+            <input id="post_seeing_again_6" type="radio" name="post_seeing_again" value="6">
+          </div>
+          <div class="app-range-item">
+            <label for="post_seeing_again_7" class="app-range-label-up">7</label>
+            <input id="post_seeing_again_7" type="radio" name="post_seeing_again" value="7">
+            <div class="app-range-label-down">a lot</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app-question">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            To what extent do you think the other person wants to see you again?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col app-range">
+          <div class="app-range-item">
+            <label for="post_other_seeing_me_again_1" class="app-range-label-up">1</label>
+            <input id="post_other_seeing_me_again_1" type="radio" name="post_other_seeing_me_again" value="1" required>
+            <div class="app-range-label-down">not at all</div>
+          </div>
+          <div class="app-range-item">
+            <label for="post_other_seeing_me_again_2" class="app-range-label-up">2</label>
+            <input id="post_other_seeing_me_again_2" type="radio" name="post_other_seeing_me_again" value="2">
+          </div>
+          <div class="app-range-item">
+            <label for="post_other_seeing_me_again_3" class="app-range-label-up">3</label>
+            <input id="post_other_seeing_me_again_3" type="radio" name="post_other_seeing_me_again" value="3">
+          </div>
+          <div class="app-range-item">
+            <label for="post_other_seeing_me_again_4" class="app-range-label-up">4</label>
+            <input id="post_other_seeing_me_again_4" type="radio" name="post_other_seeing_me_again" value="4">
+            <div class="app-range-label-down">neutral</div>
+          </div>
+          <div class="app-range-item">
+            <label for="post_other_seeing_me_again_5" class="app-range-label-up">5</label>
+            <input id="post_other_seeing_me_again_5" type="radio" name="post_other_seeing_me_again" value="5">
+          </div>
+          <div class="app-range-item">
+            <label for="post_other_seeing_me_again_6" class="app-range-label-up">6</label>
+            <input id="post_other_seeing_me_again_6" type="radio" name="post_other_seeing_me_again" value="6">
+          </div>
+          <div class="app-range-item">
+            <label for="post_other_seeing_me_again_7" class="app-range-label-up">7</label>
+            <input id="post_other_seeing_me_again_7" type="radio" name="post_other_seeing_me_again" value="7">
+            <div class="app-range-label-down">a lot</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-question">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            To what extent did you find this person smiling?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col app-range">
+          <div class="app-range-item">
+            <label for="post_smile_1" class="app-range-label-up">1</label>
+            <input id="post_smile_1" type="radio" name="post_smile" value="1" required>
+            <div class="app-range-label-down">Not smiling</div>
+          </div>
+          <div class="app-range-item">
+            <label for="post_smile_2" class="app-range-label-up">2</label>
+            <input id="post_smile_2" type="radio" name="post_smile" value="2">
+          </div>
+          <div class="app-range-item">
+            <label for="post_smile_3" class="app-range-label-up">3</label>
+            <input id="post_smile_3" type="radio" name="post_smile" value="3">
+          </div>
+          <div class="app-range-item">
+            <label for="post_smile_4" class="app-range-label-up">4</label>
+            <input id="post_smile_4" type="radio" name="post_smile" value="4">
+            <div class="app-range-label-down">neutral</div>
+          </div>
+          <div class="app-range-item">
+            <label for="post_smile_5" class="app-range-label-up">5</label>
+            <input id="post_smile_5" type="radio" name="post_smile" value="5">
+          </div>
+          <div class="app-range-item">
+            <label for="post_smile_6" class="app-range-label-up">6</label>
+            <input id="post_smile_6" type="radio" name="post_smile" value="6">
+          </div>
+          <div class="app-range-item">
+            <label for="post_smile_7" class="app-range-label-up">7</label>
+            <input id="post_smile_7" type="radio" name="post_smile" value="7">
+            <div class="app-range-label-down">Very smiling</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="otree-btn-next btn btn-primary">Next</button>
+  </div>
+</form>
+<p class="mt-5">In case of any issues during the experiment:</p>
+<ul>
+  <li>Make sure you are using the latest version of the Chrome browser and that you are connected to the internet.</li>
+  <li>Wait for a few seconds and then refresh the page.</li>
+  <li>If the issue persists, send a Whataspp message to +33684921627</li>
+</ul>
+{{ endblock }}

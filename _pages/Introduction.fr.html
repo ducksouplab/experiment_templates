@@ -1,0 +1,78 @@
+{{ block title }}
+Introduction
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+{{ endblock }}
+
+{{ block content }}
+<h2>Brainstorm au sujet de l'environnement</h2>
+
+<p>Bonjour et bienvenue dans cette expérience. Cette expérience est organisée par le Centre Multidisciplinaire des Sciences Comportementales INSEAD-Sorbonne Université et a une durée d'environ 15 minutes. Le chercheur principal qui conduit cette étude est Pablo Arias (IRCAM; arias@ircam.fr).</p>
+<p>Dans cette étude, vous allez rencontrer 4 personnes avec qui vous discuterez pendant 4 minutes sous forme d'appel vidéo. Le sujet des conversations pour sur l'environnement et au terme de chaque échange quelques questions vous seront posées. Vos réponses sont anonymes, et nous ne pourrons pas vous renseigner sur les réponses des autres participants.</p>
+<p>Par ailleurs, pendant cette expérience, nous souhaitons enregistrer les interactions sur support numérique audio/vidéo pour une analyse postérieure. Les données concernant cette étude restent cependant complètement confidentielles et ne seront utilisées que à des fins de recherche scientifique.</p>
+<p>Votre participation à l'étude doit être entièrement volontaire, et vous avez la possibilité de vous retirer de l'étude à tout moment sans aucune pénalité.</p>
+<p>En continuant, vous déclarez avoir l'âge légal de consentement, avoir lu et parfaitement compris les paragraphes ci-dessus, ainsi qu'accepter de votre plein gré de participer à cette étude.</p>
+
+<h4>Fiche technique</h4>
+<p>Afin de garantir le bon déroulement de l'expérience et de la communication avec les autres participants, merci de vous assurer que vous respectez bien tous les points suivants:</p>
+<ul>
+  <li>Vous êtes sur un ordinateur portable ou du bureau (pas sur un smartphone)</li>
+	<li>Vous utilisez le navigateur Chrome (et les autres navigateurs sont fermés)</li>
+	<li>Vous n'avez pas d'autres applications ouvertes utilisant votre webcam ou votre micro (comme Zoom)</li>
+	<li>Merci de fermer les onglets ou les applications qui consomment de la bande passante (Netflix, Youtube ou application de téléchargement)</li>
+  <li>Vous avez une bonne connexion à internet (privilégiez une connexion ethernet plutôt que wifi ou 4g)</li>
+	<li>Vous avez des écouteurs, de préférence intra auriculaires, pour écouter les autres participants</li>
+	<li>Vous êtes dans une pièce lumineuse (attention au contrejour : évitez d'avoir une fenêtre derrière vous)</li>
+	<li>Votre ordinateur a assez de batterie ou est branché au secteur</li>
+	<li>Afin de ne pas faire attendre les autres participants, merci de rester sur la fenêtre du navigateur tout le long de l'expérience et de ne pas faire autre choses pendant l'expérience</li>
+	<li>Pendant les interactions vous ne pourrez pas voir votre propre visage, seulement celui des autres participants. De ce fait, assurez vous de bien régler votre caméra au début de l'expérience, et de dire aux autres participants si leur image n'est pas bien centrée</li>
+	<li>Afin de bien régler votre caméra, assurez-vous que votre visage est bien au centre de l'écran, que vous êtes à environ 70cm de l'écran, et que votre caméra est à la hauteur de vos yeux (au dessus de l'écran que vous allez regarder pendant l'expérience). Surélevez votre ordinateur/webcam si nécessaire</li>
+  <li>Pendant l'expérience évitez de changer drastiquement de position afin de rester toujours bien centré·e</li>
+	<li>De même, évitez de couvrir votre visage avec vos mains, d'avoir des cheveux sur le visage ou des accessoires comme une casquette qui pourraient gêner la communication. Regardez attentivement les exemples suivant pour vous assurer que tout est bien réglé :</li>
+</ul>
+
+<div class="row g-0">
+  <div class="col-8">
+    <img src="{{ static 'global/img/good.jpg' }}" class="img-fluid img-good" />
+  </div>
+  <div class="col-4">
+    <div class="img-bad">
+      <img src="{{ static 'global/img/bad1.jpg' }}" class="img-fluid" />
+      <span class="img-caution">❌</span>
+    </div>
+    <div class="img-bad">
+      <img src="{{ static 'global/img/bad2.jpg' }}" class="img-fluid" />
+      <span class="img-caution">❌</span>
+    </div>
+  </div>
+</div>
+
+<div class="row g-0">
+  <div class="col-4">
+    <div class="img-bad">
+      <img src="{{ static 'global/img/bad3.jpg' }}" class="img-fluid" />
+      <span class="img-caution">❌</span>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="img-bad">
+      <img src="{{ static 'global/img/bad7.jpg' }}" class="img-fluid" />
+      <span class="img-caution">❌</span>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="img-bad">
+      <img src="{{ static 'global/img/bad5.jpg' }}" class="img-fluid" />
+      <span class="img-caution">❌</span>
+    </div>
+  </div>
+</div>
+
+<div class="float-end mt-4">
+  <button class="otree-btn-next btn btn-primary">Suivant</button>
+</div>
+
+
+{{ endblock }}

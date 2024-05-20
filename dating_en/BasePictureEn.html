@@ -1,0 +1,61 @@
+{{ block title }}
+Settings and selfie
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/picture.css' }}" type="text/css">
+{{ endblock }}
+
+{% block global_scripts %}
+<script src="{{ static 'global/scripts/picture-NW76BAAA.js' }}"></script>
+{% endblock %}
+
+{{ block content }}
+<div class="row">
+  <div class="col-5">
+    <div class="mb-3">
+      <label for="video-source" class="form-label">Select the video source </label>
+      <select id="video-source" class="form-select form-select-sm"></select>
+    </div>
+    <div class="mb-3">
+      <label for="audio-source" class="form-label">
+        Select the audio source
+        <div class="progress">
+          <div id="meter" class="progress-bar bg-info" role="progressbar" style="width: 0%"></div>
+        </div>
+      </label>
+      <select id="audio-source" class="form-select form-select-sm"></select>
+    </div>
+  </div>
+  <div class="col-7">
+    <p>Before interacting with you, the other participants will see the photo taken below.</p>
+    <p>Take this opportunity to prepare optimal conditions for the experiment: keep a position <strong>centered facing the camera</strong> and find an appropriately illuminated place.
+    </p>
+    <p>Also, make sure that the audio input is properly configured. To do this, ensure that the blue indicator (on the left) moves when you speak.</p>
+    <div id="selfie-to-take">
+      <video playsinline autoplay id="stream"></video>
+      <button class="btn btn-warning" id="take-snapshot">Take a photo</button>
+    </div>
+    <div id="selfie-taken" class="d-none">
+      <canvas id="selfie"></canvas>
+      <button class="btn btn-light" id="cancel">Take another photo</button>
+      <button class="btn btn-primary float-end d-none" id="ok">Start with this photo</button>
+    </div>
+    <p class="mt-5">In case of any issues during the experiment:</p>
+    <ul>
+      <li>Make sure you are using the latest version of the Chrome browser and that you are connected to the internet.</li>
+      <li>Wait for a few seconds and then refresh the page.</li>
+      <li>If the issue persists, send a Whataspp message to +33684921627</li>
+    </ul>
+    
+  </div>
+</div>
+
+<div class="d-none">
+  <form>
+    <input type="hidden" id="audio_source_id" name="audio_source_id" />
+    <input type="hidden" id="video_source_id" name="video_source_id" />
+    <input type="hidden" id="image_data" name="image_data" />
+  </form>
+</div>
+{{ endblock }}

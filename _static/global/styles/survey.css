@@ -1,0 +1,65 @@
+.otree-body {
+  max-width: 800px;
+}
+
+.app-survey .otree-btn-next {
+  float: right;
+}
+
+.app-question {
+  padding: 10px 20px;
+  margin-bottom: 10px;
+}
+
+.app-question:nth-of-type(2n) {
+  background-color: #f2f2f2;
+}
+
+.app-range {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 90px 45px;
+  padding: 0;
+  background: linear-gradient(#eee, #eee) no-repeat center/100% 4px;
+}
+
+.app-question:nth-of-type(2n) .app-range {
+  background: linear-gradient(#e1e1e1, #e1e1e1) no-repeat center/100% 4px;
+}
+
+.app-range-item {
+  position: relative;
+}
+
+.app-range-item input, .app-range-item label {
+  cursor: pointer;
+}
+
+.app-range-label-up {
+  position: absolute;
+  width: 23px;
+  text-align: center;
+  top: -22px;
+  left: -5px;
+  height: 45px;
+}
+
+.app-range-label-down {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 48px;
+  text-align: center;
+  top: 30px;
+  left: -84px;
+}
+
+.form-control.large {
+  height: 120px;
+}
+
+#selfie {
+  width: 100%;
+}

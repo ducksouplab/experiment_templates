@@ -1,0 +1,72 @@
+{{ block title }}
+Introduction
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+{{ endblock }}
+
+{{ block content }}
+<!-- Consent form in Mastok 
+  <p>Welcome to this experiment. This experiment is organized by Pablo Arias from the University of Glasgow. The experiments lasts about 15 minutes. This experiment investigates human social interactions and how conversations and ideas come about. In this study, you will participate in 4 video conference interactions. During the conversations we would like you to brainstorm about different topics, which will be explained before each interaction. After each interaction, you will be asked a few questions about the conversations. All your answers are anonymous. Furthermore, we would like to record the audio/video interactions you will have. These recordings  will remain completely confidential and will only be used for scientific purposes. Your participation in the study must be completely voluntary, and you have the option to withdraw from the study at any time. By continuing, you declare that you are of legal age to participate in this study, that you have read and fully understood the paragraphs above, and that you agree to participate in this study.</p> 
+-->
+
+<h4>Technical recommendations</h4>
+<p>In order to ensure that participants can see and hear you correctly, please make sure that you comply with all the following points:</p>
+<ul>
+  <li>You are using a laptop or desktop computer (not a smartphone)</li>
+	<li>You are using the Chrome browser (other browsers are closed)</li>
+	<li>You don't have other applications that use your webcam or microphone opened (like Zoom)</li>
+	<li>Please close tabs (or applications) that consume bandwidth (e.g., Netflix, Youtube or a download application)</li>
+  <li>You have a good internet connection (prefer an ethernet connection or wifi rather than 4g)</li>
+	<li>You have headphones, preferably in-ear, to listen to other participants</li>
+	<li>You are in a correctly light room (beware of backlighting: avoid having a window behind you)</li>
+	<li>Please stay on the browser window throughout the experiment and do not do anything else during the experiment to aviud delays</li>
+	<li>During the interactions you will not be able to see your own face, only that of the other participants. Therefore, be sure to adjust your camera at the beginning of the experiment, and to tell the other participants if their image is not well centered</li>
+	<li>Please make sure that your face is in the center of the screen, that you are about 70cm away from the screen, and that your camera is at eye level (above the screen you will be looking at during the experiment). If needed, elevate your computer/webcam with a book </li>
+  <li>During the experiment, avoid changing your position drastically in order to remain centered</li>
+	<li>Also, avoid covering your face with your hands, having hair on your face. </li>
+  <li> PleaseTake a close look at the following examples and make sure everything is set up correctly:</li>
+</ul>
+
+<div class="row g-0">
+  <div class="col-8">
+    <img src="{{ static 'global/img/good.jpg' }}" class="img-fluid img-good" />
+  </div>
+  <div class="col-4">
+    <div class="img-bad">
+      <img src="{{ static 'global/img/bad1.jpg' }}" class="img-fluid" />
+      <span class="img-caution">❌</span>
+    </div>
+    <div class="img-bad">
+      <img src="{{ static 'global/img/bad2.jpg' }}" class="img-fluid" />
+      <span class="img-caution">❌</span>
+    </div>
+  </div>
+</div>
+
+<div class="row g-0">
+  <div class="col-4">
+    <div class="img-bad">
+      <img src="{{ static 'global/img/bad3.jpg' }}" class="img-fluid" />
+      <span class="img-caution">❌</span>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="img-bad">
+      <img src="{{ static 'global/img/bad7.jpg' }}" class="img-fluid" />
+      <span class="img-caution">❌</span>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="img-bad">
+      <img src="{{ static 'global/img/bad5.jpg' }}" class="img-fluid" />
+      <span class="img-caution">❌</span>
+    </div>
+  </div>
+</div>
+
+<div class="float-end mt-4">
+  <button class="otree-btn-next btn btn-primary">Next</button>
+</div>
+{{ endblock }}

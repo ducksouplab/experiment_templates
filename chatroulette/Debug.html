@@ -1,0 +1,19 @@
+{{ block title }}
+Video chat
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/interact.css' }}" type="text/css">
+{{ endblock }}
+
+{% block global_scripts %}
+<script src="{{ static 'global/scripts/debug-2HZUD6NN.js' }}"></script>
+{% endblock %}
+
+{{ block content }}
+<pre id="info"></pre>
+
+<form id="form" class="d-none">
+  <input type="hidden" id="inspect_visibility" name="inspect_visibility" />
+</form>
+{{ endblock }}
