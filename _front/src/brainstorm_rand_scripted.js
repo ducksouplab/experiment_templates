@@ -4,13 +4,13 @@ const state = {
 };
 
 // 
-const ATTACK = 700;
-const SUSTAIN = 1400;
-const RELEASE = 750;
-const FX_DURATION = ATTACK + SUSTAIN + RELEASE;
-const ALPHA_SMILE = 0.9;
-const ALPHA_NEUTRAL = 0;
-const ALPHA_UNSMILE = -0.6;
+const ATTACK = 700; 
+const SUSTAIN = 1400; 
+const RELEASE = 750; 
+const FX_DURATION = ATTACK + SUSTAIN + RELEASE; 
+const ALPHA_SMILE = 0.8; 
+const ALPHA_NEUTRAL = 0; 
+const ALPHA_UNSMILE = -0.4;
 
 // from https://javascript.info/task/shuffle
 const shuffle = (input) => {

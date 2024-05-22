@@ -1,0 +1,14 @@
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/interact.css' }}" type="text/css">
+{{ endblock }}
+
+{% block global_scripts %}
+<script src="{{ ducksoupJsUrl }}"></script>
+<script src="{{ static 'global/scripts/listeners-LSXNKGQD.js' }}"></script>
+<script src="{{ static 'global/scripts/player-SY6WYYCH.js' }}"></script>
+<script src="{{ static 'global/scripts/brainstorm_rand_scripted-CIHTE7BN.js' }}"></script>
+{% endblock %}
+
+{{ block content }}
+{{ include '_pages/partials/player.en.html' }}
+{{ endblock }}

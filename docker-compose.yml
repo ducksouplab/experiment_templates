@@ -1,0 +1,25 @@
+version: '3'
+services:
+  otree:
+    image: experiment_templates:latest
+    command: otree devserver 0.0.0.0:8180
+    environment:
+      OTREE_ADMIN_PASSWORD: admin
+      OTREE_AUTH_LEVEL: STUDY
+      DUCKSOUP_URL: http://localhost:8000
+    ports:
+      - "8180:8180"
+    platform: linux/amd64
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./experiment.local.pem:/etc/nginx/certs/experiment.local.pem
+      - ./experiment.local-key.pem:/etc/nginx/certs/experiment.local-key.pem
+      - /etc/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - otree

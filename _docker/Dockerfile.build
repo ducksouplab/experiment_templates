@@ -4,6 +4,7 @@ RUN apt-get update && apt-get upgrade -y
 
 RUN apt-get update && apt-get install -y python3-pip git
 RUN apt-get update && apt-get install -y libpq-dev
+RUN apt-get update && apt-get install -y openssl
 
 WORKDIR /app
 
@@ -11,6 +12,7 @@ COPY . .
 
 RUN pip3 install -r requirements.txt
 RUN pip3 install -U python-dotenv
-#RUN pip3 install numpy
-
 CMD otree prodserver
+
+COPY experiment.local-key.pem /etc/ssl/private/experiment.local-key.pem
+COPY experiment.local.pem /etc/ssl/certs/experiment.local.pem

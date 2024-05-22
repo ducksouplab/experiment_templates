@@ -51,8 +51,8 @@ DUCKSOUP_URL=https://localhost:8001 otree devserver
 
 Build and tag docker image:
 ```
-docker build -f _docker/Dockerfile.build -t experiment_temps:latest .
-docker tag experiment_temps ducksouplab/experiment_temps
+docker build -f _docker/Dockerfile.build -t experiment_templates:latest .
+docker tag experiment_templates ducksouplab/experiment_templates
 ```
 
 Or 
@@ -64,7 +64,7 @@ make dockerbuild
 
 Deploy image to docker hub
 ```
-docker push ducksouplab/experiment_temps:latest
+docker push ducksouplab/experiment_templates:latest
 ```
 
 Or 
@@ -74,8 +74,11 @@ make dockerpush
 
 Run with docker (and default port)
 ```
-docker run -p 8180:8180 --env DUCKSOUP_URL=https://ducksoup.example.dev --rm experiment_temps:latest
+docker run -p 8180:8180 --env DUCKSOUP_URL=https://ducksoup.example.dev --rm experiment_templates:latest
 ```
+
+if you are using macos use the --platform linux/amd64 flag:
+docker run -p 8180:8180 --platform linux/amd64 --env DUCKSOUP_URL=https://ducksoup.example.dev --rm experiment_templates:latest
 
 Check if `FORWARDED_ALLOW_IPS` is needed depending on Docker image / http proxy setup.
 
