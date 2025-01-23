@@ -76,7 +76,7 @@ Check if `FORWARDED_ALLOW_IPS` is needed depending on Docker image / http proxy 
 
 
 ## Tutorial
-We have a tutorial explaining how to use this repository, check it out [here](https://github.com/ducksouplab/experiment_templates/tutorial/tutorial.md)
+We have a tutorial explaining how to use this repository, check it out [here](https://github.com/ducksouplab/experiment_templates/blob/main/tutorial/tutorial.md)
 
 ## Front-end
 
