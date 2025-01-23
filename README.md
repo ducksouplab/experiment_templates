@@ -22,11 +22,6 @@ Run devserver with (check package.json to see the dev password):
 make dev
 ```
 
-If you have an "otree: not found" error, please run:
-
-```
-pip3 install -r requirements.txt && pip3 install -U python-dotenv
-```
 
 The following environment variables may be used to modify how (all) experiments interact with DuckSoup (here with the default values):
 
@@ -55,11 +50,6 @@ docker build -f _docker/Dockerfile.build -t experiment_templates:latest .
 docker tag experiment_templates ducksouplab/experiment_templates
 ```
 
-Or 
-```
-make dockerbuild
-```
-
 ## Share image
 
 Deploy image to docker hub
@@ -72,6 +62,8 @@ Or
 make dockerpush
 ```
 
+
+## Run image
 Run with docker (and default port)
 ```
 docker run -p 8180:8180 --env DUCKSOUP_URL=https://ducksoup.example.dev --rm experiment_templates:latest
@@ -81,6 +73,10 @@ if you are using macos use the --platform linux/amd64 flag:
 docker run -p 8180:8180 --platform linux/amd64 --env DUCKSOUP_URL=https://ducksoup.example.dev --rm experiment_templates:latest
 
 Check if `FORWARDED_ALLOW_IPS` is needed depending on Docker image / http proxy setup.
+
+
+## Tutorial
+We have a tutorial explaining how to use this repository, check it out [here](https://github.com/ducksouplab/experiment_templates/tutorial/tutorial.md)
 
 ## Front-end
 

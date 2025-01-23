@@ -49,9 +49,20 @@ PAIRING = [
   [[1, 6], [2, 5], [3, 8], [4, 7]],
   [[1, 7], [2, 8], [3, 5], [4, 6]]
 ]
+# And the transformations for a given participant and round (U-> False, S-> True)
+TRANSFORMATION = [
+  [False, False, True, True], # F1 for rounds 1, 2, 3, 4
+  [False, False, True, True], # F2
+  [True, True, False, False], # F3
+  [True, True, False, False], # F4
+  [False, False, True, True], # M1
+  [True, True, False, False], # M2
+  [False, False, True, True], # M3
+  [True, True, False, False], # M4
+]
 
 class C(BaseConstants):
-  NAME_IN_URL = 'escan_tutorial'
+  NAME_IN_URL = 'meeting_N8'
   PLAYERS_PER_GROUP = 2
   NUM_ROUNDS = 4
 
@@ -66,15 +77,18 @@ class Group(BaseGroup):
   pass
 
 class Player(BasePlayer):
-  sid           = models.StringField() # session id
-  num_rounds    = models.IntegerField()
-  user_id       = models.StringField() # p1, p2...
-  other_id      = models.StringField()
-  other_id_in_group  = models.IntegerField()
-  dyad               = models.StringField() # contains user_id and other_id
-  primary            = models.BooleanField() # acts as leading/primary participant in dyad (JS wise)
+  sid = models.StringField() # session id
+  num_rounds = models.IntegerField()
+  user_id = models.StringField() # p1, p2...
+  other_id = models.StringField()
+  other_id_in_group = models.IntegerField()
+  dyad = models.StringField() # contains user_id and other_id
+  primary = models.BooleanField() # acts as leading/primary participant in dyad (JS wise)
   conversation_topic = models.StringField()
   conversation_description = models.StringField()
+
+  participant_condition = models.StringField()
+  other_condition       = models.StringField()
 
   audio_source_id = models.StringField()
   video_source_id = models.StringField()
@@ -137,6 +151,12 @@ def creating_session(subsession):
     # sid
     player.sid = subsession.session.config['id']
     
+    # condition True is S (Smile) and False is U (Unsmile)
+    player.participant_condition = 'S' if TRANSFORMATION[participant_index][round_index] else 'U'
+    
+    # other_condition
+    player.other_condition = 'S' if TRANSFORMATION[other_index][round_index] else 'U'
+
     # user_id
     player.user_id = "p" + str(player.participant.id_in_session)
 
@@ -164,6 +184,13 @@ class Interact(Page):
     interaction_name = f'{str(player.round_number)}-{player.dyad}'
     participant_index = player.participant.id_in_session - 1
     round_index = player.round_number - 1
+    has_smile = TRANSFORMATION[participant_index][round_index]
+
+
+    video_fx_name = "video_fx"
+    mozza_user_id = f'ns-{namespace}-n-{interaction_name}-u-{player.user_id}'
+    default_props = f'name={video_fx_name} deform=plugins/smile10.dfm beta=0.001 fc=1.0 user-id={mozza_user_id}'
+    video_fx = f'mozza alpha=0.8 {default_props}' if has_smile else f'mozza alpha=-0.5 {default_props}' 
 
     return dict(
        # common options used by several scripts
@@ -187,6 +214,7 @@ class Interact(Page):
         namespace=namespace,
         interactionName=interaction_name,
         size=2,
+        videoFx=video_fx,
         userId=player.user_id,
         audio=dict(
           deviceId=dict(ideal=player.participant.audio_source_id),
