@@ -55,7 +55,7 @@ Make sure it worked:
 cat .env
 ```
 
-This files contains all the environement variables which control otree's behavior. In particular, it will tell otree in which port to communicate with DuckSoup (OTREE_DUCKSOUP_URL variable). If you remember above, we used port XXXXX to initialise DuckSoup. Therefore, we are using in the .env file OTREE_DUCKSOUP_URL=http://localhost:XXXX to ensure both applications can communicate.
+This files contains all the environement variables which control otree's behavior. In particular, it will tell otree in which port to communicate with DuckSoup (OTREE_DUCKSOUP_URL variable). Below, we will use port 8101 to initialise DuckSoup. Therefore, we are using in the .env file OTREE_DUCKSOUP_URL=http://localhost:8101 to ensure both applications can communicate.
 
 Now, open the ```experiment_template``` folder inside vscode using the ```code .``` command. When prompted in Vs Code click "Reopen in container".
 
