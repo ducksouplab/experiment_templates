@@ -21,11 +21,17 @@ It might be useful for users to familiarize themselves with docker at this point
 Start by downloading [https://code.visualstudio.com/](VScode). This will be the IDE we will be using for the development of our experiment. After installing Vscode, install the "WSL" as well as the "docker" extensions into vscode, clicking on the extension button on the left bar of vscode.
 
 
-Now, open a new terminal window and go inside your ducksoup_test folder. There, clone the experiment_templates repository, which has several experiment examples that we can use as a starting point:
+Now, open a new terminal window and go inside your ducksoup_test folder:
+```
+cd ducksoup_test
+```
+
+Once in the ducksoup_test folder, clone the experiment_templates repository, which has several experiment examples that we can use as a starting point:
 ```
 git clone https://github.com/ducksouplab/experiment_templates.git
 ```
-Move to that repository
+
+Move inside the repository with this command:
 ```
 cd experiment_templates
 ```
