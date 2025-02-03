@@ -88,7 +88,7 @@ Now that you have configured both Otree and DuckSoup, you can try one of our exp
 ### Starting Ducksoup
 Start by starting Ducksoup—if it's not started already.
 ```
-docker run --name ducksoup_1 -u $(id -u arias):$(id -g arias) -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSOUP_TEST_PASSWORD=admin -e DUCKSOUP_NVCODEC=false -e DUCKSOUP_NVCUDA=false -e GST_DEBUG=3 -e DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8180 -e DUCKSOUP_JITTER_BUFFER=250 -e DUCKSOUP_GENERATE_PLOTS=true -e DUCKSOUP_GENERATE_TWCC=true -v $(pwd)/plugins:/app/plugins:ro -v $(pwd)/data:/app/data -v $(pwd)/log:/app/log --rm ducksoup:latest
+docker run --name ducksoup_1 -u $(id -u):$(id -g) -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSOUP_TEST_PASSWORD=admin -e DUCKSOUP_NVCODEC=false -e DUCKSOUP_NVCUDA=false -e GST_DEBUG=3 -e DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8180 -e DUCKSOUP_JITTER_BUFFER=250 -e DUCKSOUP_GENERATE_PLOTS=true -e DUCKSOUP_GENERATE_TWCC=true -v $(pwd)/plugins:/app/plugins:ro -v $(pwd)/data:/app/data -v $(pwd)/log:/app/log --rm ducksoup:latest
 ```
 
 Note that you can do this previous command from a new terminal, in whichever path, as long as you don't need our custom Mozza plugin, if you do, please refer to [this tutorial](https://github.com/ducksouplab/ducksoup/blob/main/tutorials/run_in_local.md#incorporate-mozza-to-perform-real-time-smile-manipulation)) to make sure you start ducksoup in the correct folder so that it can recognise mozza.
