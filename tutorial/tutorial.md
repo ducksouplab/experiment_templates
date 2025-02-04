@@ -68,8 +68,14 @@ This should start a new server running otree, which should communicate with Duck
 First of all you will need to download and setup Ducksoup. To do that, start by following the following tutorial (Download and setup Ducksoup): https://github.com/ducksouplab/ducksoup/blob/main/tutorials/run_in_local.md
 
 Once you have tested that Ducksoup works correctly, you should be able to execute it:
+On mac/linux do:
 ```
-docker run --name ducksoup_1 -u $(id -u):$(id -g) -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSOUP_TEST_PASSWORD=admin -e DUCKSOUP_NVCODEC=false -e DUCKSOUP_NVCUDA=false -e GST_DEBUG=3 -e DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8180 -e DUCKSOUP_JITTER_BUFFER=250 -e DUCKSOUP_GENERATE_PLOTS=true -e DUCKSOUP_GENERATE_TWCC=true -v $(pwd)/plugins:/app/plugins:ro -v $(pwd)/data:/app/data -v $(pwd)/log:/app/log --rm ducksoup:latest
+docker run --name ducksoup_1 -u $(id -u arias):$(id -g arias) -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSOUP_TEST_PASSWORD=admin -e DUCKSOUP_NVCODEC=false -e DUCKSOUP_NVCUDA=false -e GST_DEBUG=3 -e DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8101 -e DUCKSOUP_JITTER_BUFFER=250 -e DUCKSOUP_GENERATE_PLOTS=true -e DUCKSOUP_GENERATE_TWCC=true -v $(pwd)/plugins:/app/plugins:ro -v $(pwd)/data:/app/data -v $(pwd)/log:/app/log --rm ducksoup:latest
+```
+
+On Windows (in Power shell):
+```
+docker run --name ducksoup_1 -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSOUP_TEST_PASSWORD=admin -e DUCKSOUP_NVCODEC=false -e DUCKSOUP_NVCUDA=false -e GST_DEBUG=3 -e DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8101 -e DUCKSOUP_JITTER_BUFFER=250 -e DUCKSOUP_GENERATE_PLOTS=true -e DUCKSOUP_GENERATE_TWCC=true -v ${PWD}/plugins:/app/plugins:ro -v ${PWD}/data:/app/data -v ${PWD}/log:/app/log --rm ducksoup:latest
 ```
 
 ## Ensuring that DuckSoup and Otree communicate well.
@@ -87,8 +93,15 @@ Now that you have configured both Otree and DuckSoup, you can try one of our exp
 
 ### Starting Ducksoup
 Start by starting Ducksoup—if it's not started already.
+
+On mac/linux do:
 ```
-docker run --name ducksoup_1 -u $(id -u):$(id -g) -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSOUP_TEST_PASSWORD=admin -e DUCKSOUP_NVCODEC=false -e DUCKSOUP_NVCUDA=false -e GST_DEBUG=3 -e DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8180 -e DUCKSOUP_JITTER_BUFFER=250 -e DUCKSOUP_GENERATE_PLOTS=true -e DUCKSOUP_GENERATE_TWCC=true -v $(pwd)/plugins:/app/plugins:ro -v $(pwd)/data:/app/data -v $(pwd)/log:/app/log --rm ducksoup:latest
+docker run --name ducksoup_1 -u $(id -u arias):$(id -g arias) -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSOUP_TEST_PASSWORD=admin -e DUCKSOUP_NVCODEC=false -e DUCKSOUP_NVCUDA=false -e GST_DEBUG=3 -e DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8101 -e DUCKSOUP_JITTER_BUFFER=250 -e DUCKSOUP_GENERATE_PLOTS=true -e DUCKSOUP_GENERATE_TWCC=true -v $(pwd)/plugins:/app/plugins:ro -v $(pwd)/data:/app/data -v $(pwd)/log:/app/log --rm ducksoup:latest
+```
+
+On windows (in power shell):
+```
+docker run --name ducksoup_1 -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSOUP_TEST_PASSWORD=admin -e DUCKSOUP_NVCODEC=false -e DUCKSOUP_NVCUDA=false -e GST_DEBUG=3 -e DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8101 -e DUCKSOUP_JITTER_BUFFER=250 -e DUCKSOUP_GENERATE_PLOTS=true -e DUCKSOUP_GENERATE_TWCC=true -v ${PWD}/plugins:/app/plugins:ro -v ${PWD}/data:/app/data -v ${PWD}/log:/app/log --rm ducksoup:latest
 ```
 
 Note that you can do this previous command from a new terminal, in whichever path, as long as you don't need our custom Mozza plugin, if you do, please refer to [this tutorial](https://github.com/ducksouplab/ducksoup/blob/main/tutorials/run_in_local.md#incorporate-mozza-to-perform-real-time-smile-manipulation)) to make sure you start ducksoup in the correct folder so that it can recognise mozza.
