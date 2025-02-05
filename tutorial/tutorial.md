@@ -18,7 +18,7 @@ It might be useful for users to familiarize themselves with docker at this point
 
 ## Otree configuration
 
-Start by downloading [https://code.visualstudio.com/](VScode). This will be the IDE we will be using for the development of our experiment. After installing Vscode, install the "WSL" as well as the "docker" extensions into vscode, clicking on the extension button on the left bar of vscode.
+Start by downloading [VScode](https://code.visualstudio.com/). This will be the IDE we will be using for the development of our experiment. After installing Vscode, install the "WSL" as well as the "docker" extensions into vscode, clicking on the extension button on the left bar of vscode.
 
 
 Now, open a new terminal window and go inside your ducksoup_test folder:
