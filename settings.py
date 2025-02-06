@@ -84,10 +84,17 @@ SESSION_CONFIGS = [
 			participant_label_file='_rooms/n8.txt',
 			num_participants_allowed=[2, 4, 6, 8, 10, 12, 14],
 			doc="The number of participants must be between 2 and 14"
-		)
+		),
+
+		dict(id = 'mirror_experiment',
+			name = 'mirror_experiment',
+			app_sequence = ['mirror_experiment'],
+			num_demo_participants = 1,
+			participant_label_file = '_rooms/n8.txt',
+			num_participants_allowed=[1],
+			doc="The number of participants must be 1")
 ]
 			
-
 
 ROOMS = [
 	dict(
