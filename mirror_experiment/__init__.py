@@ -1,8 +1,8 @@
-from otree.api import *
-# from pprint import pprint
 # global configuration variables
+from otree.api import *
 import sys
 import random
+import time
 sys.path.append("..")
 from config import Env
 from _lib.pages import *
@@ -17,15 +17,23 @@ mirror_experiment
 # ----------------------------------------
 
 CONNECTING_DURATION = 1 # seconds (10 seconds in "connecting" state)
-INTERACTION_DURATION = 25 # seconds (not including CONNECTING_DURATION)
 TIMEOUT = 18 # seconds, 12 is a minimum to temper with signaling potential delay
+
+#######PARAMETERS OF THE EXPERIMENT#########
+INTERACTION_DURATION = 25 # Trial duration 
+NUMBER_OF_TRIALS = 10 # Number of trials in the experiment
+MANIPULATION_ALPHAS = ["-0.8", "-0.6",  "-0.4", "-0.2", "1.0", "1.2"] # intensity range of smile filter
+QUESTION = "Did you feel like the person on the video was really you?"
+ANSWER_OPTIONS = ["Yes, it was really me on the video", "No, it was not me"]
+ANSWER_TIME_LIMIT = 25 #timeout on the decision page
+#######PARAMETERS OF THE EXPERIMENT#########
 
 class C(BaseConstants):
   NAME_IN_URL = 'mirror_experiment'
   PLAYERS_PER_GROUP = None
-  NUM_ROUNDS = 6
+  NUM_ROUNDS = NUMBER_OF_TRIALS
 
-MANIPULATION_ALPHAS = ["-0.8", "-0.6",  "-0.4", "-0.2", "1.0", "1.2"]
+
 
 # ----------------------------------------
 # Models
@@ -39,8 +47,18 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
   sid = models.StringField() # session id
+  round_nb = models.IntegerField()
   num_rounds = models.IntegerField()
   user_id = models.StringField() # p1, p2...
+
+  #Mirror variables
+  smile_intensity = models.StringField(initial="")
+  me_notme = models.BooleanField(choices=[(True, ANSWER_OPTIONS[0]),(False, ANSWER_OPTIONS[1])],
+                                                    label=QUESTION,
+                                                    widget=widgets.RadioSelect
+                                                    )
+  reactiontime = models.FloatField(blank=True)
+
   primary = models.BooleanField() # acts as leading/primary participant in dyad (JS wise)
   inspect_visibility = models.LongStringField()
   participant_videos = models.StringField(initial="")
@@ -48,18 +66,15 @@ class Player(BasePlayer):
   audio_source_id = models.StringField()
   video_source_id = models.StringField()
 
-  #Mirror variables
-  smile_alpha = models.StringField(initial="")
-  participant_detection = participant_detection = models.BooleanField(choices=[(True, "Yes, I think my face was manipulated"),(False, "No, I don't think my face was manipulated")],
-                                                    label="Do you think your face was manipulated in this trial?",
-                                                    widget=widgets.RadioSelect
-                                                  )
+
+  """                                             
   smile_direction = models.StringField(
       choices=["Increased", "Decreased"],
       label="If manipulated, in which direction do you think your smile changed?",
       widget=widgets.RadioSelect,
       blank = True
   )
+  """
 
 # ----------------------------------------
 # Session creation logic
@@ -69,12 +84,13 @@ def creating_session(subsession):
     round_index = subsession.round_number
     for player in subsession.get_players():
         if round_index == 1: 
-            player.participant.vars['manipulation_order'] = random.sample(MANIPULATION_ALPHAS, len(MANIPULATION_ALPHAS))
+            player.participant.vars['manipulation_order'] = random.choices(MANIPULATION_ALPHAS, k = NUMBER_OF_TRIALS)
         
         player.sid = subsession.session.config['id']
         player.user_id = 'p' + str(player.participant.id_in_session)
         player.round_nb = round_index
-        player.smile_alpha = player.participant.vars['manipulation_order'][round_index - 1]
+        player.smile_intensity = player.participant.vars['manipulation_order'][round_index - 1]
+        
 
 # ----------------------------------------
 # Custom pages
@@ -96,11 +112,22 @@ class BaseSettingsMirror(Page):
 class Instructions(Page):
   def is_displayed(player):
     return player.round_number == 1
+  def vars_for_template(player):
+    return dict(trial_duration = INTERACTION_DURATION)
 
 class ParticipantDetection(Page):
-  timeout_seconds = 15
+  timeout_seconds = ANSWER_TIME_LIMIT
   form_model = "player"
-  form_fields = ["participant_detection", "smile_direction"]
+  form_fields = ["me_notme"]
+  
+  @staticmethod
+  def vars_for_template(player):
+    player.participant.vars['start_time']= time.time()*1000
+
+  @staticmethod
+  def before_next_page(player, timeout_happened):
+    end_time            = time.time()*1000
+    player.reactiontime = round(end_time-player.participant.vars['start_time'],1)
 
 class Interact(Page):
   timeout_seconds = INTERACTION_DURATION + TIMEOUT
@@ -113,7 +140,7 @@ class Interact(Page):
   def js_vars(player):
     namespace = player.sid
     interaction_name = f'{str(player.round_number)}-mirror'
-    alpha     = player.smile_alpha
+    alpha     = player.smile_intensity
 
 
     video_fx_name = "video_fx"
@@ -144,7 +171,7 @@ class Interact(Page):
         frameRate=Env.DUCKSOUP_FRAMERATE,
         namespace=namespace,
         interactionName=interaction_name,
-        size=1,
+        size=1, # Size 1 for mirror mode
         userId=player.user_id,
         videoFx=video_fx,
         video=dict(
@@ -192,4 +219,4 @@ class MeetingProlificCompensation(Page):
 # Page sequence (shared and custom)
 # ----------------------------------------
 
-page_sequence = [ProlificIntroduction, BaseSettingsMirror, Instructions, BaseWaitForAll, Interact, ParticipantDetection, MeetingProlificCompensation]
+page_sequence = [ProlificIntroduction, BaseSettingsMirror, Instructions, Interact, ParticipantDetection, MeetingProlificCompensation]

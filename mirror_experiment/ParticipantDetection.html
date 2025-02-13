@@ -21,14 +21,12 @@ Face Perception Question
 </style>
 
 
-{{ formfield 'participant_detection' }}
+{{ formfield 'me_notme' }}
 
-<div id="smile-direction-field" style="display: none; margin-top: 10px;">
-    {{ formfield 'smile_direction' }}
-</div>
 
 <script>
-document.querySelectorAll('input[name="participant_detection"]').forEach(input => {
+/*
+document.querySelectorAll('input[name="me_notme"]').forEach(input => {
     input.addEventListener("change", function() {
         let smileDirectionField = document.getElementById("smile-direction-field");
         if (this.value === "True") {
@@ -39,6 +37,7 @@ document.querySelectorAll('input[name="participant_detection"]').forEach(input =
         }
     });
 });
+*/
 </script>
 
 
