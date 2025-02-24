@@ -287,10 +287,235 @@ Now that you have a working experiment, you might want to:
 - Customize the look and feel
 - Add experimental conditions
 
+## Adding Video Effects
+
+Let's enhance our experiment by adding real-time facial manipulation using DuckSoup's Mozza plugin. We'll make both participants appear to smile more during their interaction.
+
+First, make sure you have the Mozza plugin properly set up in your DuckSoup installation. If you haven't done this yet, follow the [Mozza setup instructions](https://github.com/ducksouplab/ducksoup/blob/main/tutorials/run_in_local.md#incorporate-mozza-to-perform-real-time-smile-manipulation).
+
+Now, let's modify our `Interact` page to include the smile effect. Update the `js_vars` method in your `__init__.py`:
+
+```python
+def js_vars(player):
+    namespace = player.sid
+    interaction_name = f'1-{player.dyad}'
+
+    # Configure the smile effect
+    video_fx_name = "video_fx"
+    mozza_user_id = f'ns-{namespace}-n-{interaction_name}-u-{player.user_id}'
+    video_fx = f'mozza alpha=1.2 name={video_fx_name} deform=plugins/smile10.dfm beta=0.001 fc=1.0 user-id={mozza_user_id}'
+
+    return dict(
+        # Previous settings remain the same
+        connectingDuration=CONNECTING_DURATION,
+        interactionDuration=INTERACTION_DURATION,
+        playerOptions=dict(
+            ducksoupURL=Env.DUCKSOUP_URL,
+        ),
+        
+        # Video chat settings with added effects
+        peerOptions=dict(
+            namespace=namespace,
+            interactionName=interaction_name,
+            size=2,
+            userId=player.user_id,
+            
+            # Add the video effect configuration
+            videoFx=video_fx,
+            
+            # Video settings remain the same
+            gpu=Env.DUCKSOUP_REQUEST_GPU,
+            videoFormat=Env.DUCKSOUP_FORMAT,
+            width=Env.DUCKSOUP_WIDTH,
+            height=Env.DUCKSOUP_HEIGHT,
+            frameRate=Env.DUCKSOUP_FRAMERATE,
+            
+            audio=dict(
+                deviceId=dict(
+                    ideal=player.participant.audio_source_id
+                ),
+            ),
+            video=dict(
+                deviceId=dict(
+                    ideal=player.participant.video_source_id
+                ),
+                facingMode=dict(ideal="user"),
+            ),
+        ),
+    )
+```
+
+Let's break down the video effect configuration:
+
+1. **Effect Setup**:
+   ```python
+   video_fx_name = "video_fx"
+   mozza_user_id = f'ns-{namespace}-n-{interaction_name}-u-{player.user_id}'
+   ```
+   - Creates a unique identifier for each participant's video stream
+   - Ensures effects are applied correctly to each participant
+
+2. **Smile Effect**:
+   ```python
+   video_fx = f'mozza alpha=1.2 name={video_fx_name} deform=plugins/smile10.dfm beta=0.001 fc=1.0 user-id={mozza_user_id}'
+   ```
+   - `alpha=1.2`: Controls the intensity of the smile effect (values > 1 increase smile)
+   - `deform=plugins/smile10.dfm`: Uses the smile deformation model
+   - `beta=0.001`: Fine-tunes the deformation
+   - `fc=1.0`: Sets the facial control parameter
+
+3. **Integration**:
+   ```python
+   peerOptions=dict(
+       # ... other options ...
+       videoFx=video_fx,
+       # ... other options ...
+   )
+   ```
+   - Adds the effect to the video configuration
+   - Applied in real-time during the interaction
+
+This configuration will make both participants appear to smile more during their interaction. You can adjust the `alpha` parameter to control the intensity of the effect:
+- `alpha=1.2`: Strong smile enhancement
+- `alpha=0.8`: Strong Smile reduction
+
+Note: Values greater than 1 increase the smile intensity, while values less than 1 decrease it.
+
+## Adding Audio Effects
+
+You can also modify participants' voices using audio effects. Let's see how to use the pitch plugin to alter voice pitch during the interaction. Update the `js_vars` method in your `__init__.py` to include audio effects (see audio_fx parameter in the peerOptions):
+
+```python
+def js_vars(player):
+    namespace = player.sid
+    interaction_name = f'1-{player.dyad}'
+
+    # Configure the audio effect
+    audio_fx = 'pitch pitch=1.2'  # Increases pitch by 20%
+
+    return dict(
+        # Previous settings remain the same
+        connectingDuration=CONNECTING_DURATION,
+        interactionDuration=INTERACTION_DURATION,
+        playerOptions=dict(
+            ducksoupURL=Env.DUCKSOUP_URL,
+        ),
+        
+        # Video chat settings
+        peerOptions=dict(
+            namespace=namespace,
+            interactionName=interaction_name,
+            size=2,
+            userId=player.user_id,
+            
+            # Add the audio effect configuration
+            audioFx=audio_fx,
+            
+            # Standard settings
+            gpu=Env.DUCKSOUP_REQUEST_GPU,
+            videoFormat=Env.DUCKSOUP_FORMAT,
+            width=Env.DUCKSOUP_WIDTH,
+            height=Env.DUCKSOUP_HEIGHT,
+            frameRate=Env.DUCKSOUP_FRAMERATE,
+            
+            audio=dict(
+                deviceId=dict(
+                    ideal=player.participant.audio_source_id
+                ),
+            ),
+            video=dict(
+                deviceId=dict(
+                    ideal=player.participant.video_source_id
+                ),
+                facingMode=dict(ideal="user"),
+            ),
+        ),
+    )
+```
+
+Let's understand the audio effect configuration:
+
+1. **Pitch Effect**:
+   ```python
+   audio_fx = 'pitch pitch=1.2'
+   ```
+   - Uses GStreamer's pitch plugin
+   - `pitch=1.2`: Increases pitch by 20%
+   - Values > 1 make the voice higher in pitch
+   - Values < 1 make the voice lower in pitch
+
+2. **Integration**:
+   ```python
+   peerOptions=dict(
+       # ... other options ...
+       audioFx=audio_fx,
+       # ... other options ...
+   )
+   ```
+   - Adds the effect to the audio configuration
+   - Applied in real-time during the interaction
+
+You can adjust the pitch parameter to achieve different effects:
+- `pitch=1.2`: Voice is 20% higher
+- `pitch=0.8`: Voice is 20% lower
+- `pitch=1.5`: Voice is 50% higher (might sound unnatural)
+
+Note: Keep the pitch values within reasonable ranges (0.8 to 1.4) to maintain intelligible speech.
+
+### Combining Audio and Video Effects
+
+You can use both audio and video effects together. Here's how to combine them:
+
+```python
+def js_vars(player):
+    namespace = player.sid
+    interaction_name = f'1-{player.dyad}'
+
+    # Configure both effects
+    video_fx_name = "video_fx"
+    mozza_user_id = f'ns-{namespace}-n-{interaction_name}-u-{player.user_id}'
+    video_fx = f'mozza alpha=1.2 name={video_fx_name} deform=plugins/smile10.dfm beta=0.001 fc=1.0 user-id={mozza_user_id}'
+    audio_fx = 'pitch pitch=1.2'
+
+    return dict(
+        # ... other settings ...
+        peerOptions=dict(
+            # ... other options ...
+            videoFx=video_fx,
+            audioFx=audio_fx,
+            # ... rest of options ...
+        ),
+    )
+```
+
+This configuration will:
+1. Enhance participants' smiles by 20%
+2. Increase their voice pitch by 20%
+
 Remember to:
-- Test with real participants
-- Monitor the technical quality
-- Back up your data
-- Document any changes you make
+1. Test the effects thoroughly before running experiments
+2. Consider how the combination of effects might impact interaction
+3. Document all effect parameters in your research methods
+4. Monitor audio quality during testing
+
+## Testing Your Experiment
+
+Ready to try it out? Here's what to do:
+
+1. Start DuckSoup:
+```bash
+docker run --name ducksoup_1 -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSOUP_TEST_PASSWORD=admin -e DUCKSOUP_NVCODEC=false -e DUCKSOUP_NVCUDA=false -e GST_DEBUG=3 -e DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8180 -e DUCKSOUP_JITTER_BUFFER=250 -e DUCKSOUP_GENERATE_PLOTS=true -e DUCKSOUP_GENERATE_TWCC=true -v $(pwd)/plugins:/app/plugins:ro -v $(pwd)/data:/app/data -v $(pwd)/log:/app/log --rm ducksoup:latest
+```
+
+2. Start oTree:
+```bash
+make dev
+```
+
+3. Run a test:
+   - Go to http://localhost:8180/demo
+   - Click "Simple Chat"
+   - Open two browser windows
+   - Try the whole experiment flow
 
 Need help? Check out the other tutorials or ask in the DuckSoup community! 
