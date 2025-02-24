@@ -10,7 +10,7 @@ https://docs.docker.com/desktop/setup/install/mac-install/
 Then create an account in docker. 
 Then open the new Docker Desktop app in your computer.
 Then open the terminal and check that docker installation worked:
-‘docker --version’
+'docker --version'
 
 If you are using linux install docker following the instructions [here](https://docs.docker.com/engine/install/ubuntu/).
 
@@ -131,31 +131,42 @@ To understand how this page works, you can refer to the otree documentation.
 You should see a list. Each item in this list is an experiment. Click click in the "DuckSoup now!" item to start the "DuckSoup now!" experiment (this one requires the mozza plugin).  After that, open all the participant links (from p1 to p8). Each of these links is a different participant. You should see yourself in each of these windows. You can test other experiments, but ensure that, if you run an experiment which has 'smile' in its name, you have the mozza plugin configured in DuckSoup, as it will be required for the experiment.
 
 ### Create a new experiment
-You can now create your own experiment using otree, use one of the template experiments as a starting point. To do this, copy one of the folders in the experiment_template folder, such as meeting_visual_smile_N8, give it a new name 
 
-Then in the settings.py file, add an entry such as::
-```
-		dict(
-			id='your_new_experiment', 
-			name='your_new_experiment',
-			display_name='your_new_experiment',
-			app_sequence=['your_new_experiment'],
-			num_demo_participants=8,
-			participant_label_file='_rooms/n8.txt',
-			num_participants_allowed=[2, 4, 6, 8, 10, 12, 14],
-			doc="The number of participants must be between 2 and 14"
-		)
+For a detailed, step-by-step guide on creating your first DuckSoup experiment, we recommend following our [Simple Chat Tutorial](simple_chat_tutorial.md). This tutorial will walk you through creating a basic video chat experiment for two participants, including:
+- Setting up the experiment structure
+- Implementing video chat functionality
+- Adding rating scales
+- Creating a professional user interface
+- Testing and troubleshooting
+
+If you prefer to start from an existing experiment, you can:
+1. Copy one of the folders in the experiment_template folder, such as meeting_visual_smile_N8
+2. Give it a new name 
+3. Update the settings.py file by adding an entry such as:
+```python
+dict(
+    id='your_new_experiment', 
+    name='your_new_experiment',
+    display_name='your_new_experiment',
+    app_sequence=['your_new_experiment'],
+    num_demo_participants=8,
+    participant_label_file='_rooms/n8.txt',
+    num_participants_allowed=[2, 4, 6, 8, 10, 12, 14],
+    doc="The number of participants must be between 2 and 14"
+)
 ```
 
 Also, in the init.py file, in the folder with the code of your experiment, make sure to change NAME_IN_URL and doc to:
-```
+```python
 NAME_IN_URL = 'your_new_experiment'
 ```
 
-As well as
+As well as:
+```python
 doc = """
 your_new_experiment
 """
+```
 
 Now you can restart the otree server with ```make dev```, you should see your new experiment in the list of experiments. You can now modify this experiment to your required needs.
 

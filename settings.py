@@ -2,6 +2,15 @@ import os
 
 SESSION_CONFIGS = [
 	dict(
+		id='SC',  # default DuckSoup namespace, should be changed per session
+		name='simple_chat',
+		display_name='Simple Chat',
+		app_sequence=['simple_chat'],
+		num_demo_participants=2,
+		num_participants_allowed=[2],
+		doc="A simple video chat experiment where two participants interact."
+	),
+	dict(
 		id='CH', # default DuckSoup namespace, should be changed per session
 		name='chatroulette',
 		display_name='Chatroulette',

@@ -1,0 +1,34 @@
+{{ block title }}
+    Rate Your Interaction
+{{ endblock }}
+
+{{ block content }}
+
+<div class="card">
+    <div class="card-body">
+        <h5>Please rate your interaction experience:</h5>
+        
+        <div class="mb-4">
+            {{ formfield 'liked' }}
+            <small class="text-muted">1 = Not at all, 7 = Very much</small>
+        </div>
+
+        <div class="mb-4">
+            {{ formfield 'conversation_quality' }}
+            <small class="text-muted">1 = Very poor, 7 = Excellent</small>
+        </div>
+
+        <div class="mb-4">
+            {{ formfield 'video_conf_quality' }}
+            <small class="text-muted">1 = Very poor, 7 = Excellent</small>
+        </div>
+
+        <div class="mb-4">
+            {{ formfield 'interaction_comment' }}
+        </div>
+
+        {{ next_button }}
+    </div>
+</div>
+
+{{ endblock }} 
