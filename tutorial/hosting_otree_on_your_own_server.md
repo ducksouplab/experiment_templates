@@ -161,7 +161,38 @@ Using HTTPS is essential for several reasons, especially when hosting applicatio
 
 ## Step 4: Accessing Your oTree Application
 
-- You can now access your oTree application by navigating to `http://your_domain_or_ip` in your web browser.
+- You can now access your oTree application by navigating to `https://your_domain_or_ip` in your web browser.
+
+## Step 5: DuckSoup Configuration
+
+To configure DuckSoup, follow these steps:
+
+1. **Download and Set Up DuckSoup**:
+   Start by following the tutorial to download and set up DuckSoup: [Download and Setup DuckSoup](https://github.com/ducksouplab/ducksoup/blob/main/tutorials/run_in_local.md).
+
+2. **Run DuckSoup**:
+   Once you have tested that DuckSoup works correctly, you should be able to execute it. Use the following command to run DuckSoup on Linux:
+
+   ```bash
+   docker run --name ducksoup_1 -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSOUP_TEST_PASSWORD=admin -e DUCKSOUP_NVCODEC=false -e DUCKSOUP_NVCUDA=false -e GST_DEBUG=3 -e DUCKSOUP_ALLOWED_WS_ORIGINS=https://your_domain_or_ip -e DUCKSOUP_JITTER_BUFFER=250 -e DUCKSOUP_GENERATE_PLOTS=true -e DUCKSOUP_GENERATE_TWCC=true -v $(pwd)/plugins:/app/plugins:ro -v $(pwd)/data:/app/data -v $(pwd)/log:/app/log --rm ducksoup:latest
+   ```
+
+   Make sure to replace `your_domain_or_ip` with the actual domain name or IP address of your server.
+
+3. **Ensure DuckSoup and oTree Communicate**:
+   To ensure that DuckSoup and oTree communicate well, you need to configure both applications correctly.
+
+   - **DuckSoup Configuration**: The command above includes the parameter `DUCKSOUP_ALLOWED_WS_ORIGINS=https://your_domain_or_ip`, which allows DuckSoup to accept requests from the oTree server running at the specified HTTPS address.
+
+   - **oTree Configuration**: In the `.env` file located in the `experiment_template` folder, ensure you have the following environment variable set:
+   ```bash
+   OTREE_DUCKSOUP_URL=http://localhost:8101
+   ```
+
+   This configuration tells oTree where to find DuckSoup, allowing both applications to communicate effectively.
+
+4. **Running an Experiment**:
+   Now that you have configured both oTree and DuckSoup, you can try one of the experiment examples. Follow the instructions in the previous sections to start DuckSoup and oTree, and access the experiment through the provided URLs.
 
 ## Conclusion
 You have successfully set up your oTree application on your own server using Docker and Nginx. This setup allows you to have full control over your hosting environment and can be customized further based on your needs. For more advanced configurations, consider exploring SSL setup for secure connections and load balancing options. 
