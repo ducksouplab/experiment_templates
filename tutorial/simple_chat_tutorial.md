@@ -2,6 +2,10 @@
 
 Welcome to the Simple Chat tutorial! In this guide, you'll learn how to create a basic video chat experiment where two participants can have a conversation and rate their experience. This is a great starting point for understanding how DuckSoup and oTree work together.
 
+## What is oTree?
+
+oTree is an open-source platform for creating and running behavioral experiments and surveys. It allows researchers to build interactive applications using Python, making it easy to design experiments that involve multiple participants. In this repository, oTree is used to orchestrate participants, and collect behavioral data. We use DuckSoup as a plugin inside otree to enable real-time video interactions between participants, as well as the use of real-time audio and video effects. For more in-depth familiarization with oTree, check out their [tutorials](https://otree.readthedocs.io/en/latest/tutorial/intro.html), they are very nice and comprehensive.
+
 > **Quick Start**: All the files discussed in this tutorial are already available in the `simple_chat` folder. You can:
 > - Use them directly as a template for your own experiments
 > - Follow this tutorial to understand how everything works
@@ -518,4 +522,97 @@ make dev
    - Open two browser windows
    - Try the whole experiment flow
 
-Need help? Check out the other tutorials or ask in the DuckSoup community! 
+Need help? Check out the other tutorials or ask in the DuckSoup community!
+
+## Moving to More Complex Experiments
+
+Once you have a basic understanding of how to create a simple chat experiment, you may want to explore more complex scenarios involving multiple interactions with different partners. Here are a few examples to guide you:
+
+### Example 1: Within-Participant Designs with Dyads
+
+In a within-participant design, each participant interacts with multiple partners across different rounds. You can achieve this by modifying the `NUM_ROUNDS` constant in your experiment's `__init__.py` file. For instance, if you want each participant to interact with different partners in four rounds, you would set:
+
+```python
+class C(BaseConstants):
+    NAME_IN_URL = 'dyad_experiment'
+    PLAYERS_PER_GROUP = 2  # Each interaction is still a dyad
+    NUM_ROUNDS = 4         # Four rounds of interaction
+```
+
+You would also need to implement a pairing logic that ensures participants are matched with different partners in each round. This can be done using a pairing matrix such as:
+
+```python
+PAIRING = [
+    [[1, 2], [3, 4], [5, 6], [7, 8]],  # Round 1 pairs. Participant 1 interacts with participant 2, participant 3 with participant 4, etc.
+    [[1, 3], [2, 4], [5, 7], [6, 8]],  # Round 2 pairs. Participant 1 interacts with participant 3, participant 2 with participant 4, etc.
+    [[1, 4], [2, 3], [5, 8], [6, 7]],  # Round 3 pairs. Participant 1 interacts with participant 4, participant 2 with participant 3, etc.
+    [[1, 5], [2, 6], [3, 7], [4, 8]],  # Round 4 pairs. Participant 1 interacts with participant 5, participant 2 with participant 6, etc.
+]
+```
+
+### Example 2: Handling Different Manipulations for Each Dyad
+
+In more complex experiments, you may want to apply different manipulations based on the dyad's condition. For instance, you can define conditions such as "Smile" and "No Smile" for each dyad and apply different video effects accordingly.
+
+In your `creating_session` function, you can set conditions for each participant based on their dyad:
+
+```python
+def creating_session(subsession):
+    # ... existing code ...
+    
+    for player in subsession.get_players():
+        # Assign conditions based on the dyad they are in
+        if player.id_in_group == 1:  # Primary participant
+            player.participant_condition = 'S'  # Smile effect
+        else:  # Secondary participant
+            player.participant_condition = 'U'  # No smile effect
+```
+
+Similarly, you can create different manipulations for different rounds:
+
+```python
+def creating_session(subsession):
+    # ... existing code ...
+    
+    for player in subsession.get_players():
+        # Assign conditions based on the round participants are in  
+        player.participant_condition = 'S' if player.round_number % 2 == 1 else 'U'  # Smile for odd rounds, no smile for even rounds
+```
+
+Alternatively, you can randomize the conditions for each participant:
+
+```python
+def creating_session(subsession):
+    # ... existing code ...
+    
+    for player in subsession.get_players():
+        # Randomize conditions for each participant based on the round they are in
+        player.participant_condition = 'S' if player.round_number % 2 == 1 else 'U'
+```
+
+Then, in your `js_vars` method, you can check these conditions to apply the appropriate video effects:
+
+```python
+def js_vars(player):
+    # ... existing code ...
+    
+    if player.participant_condition == 'S':
+        video_fx = 'mozza alpha=1.2 ...'  # Smile effect for primary
+    else:
+        video_fx = 'mozza alpha=0.8 ...'  # No smile effect for secondary
+
+    return dict(
+        # ... existing settings ...
+        peerOptions=dict(
+            # ... existing options ...
+            videoFx=video_fx,
+            # ... other options ...
+        ),
+    )
+```
+
+### Conclusion
+
+By following these examples, you can expand your experiments to include multiple interactions with different partners while applying specific manipulations for each dyad. This allows for a richer exploration of behavioral interactions and the effects of different conditions on participant behavior.
+
+For more detailed guidance on creating complex experiments, refer to the oTree documentation and community resources. 
