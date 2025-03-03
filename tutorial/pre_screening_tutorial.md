@@ -139,5 +139,5 @@ Regards, The Experiment Team
    - Follow up if someone drops out or fails the technical requirements.
 
 
-**End of Tutorial**  
+## 6. **End of Tutorial**  
 You now have a structured overview of how to set up, run, and monitor a prescreening experiment using Mastok and Prolific. Good luck with your experiment!
