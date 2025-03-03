@@ -1,0 +1,129 @@
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/interact.css' }}" type="text/css">
+{{ endblock }}
+
+{% block global_scripts %}
+<script src="{{ ducksoupJsUrl }}"></script>
+<script src="{{ static 'global/scripts/audio_prescreen-SLFELS52.js' }}"></script>
+<script src="{{ static 'global/scripts/listeners-LSXNKGQD.js' }}"></script>
+<script src="{{ static 'global/scripts/ducksoup_now-4MHTN4TI.js' }}"></script>
+{% endblock %}
+
+{{ block content }}
+
+
+<style> 
+/* Connecting... dot animation */
+.dot {
+    opacity: 0;
+    animation: dot 1.5s infinite;
+    font-size: 25px;
+}
+
+.dot1 {
+    animation-delay: 0.5s;
+}
+
+.dot2 {
+    animation-delay: 1s;
+}
+
+.dot3 {
+    animation-delay: 1.5s;
+}
+
+@keyframes dot {
+    0% {opacity: 0;}
+    50% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/* Connecting... dot animation */
+
+/* Connected blink animation */
+@keyframes blink {
+    0% {opacity: 1;}
+    50% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+  .blink-text {
+    animation: blink 1s step-end 3;
+    align-self: flex-start;
+}
+
+
+.noise_test{
+    font-family: Arial, sans-serif;
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+    }
+
+.signal_test{
+    font-family: Arial, sans-serif;
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+    }
+
+.ducksoup-container{
+  display: grid;
+}
+</style>
+
+<div id="stopped" class="d-none">
+  <p id="stopped-message">Conversation ended</p>
+</div>
+<div id="failed" class="d-none">
+  <p>Errors</p>
+</div>
+<div class="ducksoup-container">
+  <div class="d-none" id="ducksoup-root"></div>
+  <div class="overlay connecting d-none">
+    <div style="color: red; background-color: transparent; top: 0;">Connecting
+      <span class="dot dot1">.</span>
+      <span class="dot dot2">.</span>
+      <span class="dot dot3">.</span>
+    </div>
+  </div>
+
+  <div class = "noise_test d-none">
+    <p style="font-size: 24px; font-weight: bold; color: #4CAF50; margin: 0;">
+      The communication test has started
+    </p>
+    <p style="font-size: 20px; color: #333; margin: 10px 0;">
+      <span style = "text-decoration: underline">Remain completely silent</span> until you are prompted to read a text below!
+    </p>
+
+    <div id = "count_down"></div>
+  </div>
+
+  <div class = "signal_test d-none">
+    <p style="font-size: 24px; font-weight: bold; color: #4CAF50; margin: 0;">
+      Read the text below:
+    </p>
+    <p style="font-size: 20px; color: #333; margin: 10px 0;">
+      The honeybee is an incredible insect, known for its role in pollination and producing honey.
+      A single bee can visit hundreds of flowers in one day, collecting nectar and spreading pollen, helping plants grow and thrive.
+    </p>
+  </div>
+
+
+</div>
+
+
+<form id="form" class="d-none">
+  <input type="hidden" id="inspect_visibility" name="inspect_visibility" />
+</form>
+
+{{ endblock }}
+
+
+{{ block scripts }}
+<script>
+
+
+
+</script>
+{{ endblock }}
+

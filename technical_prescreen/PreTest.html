@@ -1,0 +1,59 @@
+{{ block title }}
+   Task Instructions
+{{ endblock }}
+
+
+{{block global styles}}
+
+<link rel="stylesheet" href="{{ static 'global/styles/interact.css' }}" type="text/css">
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+
+<style>
+
+#instr_div{
+    position: inherit;
+    height: inherit;
+    width: inherit;
+}
+
+#button_div{
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+</style>
+{{ endblock }}
+
+
+{{ block content }}
+
+<div id = "instr_div">
+    <p>At the start of the test, you will be told to remain silent for 12 seconds. After this, a message saying <span style = "color: green;">'Read the text below:'</span> will appear. 
+        When prompted, read the text <strong>aloud</strong> in a normal pace and tone of voice. You should now be able to hear your own voice <strong>clearly</strong> in your headphones. It is important
+        that you speak continously once the reading phase starts, even if the voice feedback in your headphones makes this difficult. 
+    </p>
+
+    <p><strong>Note:</strong> At this point, it is crucial that you have your headphones plugged in and equipped! Doing the test without headphones will cause an echo and may cause you to fail the test.</p>
+
+    <p><strong>Important:</strong> This is a <strong>one-time</strong> test and <strong>cannot</strong> be retaken. Make sure you are completely ready before proceeding. Pressing the 'START TEST'-button will start the audio test immediately.</p>
+
+    <div id = "button_div">
+        <button style = "
+        background: blue; 
+        color: white; 
+        padding: 15px 28px; 
+        text-align: center; 
+        width: 18%;
+        height:10%;
+        font-size: 16px; 
+        margin: 4px 2px; 
+        cursor: pointer;
+        border-radius: 20px; 
+        border: 4px solid transparent;
+        ">START TEST</button>
+    </div>
+</div>
+
+    
+    
+{{ endblock }}

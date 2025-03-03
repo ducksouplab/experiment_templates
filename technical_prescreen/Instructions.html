@@ -1,0 +1,63 @@
+{{ block title }}
+Pre-screening Audio Test for Live Interaction Experiment
+{{ endblock }}
+
+
+{{block global styles}}
+
+<link rel="stylesheet" href="{{ static 'global/styles/interact.css' }}" type="text/css">
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+
+<style>
+
+    #instr_div{
+        position: inherit;
+        height: inherit;
+        width: inherit;
+    }
+</style>
+{{ endblock }}
+
+
+{{ block content }}
+
+<div id = "instr_div">
+  <p>The aim of this pre-screening is to test your communication setup to ensure high-quality audio for the main experiment. We'll assess both your microphone quality and headphone functionality.
+    You will need to complete the same audio test again at the beginning of the main experiment.
+    However, unlike in this pre-screening where you only have one attempt, during the main experiment you will have multiple opportunities to adjust your setup if needed. 
+  </p>
+  
+  <h3>Important Information</h3>
+  
+  <ol>
+    <li>After passing the audio test, you'll be asked to say if you will be available for the full experiment on <strong>Monday, 2025-03-03 at 4:00PM</strong>.</li>
+    <li>Once you confirm your availability, you'll be redirected to the Prolific homepage and receive a completion code.</li>
+    <li>We'll send a friendly reminder before your scheduled session.</strong></li>
+  </ol>
+  
+  <p>If you do not pass the audio test, you'll be directly redirected to the Prolific homepage and still receive a completion code.</p>
+  
+  <p>More detailed task instructions for the pre-screening will be provided after you've configured your audio setup. Press "Next" to proceed to the audio configuration page.</p>
+</div>
+
+
+    <button style = "
+    background: blue; 
+    border: none; 
+    color: white; 
+    padding: 15px 28px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block;
+    width: 10%;
+    height:10%;
+    font-size: 16px; 
+    margin: 4px 2px; 
+    cursor: pointer;
+    border-radius: 20px; 
+    border: 4px solid transparent;
+    ">Next</button>
+    </div>
+    
+    
+{{ endblock }}

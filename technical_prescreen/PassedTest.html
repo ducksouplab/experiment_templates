@@ -1,0 +1,171 @@
+{{ block title }}
+    Availble time slots for full experiment
+{{ endblock }}
+
+
+{{block global styles}}
+
+<link rel="stylesheet" href="{{ static 'global/styles/interact.css' }}" type="text/css">
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+
+<style>
+
+#instr_div{
+    position: inherit;
+    height: inherit;
+    width: inherit;
+}
+
+
+input:focus {
+    border-color: #007bff;
+}
+
+input:invalid {
+    border-color: red;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+}
+
+#prolific_div{
+    margin-top: 20px;
+}
+
+.timeslot_text {
+color: white; /* Improved contrast */
+background-color: green; /* Background makes it stand out */
+padding: 6px 12px; /* Balanced padding */
+margin: 4px 4px; 
+border: 2px solid black; /* Keep border but refine */
+border-radius: 5px; /* Softer edges */
+font-weight: bold; /* Make text stand out */
+display: inline-block; /* Prevents unnecessary stretching */
+cursor: pointer; /* Indicate interactivity */
+transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+/* Active (clicked) effect */
+.timeslot_text:active {
+    background-color: limegreen; /* Lighter green for click feedback */
+    transform: scale(0.98); /* Slight click-in effect */
+}
+
+.disabled {
+    background-color: grey !important;
+    color: lightgray !important;
+    border-color: darkgray !important;
+    cursor: not-allowed;
+}
+
+</style>
+{{ endblock }}
+
+{{ block script }}
+
+<script>
+var timeslots = '{{timeslots}}'
+timeslots = JSON.parse(timeslots)
+
+var timeslot_1 = timeslots['thursday_2:00_PM']
+//document.getElementById('timeslot_1_label').textContent = `- Timeslots open: ${timeslots['2:00']}`;
+if (timeslots['thursday_2:00_PM'] == 0) {
+    document.getElementById("timeslot_1").disabled = true;
+    document.getElementById('timeslot_1_label').textContent = `Timeslot is full`
+    document.getElementById('timeslot_1_label').classList.add("disabled");
+}
+
+var timeslot_2 = timeslots['thursday_4:00_PM']
+//document.getElementById('timeslot_2_label').textContent = `- Timeslots open: ${timeslots['3:30']}`;
+if (timeslots['thursday_4:00_PM'] == 0) {
+    document.getElementById("timeslot_2").disabled = true;
+    document.getElementById('timeslot_2_label').textContent = `Timeslot is full`
+    document.getElementById('timeslot_2_label').classList.add("disabled");
+}
+
+
+var timeslot_3 = timeslots['friday_10:00_AM']
+//document.getElementById('timeslot_3_label').textContent = `- Timeslots open: ${timeslots['5:00']}`;
+if (timeslots['friday_10:00_AM'] == 0) {
+    document.getElementById("timeslot_3").disabled = true;
+    document.getElementById('timeslot_3_label').textContent = `Timeslot is full`
+    document.getElementById('timeslot_3_label').classList.add("disabled");
+}
+
+
+var timeslot_4 = timeslots['friday_1:00_PM']
+//document.getElementById('timeslot_3_label').textContent = `- Timeslots open: ${timeslots['5:00']}`;
+if (timeslots['friday_1:00_PM'] == 0) {
+    document.getElementById("timeslot_4").disabled = true;
+    document.getElementById('timeslot_4_label').textContent = `Timeslot is full`
+    document.getElementById('timeslot_4_label').classList.add("disabled");
+}
+
+</script>
+
+{{ endblock }}
+
+{{ block content }}
+
+<p> You <strong>passed</strong> the pre-screening audio test and are eligible to participate in the full 60 minute experiment. 
+    The full experiment will be run on <strong>Monday, 2025-03-03 at 16:00PM</strong>. Please confirm if you are available at that time for the full experiment.
+</p>
+
+<div class="row" >
+    <div class="col app-range">
+        <div class="app-range-item">
+            <input id="timeslot_1" type="radio" name="available_times" value="monday_4:00_PM" required>
+            <label for="timeslot_1" class="app-range-label-up">I confirm I am available Monday, 2025-03-03 at 4:00 PM GMT</label>
+            <label for="timeslot_1" class="timeslot_text" id="timeslot_1_label"> Timeslot is open</label>
+        </div>
+
+        <div class="app-range-item" style = "padding-top: 20px;">
+            <input id="timeslot_2" type="radio" name="available_times" value="Not_available">
+            <label for="timeslot_2" class="app-range-label-up">I am not available at this time but I am happy to be contacted by the researcher for an experiment in the near future.</label>
+        </div>
+    </div>
+
+    <div id = "prolific_div">
+    <label for="prolific_id">Enter your Prolific ID: </label>
+    <input id="prolific_id" name="prolific_id" type="text" minlength="24" maxlength="24" pattern=".{24}" required>
+    <p class="error-message" id="error-msg">Prolific ID must be exactly 24 characters long.</p>
+    </div>
+</div>
+
+{{ formfield_errors 'available_times' }}
+
+<button style = "
+background: blue; 
+border: none; 
+color: white; 
+padding: 15px 28px; 
+text-align: center; 
+text-decoration: none; 
+display: inline-block;
+width: 10%;
+height:10%;
+font-size: 16px; 
+margin: 4px 2px; 
+cursor: pointer;
+border-radius: 20px; 
+border: 4px solid transparent;
+">Next</button>
+    
+<script>
+    document.getElementById("prolific_id").addEventListener("input", function () {
+        const errorMsg = document.getElementById("error-msg");
+        if (this.value.length !== 24) {
+            this.setCustomValidity("Prolific ID must be exactly 24 characters long.");
+            errorMsg.style.display = "block";
+        } else {
+            this.setCustomValidity("");
+            errorMsg.style.display = "none";
+        }
+    });
+</script>
+    
+{{ endblock }}

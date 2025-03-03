@@ -1,0 +1,71 @@
+{{ block title }}
+Thank you for your participation!
+{{ endblock }}
+
+{{ block content }}
+
+
+<!-- Passed test -->
+{{if passed_test}}
+
+        {{if unavailable}}
+        <!-- Not available at any of the timeslots -->
+
+            <p>Thank you very much for completing this pre-screening experiment.
+                Since you expressed interest in future experiments, we may contact you about participation in future rounds of data collection.
+                If you have any questions, please message us directly using Prolific's "contact researcher" feature in your <a href="https://app.prolific.com/submissions?_gl=1*1j8ob7x*_gcl_au*NDExOTA0MTUzLjE2OTc1NTEzNTA." target="_blank">submission page</a>. More info <a href="https://participant-help.prolific.com/hc/en-gb/articles/4417210889234-How-can-I-contact-a-researcher-" target="_blank">here</a>.</p>
+        
+            <h4>Prolific compensation</h4>
+        
+            Please click on the following link to be redirected to prolific and be compensated for your participation. If you don't click on the link we won't be able to pay for your participation.
+        
+            <a href="https://app.prolific.com/submissions/complete?cc=C1A9QE6C">I confirm I finished the experiment, please redirect me to prolific and pay me for my participation</a>
+
+
+        {{else}}
+        <!-- Available at some timeslot -->
+
+            <script>
+            var selected_day = '{{selected_day}}'
+            var selected_time = '{{selected_time}}'
+            var am_pm         = '{{am_pm}}'
+            </script>
+
+            <p>Thank you very much for completing this pre-screening experiment and for showing interest in our full 60 minute experiment. 
+            We have confirmed your booking for <span style = "color:red"><strong>Monday, 2025-03-03 at 4:00 PM</strong>.</span>
+                We will send you a message concerning the details of your sign-up for the full experiment soon. If you have any questions, please message us directly using Prolific's "contact researcher" feature in your <a href="https://app.prolific.com/submissions?_gl=1*1j8ob7x*_gcl_au*NDExOTA0MTUzLjE2OTc1NTEzNTA." target="_blank">submission page</a>. More info <a href="https://participant-help.prolific.com/hc/en-gb/articles/4417210889234-How-can-I-contact-a-researcher-" target="_blank">here</a>. </p>
+
+
+            <h3>Important Information</h3>
+
+            <p><strong>The main experiment is a live interaction experiment</strong> where multiple participants must join at the <strong>exact same time</strong>.
+            The success of the experiment depends on everyone being present at the scheduled time. It is crucial that you are logged in and ready 10 minutes before your scheduled time. Please enable an alarm on your phone to remember your timeslot <span style = "color:red"><strong>{{selected_day}} {{selected_time}} {{am_pm}}</strong>.</span> Moreover, it is crucial that you use exactly the same set-up for the full experiment as used during this pre-sceening session. Namely: use the same computer, internet browser, internet connection and audio settings.
+
+
+            <p>We will send you a direct message 10 minutes before the experiment to notify you that it is live. If you can't see our study in your dashboard please notify us and we will send a direct link to the experiment.</p>
+
+            <h4>Prolific compensation</h4>
+
+            Please click on the following link to be redirected to prolific and be compensated for your participation. If you don't click on the link we won't be able to pay for your participation.
+
+            <a href="https://app.prolific.com/submissions/complete?cc=CK0HVVHB">I confirm I finished the experiment, please redirect me to prolific and pay me for my participation</a>
+        {{endif}}
+
+<!-- Failed test -->
+{{else}}
+
+    <p>Thank you very much for completing this pre-screening experiment.
+        Unfortunately your audio-communication setup did <strong>not</strong> meet the requirements needed to participate in the full study.
+        If you have any questions, please message us directly using Prolific's "contact researcher" feature in your <a href="https://app.prolific.com/submissions?_gl=1*1j8ob7x*_gcl_au*NDExOTA0MTUzLjE2OTc1NTEzNTA." target="_blank">submission page</a>. More info <a href="https://participant-help.prolific.com/hc/en-gb/articles/4417210889234-How-can-I-contact-a-researcher-" target="_blank">here</a>.</p>
+
+    <h4>Prolific compensation</h4>
+
+    Please click on the following link to be redirected to prolific and be compensated for your participation. If you don't click on the link we won't be able to pay for your participation.
+
+    <a href="https://app.prolific.com/submissions/complete?cc=C1A9QE6C">I confirm I finished the experiment, please redirect me to prolific and pay me for my participation</a>
+
+
+{{endif}}
+
+
+{{ endblock }}

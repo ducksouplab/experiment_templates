@@ -101,7 +101,18 @@ SESSION_CONFIGS = [
 			num_demo_participants = 1,
 			participant_label_file = '_rooms/n8.txt',
 			num_participants_allowed=[1],
-			doc="The number of participants must be 1")
+			doc="The number of participants must be 1"),
+            
+		dict(
+			id='technical_prescreen',
+			name = 'technical_prescreen',
+			display_name='technical_prescreen',
+			app_sequence = ['technical_prescreen'],
+			num_demo_participants = 1,
+			participant_label_file = '_rooms/n8.txt',
+			num_participants_allowed=[1],
+			doc="The number of participants must be 1 for demo"
+		)
 ]
 			
 
