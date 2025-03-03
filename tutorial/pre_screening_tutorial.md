@@ -41,7 +41,6 @@ This tutorial provides step-by-step guidance for conducting a prescreening exper
 ### 3.1 Consten form
 
 Below is the text for the **Mastok session** to put in your session as consent form. Please change the dates as required.
----
 ```
 This is a pre-screening experiment for a social interaction experiment in which participants interact in an audio-conference setting with each other. The pre-screening aims to assess that your audio-communication setup is of sufficient quality and compatible with our software.
 
@@ -82,7 +81,7 @@ We are very sorry. To handle server load we can only run a certain number of par
 
 
 ## 4. Preparing a Prolific Session for the Prescreening
-
+```
 Below is the **Prolific message** text to put in your session. Please change the dates as required.
 
 Your Experiment Friday: 10:00 AM GMT
@@ -107,9 +106,9 @@ If the study is not visible on your dashboard at 9:50 AM, please message us imme
 We will send another notification when the study is live on your dashboard.
 
 Thank you for your valuable contribution to our research!
-Best regards, The Experiment Team
+Regards, The Experiment Team
 
----
+```
 
 ## 5. Running the Actual Experiment
 
