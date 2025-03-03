@@ -71,8 +71,9 @@ We are very sorry, there are no spots left to participate in the experiment at t
 ```
 
 ### 3.3 Complete instructions
-
+```
 We are very sorry, there are no spots left to participate in this experiment. Please return your Prolific submission by clicking on this link.
+```
 
 ### 3.4 Pending message
 ```
