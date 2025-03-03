@@ -42,12 +42,12 @@ This tutorial provides step-by-step guidance for conducting a prescreening exper
 
 Below is the text for the **Mastok session** to put in your session as consent form. Please change the dates as required.
 ---
-
+```
 This is a pre-screening experiment for a social interaction experiment in which participants interact in an audio-conference setting with each other. The pre-screening aims to assess that your audio-communication setup is of sufficient quality and compatible with our software.
 
 Furthermore, we would like to record the audio of your voice. These recordings  will remain completely confidential and will only be used for scientific purposes.
 
-TECHNICAL REQUIREMENTS
+# TECHNICAL REQUIREMENTS
 
 This experiment only works if you are using the LATEST version of the google CHROME Browser. If you don’t have the latest version of Chrome, please update your software now and come back to this page after updating and restarting it (the browser needs restarting to finish update). Please do not continue if you don’t have the latest version of Chrome. This is very important as it may break the communication with other participants.
 	-[ ]	Check this box to confirm that you are using the latest version of the Chrome Browser.
@@ -58,21 +58,26 @@ Moreover, we need to ensure that audio-conference communication will happen in t
 	-[ ] I agree to wear headphones (preferably in-ear) during the interactions.
 	-[ ] I am in a calm and silent environment.
 
-Consent
+# Consent
 	- [ ] By continuing, you declare that you have read and fully understood the paragraphs above, and that you agree to participate in this study. If you don’t consent and don’t want to participate in the study please click on this link to return your prolific submission and close this page.
 
 [accept]Consent[/accept]
 [alert]Accepting conditions above is required before starting[/alert]
+```
 
 ### 3.2 Paused instructions
+```
 We are very sorry, there are no spots left to participate in the experiment at the moment. However, the researcher might still have a place if another participant dropped out. Please send a message to the experimenter as soon as possible if you would still like to participate in the experiment.
+```
 
 ### 3.3 Complete instructions
 
 We are very sorry, there are no spots left to participate in this experiment. Please return your Prolific submission by clicking on this link.
 
 ### 3.4 Pending message
+```
 We are very sorry. To handle server load we can only run a certain number of participants in parallell. Please wait 1 or 2 minutes. If the waiting time exceeds 2 minutes please return your Prolific submission by clicking on this link. You will be compensated for your waiting time, please send us a direct message.
+```
 
 
 ## 4. Preparing a Prolific Session for the Prescreening
