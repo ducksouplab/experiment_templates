@@ -62,7 +62,7 @@ Now, open the ```experiment_template``` folder inside vscode using the ```code .
 Now, to test the template experiments, in the the vscode command line— which should be inside vscode the container at this point—, type:
 ```make dev```
 
-This should start a new server running otree, which should communicate with DuckSoup. You can select here a new experiment as you would do for any otree experiment. Modify the otree code in the experiment_template to create your own experiment. Refer to the otree documentation to do this.
+This should start a new server running otree, which will later be able to communicate with DuckSoup. You can select here a new experiment as you would do for any otree experiment. Modify the otree code in the experiment_template to create your own experiment. Refer to the otree documentation to do this.
 
 ## Ducksoup configuration
 First of all you will need to download and setup Ducksoup. To do that, start by following the following tutorial (Download and setup Ducksoup): https://github.com/ducksouplab/ducksoup/blob/main/tutorials/run_in_local.md
@@ -80,7 +80,7 @@ docker run --name ducksoup_1 -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSO
 
 ## Ensuring that DuckSoup and Otree communicate well.
 
-if you copy pasted the code below, otree and DuckSoup should be already communicating well. But this part explains how it's done. Specifically, to make DuckSoup and otree communicate, we need to ensure that Ducksoup knows which webadress otree is using, as well as ensure that otree knows which port DuckSoup is running on.
+if you copy pasted the code above, otree and DuckSoup should be already communicating well. But this part explains how it's done. Specifically, to make DuckSoup and otree communicate, we need to ensure that Ducksoup knows which webadress otree is using, as well as ensure that otree knows which port DuckSoup is running on.
 
 
 First, to ensure that Ducksoup knows where otree is going running we add the parameter to```DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8180```to the Ducksoup execution command.  This parameter configures ducksoup so that it accepts requests from the otree server, which will be running in adress ```http://localhost:8180```. Therefore, we put ```DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8180```, so that ducksoup accepts requests from this website.
@@ -96,15 +96,15 @@ Start by starting Ducksoup—if it's not started already.
 
 On mac/linux do:
 ```
-docker run --name ducksoup_1 -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSOUP_TEST_PASSWORD=admin -e DUCKSOUP_NVCODEC=false -e DUCKSOUP_NVCUDA=false -e GST_DEBUG=3 -e DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8101 -e DUCKSOUP_JITTER_BUFFER=250 -e DUCKSOUP_GENERATE_PLOTS=true -e DUCKSOUP_GENERATE_TWCC=true -v $(pwd)/plugins:/app/plugins:ro -v $(pwd)/data:/app/data -v $(pwd)/log:/app/log --rm ducksoup:latest
+docker run --name ducksoup_1 -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSOUP_TEST_PASSWORD=admin -e DUCKSOUP_NVCODEC=false -e DUCKSOUP_NVCUDA=false -e GST_DEBUG=3 -e DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8180 -e DUCKSOUP_JITTER_BUFFER=250 -e DUCKSOUP_GENERATE_PLOTS=true -e DUCKSOUP_GENERATE_TWCC=true -v $(pwd)/plugins:/app/plugins:ro -v $(pwd)/data:/app/data -v $(pwd)/log:/app/log --rm ducksoup:latest
 ```
 
 On windows (in power shell):
 ```
-docker run --name ducksoup_1 -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSOUP_TEST_PASSWORD=admin -e DUCKSOUP_NVCODEC=false -e DUCKSOUP_NVCUDA=false -e GST_DEBUG=3 -e DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8101 -e DUCKSOUP_JITTER_BUFFER=250 -e DUCKSOUP_GENERATE_PLOTS=true -e DUCKSOUP_GENERATE_TWCC=true -v ${PWD}/plugins:/app/plugins:ro -v ${PWD}/data:/app/data -v ${PWD}/log:/app/log --rm ducksoup:latest
+docker run --name ducksoup_1 -p 8101:8100 -e DUCKSOUP_TEST_LOGIN=admin -e DUCKSOUP_TEST_PASSWORD=admin -e DUCKSOUP_NVCODEC=false -e DUCKSOUP_NVCUDA=false -e GST_DEBUG=3 -e DUCKSOUP_ALLOWED_WS_ORIGINS=http://localhost:8180 -e DUCKSOUP_JITTER_BUFFER=250 -e DUCKSOUP_GENERATE_PLOTS=true -e DUCKSOUP_GENERATE_TWCC=true -v ${PWD}/plugins:/app/plugins:ro -v ${PWD}/data:/app/data -v ${PWD}/log:/app/log --rm ducksoup:latest
 ```
 
-Note that you can do this previous command from a new terminal, in whichever path, as long as you don't need our custom Mozza plugin, if you do, please refer to [this tutorial](https://github.com/ducksouplab/ducksoup/blob/main/tutorials/run_in_local.md#incorporate-mozza-to-perform-real-time-smile-manipulation)) to make sure you start ducksoup in the correct folder so that it can recognise mozza.
+Note that you can do this previous command from a new terminal, in whichever path, as long as you don't need our custom Mozza plugin, if you do, please refer to [this tutorial](https://github.com/ducksouplab/ducksoup/blob/main/tutorials/run_in_local.md#incorporate-mozza-to-perform-real-time-smile-manipulation) to make sure you start ducksoup in the correct folder so that it can recognise mozza.
 
 
 ### Starting Otree
