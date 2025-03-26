@@ -1,0 +1,78 @@
+{{ block title }}
+    <h1>Experiment Instructions</h1>
+{{ endblock }}
+
+
+{{block global styles}}
+
+<link rel="stylesheet" href="{{ static 'global/styles/interact.css' }}" type="text/css">
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+
+<style>
+
+    #instr_div{
+        position: inherit;
+        height: inherit;
+        width: inherit;
+    }
+
+    .img_div {
+        display: flex; 
+        justify-content:space-around;
+        position: relative;
+        padding-bottom: 20px;
+        width: 100%; /* Set width of div */
+        height: 100%; /* Allow height to adjust automatically */
+         /* Ensure image doesn't exceed div width */
+    }
+    
+    .img_div img {
+        width: 50%; /* Set width of image to fill the div */
+        height: auto; /* Allow height to adjust automatically */
+    }
+
+</style>
+{{ endblock }}
+
+
+{{ block content }}
+
+<div id = "instr_div">
+
+    <p>Thank you for your interest in this study! In this experiment, you will interact with a video of yourself.</p>
+
+    <h2>What will happen?</h2>
+    <ul>
+        <li>During the main task, you will see a {{trial_duration}} second long video stream of your own face, mirrored back to you in real time.</li>
+        <li>In each trial, your face may appear naturally or with a subtle to moderate modification of some facial features.</li>
+        <li>After each trial, you will answer whether you <i>felt</i> it was truly you on the video or not.</li>
+    </ul>
+
+    <h2>What should I do?</h2>
+    <p>Watch each video stream carefully and respond as accurately as possible. There are no right or wrong answers — we are interested in your perception!</p>
+    <p>You will be able to give your answer once the video stream is finished.</p>
+
+    <p>Press 'Next' when you are ready to start the first round of the experiment. </p>
+
+</div>
+
+    <button style = "
+    background: blue; 
+    border: none; 
+    color: white; 
+    padding: 15px 28px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block;
+    width: 10%;
+    height: 10%;
+    font-size: 16px; 
+    margin: 4px 2px; 
+    cursor: pointer;
+    border-radius: 20px; 
+    border: 4px solid transparent;
+    ">Next</button>
+    </div>
+    
+    
+{{ endblock }}
