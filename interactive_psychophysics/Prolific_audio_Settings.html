@@ -1,0 +1,64 @@
+{{ extends 'otree/Page.html' }}
+{{ block title }}
+<p style = "font-size: 24px; position: relative; top: 55px;">Configure Audio Settings</p>
+
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/settings.css' }}" type="text/css">
+
+
+
+
+
+{{ endblock }}
+
+{% block global_scripts %}
+
+<script src="{{ static 'global/scripts/audio_settings-6KTGXODJ.js' }}"></script>
+
+{% endblock %}
+
+{{ block content }}
+<div class="row">
+  <div class="col-5" style = "position: relative; top: 60px;">
+    <div class="mb-3">
+      <label for="audio-source" >
+        <strong> Choose microphone: </strong> 
+        <select id="audio-source" class="form-select form-select-sm" style = "position: relative; top:20px; width: 90%;;"></select>
+        <div class="progress" style = "height: 40px; position: relative; top: 30px; width: 90%;">
+          <div id="meter" class="progress-bar bg-info" role="progressbar" style="width: 10%;"></div> <strong><p style = "font-size: 14px;">← This should move when you speak</p></strong>
+        </div>
+      </label>
+    </div>
+  </div>
+  <div class="col-7">
+    <h3>⚠️ Important</h3>
+    <p>
+      <ul>
+        Please configure your microphone. <strong style = "color:red;">Use the same settings you used during the test session previously.</strong> 
+        <li>Microphone: Make sure the audio input is configured properly . You should see <strong>the blue meter on the left of the screen move when you speak</strong>. If it does not move, try changing the microphone in the left of the screen. Alternatively, disconnect and reconnect your microphone and then reload the page. </li>
+      </ul>
+    </p>
+    
+    <p class="mt-5">In case of problems during the experiment:</p>
+    <ul>
+      <!--<li>Make sure you are using the latest version of the Chrome browser and that you are connected to the internet</li>-->
+      <li>Wait a few seconds and reload the page</li>
+      <!--<li>If the problem persists please send an SMS to +447724363311 or a Whatsapp message to +33684921627 </li>-->
+      <li>If the problem persists please chat with the researcher using Prolific's "contact researcher" feature in your <a href="https://app.prolific.com/submissions?_gl=1*1j8ob7x*_gcl_au*NDExOTA0MTUzLjE2OTc1NTEzNTA." target="_blank">submission page</a>. More info <a href="https://participant-help.prolific.com/hc/en-gb/articles/4417210889234-How-can-I-contact-a-researcher-" target="_blank"> here</a>.</li>
+
+    </ul>
+  </div>
+</div>
+
+<div class="mt-4" style = "position: relative; left: 90%;">
+  <button class="otree-btn-next btn btn-primary" style = "font-size: 24px;">Next</button>
+</div>
+
+<div class="d-none">
+  <form>
+    <input type="hidden" id="audio_source_id" name="audio_source_id" />
+  </form>
+</div>
+{{ endblock }}

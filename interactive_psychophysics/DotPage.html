@@ -1,0 +1,173 @@
+{{ block scripts }}
+<script src="{{ static 'jspsych/jspsych.js' }}"></script>
+<script src="{{ static 'jspsych/plugin-html-keyboard-response.js' }}"></script>
+<script src="{{ static 'jspsych/plugin-canvas-keyboard-response.js' }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link href="{{ static 'jspsych/jspsych.css' }}" rel="stylesheet" type="text/css" />
+{{ endblock }}
+
+{{ block }}
+
+<style>
+
+    #display_stage_background {
+        width: 100vw;
+        background-color: white;
+        z-index: -1;
+    }
+
+    #display_stage {
+        position: fixed;
+        left: 1vw;
+        top: 1vh;
+        height: 98vh;
+        width: 98vw;
+        background-color: white;
+        box-shadow: 1px 1px 1px #999;
+        border-radius: 15px;
+        z-index: 0;
+        overflow-y: scroll;
+        overflow-x: scroll;
+    }
+
+/*TIMER*/
+.countdown-container {
+    position: absolute;
+    height: 5%; 
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+#count_down_number {
+    font-size: 60px;
+    color: red;
+    display: inline-block;
+    margin-left: 5px; /* Adjust this value to your preference */
+}
+</style>
+
+
+<div id='display_stage_background'></div>
+<div id='display_stage'></div>
+
+
+<script>
+/* initialize jsPsych */
+var jsPsych = initJsPsych({
+    display_element: 'display_stage',
+    on_finish: function(data) {
+    $document.getElementById('form').submit();
+    }
+});
+    
+/* create timeline */
+var timeline = [];
+
+var seconds  = 3;
+let IntervalID   = null;
+function updateCountdown() {
+    const countdownEl = document.getElementById('count_down_number');
+    countdownEl.innerHTML = `${seconds}`;
+    seconds--; 
+}
+
+var countdown = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: function(){
+        return '<div class = "countdown-container">'+
+                '<p id = "count_down_number" >3</p>' + '</div>'        
+            },
+    choices: "NO_KEYS",
+    trial_duration: 4000,
+    on_load: function() {
+        setTimeout(updateCountdown, 200);
+        IntervalID = setInterval(updateCountdown, 1000);
+        }
+}
+    timeline.push(countdown);
+    
+var round_stimuli = "{{round_stimuli}}"
+round_stimuli = round_stimuli.split(':').map(Number);
+var condition     = "{{condition}}"
+var grp_id        = "{{grp_id}}"
+var correct_response = null;
+console.log(condition, grp_id);
+
+var trial = {
+    type: jsPsychCanvasKeyboardResponse,
+    canvas_size: [300, 300],
+    on_load: function(){clearInterval(IntervalID);},
+    stimulus: function(canvas, display_element) {
+    var ctx = canvas.getContext('2d');
+    canvas.width = 800;
+    canvas.height = 600;
+
+    // Function to draw a circle with points
+    function drawCircleWithPoints(x, y, pointsCount) {
+    const points = [];
+
+    ctx.beginPath();
+    ctx.arc(x, y, 100, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    // Generate points within the circle
+    for (let i = 0; i < pointsCount; i++) {
+        let angle = Math.random() * 2 * Math.PI;
+        let radius = Math.random() * 95;
+        let px = x + radius * Math.cos(angle);
+        let py = y + radius * Math.sin(angle);
+        let transparency = Math.random() * (.5) + 0.5; //.5 is the range, .5 is minimum value, 1 is max. [.5, 1]
+        points.push([px,py,transparency]);
+        ctx.fillStyle = `rgba(0, 0, 0, ${transparency})`;
+        ctx.beginPath();
+        ctx.arc(px, py, 3, 0, 2 * Math.PI);
+        ctx.fill();
+        }
+    return points
+    }
+    if (condition == "Non-conflict"){
+        // Draw two circles with random points
+        left_coordinates = drawCircleWithPoints(200, 300, round_stimuli[0]); // x, y, number of points on the left
+        right_coordinates = drawCircleWithPoints(600, 300, round_stimuli[1]); // x, y, number of points on the right
+        //console.log("left dots: ", round_stimuli[0], left_coordinates)
+        //console.log("right dots: ", round_stimuli[1], right_coordinates)
+
+        if (round_stimuli[0] > round_stimuli[1]){correct_response = "Left"}else{correct_response = "Right"}
+        liveSend({
+            "id": grp_id, "stimuli_order": `${round_stimuli[0]}:${round_stimuli[1]}`, "correct_response": correct_response, "coordinates": JSON.stringify({left: left_coordinates, right: right_coordinates})
+            })
+        }
+
+    else{   
+            if (grp_id == 1){
+                left_coordinates  = drawCircleWithPoints(200, 300, round_stimuli[0]); // x, y, number of points on the left
+                right_coordinates = drawCircleWithPoints(600, 300, round_stimuli[1]); // x, y, number of points on the right
+                //console.log("left dots: ", round_stimuli[0], left_coordinates)
+                //console.log("right dots: ", round_stimuli[1], right_coordinates)
+                if (round_stimuli[0] > round_stimuli[1]){correct_response = "Left"}else{correct_response = "Right"}
+                liveSend({"id": grp_id, "stimuli_order": `${round_stimuli[0]}:${round_stimuli[1]}`, "correct_response": correct_response, "coordinates": JSON.stringify({left: left_coordinates, right: right_coordinates})
+                })  
+            }
+            else{
+                left_coordinates = drawCircleWithPoints(200, 300, round_stimuli[1]); // x, y, number of points on the left
+                right_coordinates = drawCircleWithPoints(600, 300, round_stimuli[0]); // x, y, number of points on the right
+                //console.log("left dots: ", round_stimuli[1], left_coordinates)
+                //console.log("right dots: ", round_stimuli[0], right_coordinates)
+                if (round_stimuli[1] > round_stimuli[0]){correct_response = "Left"}else{correct_response = "Right"}
+                liveSend({"id": grp_id, "stimuli_order": `${round_stimuli[1]}:${round_stimuli[0]}`, "correct_response": correct_response, "coordinates": JSON.stringify({left: left_coordinates, right: right_coordinates})
+                })
+            }
+        }
+    },
+    choices: "NO_KEYS",
+    trial_duration: 2000,
+    data: {dot: 'circle'}
+}
+timeline.push(trial);
+    
+    /* start the experiment */
+    jsPsych.run(timeline);
+    
+    </script>
+    {{ endblock }}

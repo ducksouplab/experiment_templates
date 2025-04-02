@@ -1,0 +1,164 @@
+{{ block title }}
+Final questionnaire
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
+{{ endblock }}
+
+{{ block content }}
+<p>
+    You just had a certain number of audioconference interactions, somewhat similar to the ones you can have with services like Skype, Messenger, or Zoom, which you may be familiar with. This is, of course, less natural than having a real in-person interaction. In this final questionnaire, we would like you to evaluate to what extent you think this setup influenced the conversations.
+</p>
+
+<form>
+  <div class="app-survey">
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            Sound quality
+          </p>
+          <p class="fw-lighter">
+            Evaluate the quality of the sound during the conversations you had, comparing it to what you are used to with other services like Skype or Zoom. Poor sound quality could be noisy, interrupted, distorted, or hard to understand.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col app-range">
+          <div class="app-range-item">
+            <label for="final_quality_1" class="app-range-label-up">1</label>
+            <input id="final_quality_1" type="radio" name="final_quality" value="1" required>
+            <div class="app-range-label-down">much worse than other services            </div>
+          </div>
+          <div class="app-range-item">
+            <label for="final_quality_2" class="app-range-label-up">2</label>
+            <input id="final_quality_2" type="radio" name="final_quality" value="2">
+          </div>
+          <div class="app-range-item">
+            <label for="final_quality_3" class="app-range-label-up">3</label>
+            <input id="final_quality_3" type="radio" name="final_quality" value="3">
+          </div>
+          <div class="app-range-item">
+            <label for="final_quality_4" class="app-range-label-up">4</label>
+            <input id="final_quality_4" type="radio" name="final_quality" value="4">
+            <div class="app-range-label-down">as good as other services</div>
+          </div>
+          <div class="app-range-item">
+            <label for="final_quality_5" class="app-range-label-up">5</label>
+            <input id="final_quality_5" type="radio" name="final_quality" value="5">
+          </div>
+          <div class="app-range-item">
+            <label for="final_quality_6" class="app-range-label-up">6</label>
+            <input id="final_quality_6" type="radio" name="final_quality" value="6">
+          </div>
+          <div class="app-range-item">
+            <label for="final_quality_7" class="app-range-label-up">7</label>
+            <input id="final_quality_7" type="radio" name="final_quality" value="7">
+            <div class="app-range-label-down">Much better than other services</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            What kind of flaws did you hear?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="final_quality_comment" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            Fidelity of the conversation
+          </p>
+          <p class="fw-lighter">
+            Some digitally mediated conversations give us the impression that the other person hasn't really been able to create a "fair" impression of us, perhaps because the sound quality didn't present us well, or because he or she couldn't really hear what we were saying. To what extent do you think the audio setup influenced the impression your interlocutors had of you, and the impression you had of them?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col app-range">
+          <div class="app-range-item">
+            <label for="final_conversation_fidelity_1" class="app-range-label-up">1</label>
+            <input id="final_conversation_fidelity_1" type="radio" name="final_conversation_fidelity" value="1" required>
+            <div class="app-range-label-down">much less faithful to reality than other services (e.g. Zoom)
+            </div>
+          </div>
+          <div class="app-range-item">
+            <label for="final_conversation_fidelity_2" class="app-range-label-up">2</label>
+            <input id="final_conversation_fidelity_2" type="radio" name="final_conversation_fidelity" value="2">
+          </div>
+          <div class="app-range-item">
+            <label for="final_conversation_fidelity_3" class="app-range-label-up">3</label>
+            <input id="final_conversation_fidelity_3" type="radio" name="final_conversation_fidelity" value="3">
+          </div>
+          <div class="app-range-item">
+            <label for="final_conversation_fidelity_4" class="app-range-label-up">4</label>
+            <input id="final_conversation_fidelity_4" type="radio" name="final_conversation_fidelity" value="4">
+            <div class="app-range-label-down">like other services</div>
+          </div>
+          <div class="app-range-item">
+            <label for="final_conversation_fidelity_5" class="app-range-label-up">5</label>
+            <input id="final_conversation_fidelity_5" type="radio" name="final_conversation_fidelity" value="5">
+          </div>
+          <div class="app-range-item">
+            <label for="final_conversation_fidelity_6" class="app-range-label-up">6</label>
+            <input id="final_conversation_fidelity_6" type="radio" name="final_conversation_fidelity" value="6">
+          </div>
+          <div class="app-range-item">
+            <label for="final_conversation_fidelity_7" class="app-range-label-up">7</label>
+            <input id="final_conversation_fidelity_7" type="radio" name="final_conversation_fidelity" value="7">
+            <div class="app-range-label-down">much more faithful to reality than Skype
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-5" style = "position: relative; top: 20px;">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            Which aspects do you think were most impacted by the audio-communication setup?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="final_conversation_fidelity_comment" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-5" style = "position: relative; top: 50px;">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            What do you think was the goal of this experiment?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="final_xp_goal" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>
+
+    {{ formfield 'stim_manip_detec'}}
+
+    <button class="otree-btn-next btn btn-primary" style = "position: relative; top: 20px;">Next</button>
+  </div>
+</form>
+{{ endblock }}

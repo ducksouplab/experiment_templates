@@ -1,0 +1,32 @@
+{{ extends 'otree/WaitPage.html' }}
+
+{{ block title }}
+
+{{if player.round_nb == 1}}
+
+The first round of the experiment is starting soon - be ready!
+
+{{else}}
+
+New round starting shortly - pay attention
+{{endif}}
+
+{{ endblock }}
+
+
+{{ block content }}
+{{if player.round_nb == 1}}
+    <p>
+        We are currently waiting for other players to join in. Since this is the first round of the experiment it may take some time. 
+        Feel free to contact the researcher using Prolific's "contact researcher" feature in your <a href="https://app.prolific.com/submissions?_gl=1*1j8ob7x*_gcl_au*NDExOTA0MTUzLjE2OTc1NTEzNTA." target="_blank">
+        submission page</a>  if you have any further questions.
+    </p>
+
+{{else}}
+<p>We are currently waiting for other players to catch up. Pay attention as the round may start at any moment!</p>
+<br></br>
+<p style = "font-size: 12px;">If you have been waiting for an abnormally long time (more than 3 minutes), feel free to contact the researcher and we will inform you of the situation.
+    
+</p>
+{{endif}}
+{{ endblock }}

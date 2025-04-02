@@ -1,0 +1,138 @@
+
+
+{{ block title }}
+  Individual confidence
+{{ endblock }}
+
+{{ block content }}
+<link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
+<style>
+
+.otree-timer{
+    position: relative;
+    display: none;
+  }
+
+  #timer{
+    display: block;
+    top: 20px;
+  }
+
+#message{
+  display: block; 
+  color: red;
+}
+
+
+.slidecontainer {
+  position:relative;
+  width: 70%; /* Width of the outside container */
+  justify-self: center;
+}
+
+.slider {
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;  
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; 
+  background: black;
+  cursor: pointer;
+  }
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: black;
+  cursor: pointer;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+.slider_div{
+  display: grid;
+}
+
+</style>
+
+
+<div class = slider_div>
+  <p style = "font-size: 18px;">How confident are you in your decision? Your decision was: <strong>{{player.individual_decision}}</strong></p>
+
+  <div class="slidecontainer" >
+    <input type="range" min="0" value = "" max="100" class="slider" id="individual_confidence_1" name = 'individual_confidence_1'>
+    <span class="slider-label">0%</span>
+    <span id="sliderValue" style = "position: relative; left: 42%; display: none;"></span>
+    <span class="slider-label" style = 'position: absolute; left: 98%'>100%</span>
+  </div>
+
+
+  <div>
+    <button style ="
+    background-color: blue; 
+    border: none; 
+    color: white; 
+    padding: 10px 28px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block; 
+    font-size: 16px; 
+    margin: 4px 2px; 
+    cursor: pointer;
+    border-radius: 20px; 
+    border: 4px solid transparent;
+    position: relative;
+    left: 20px;
+    
+    
+    " id = "next_button" disabled>Next</button>
+
+  <p id="message">State your confidence before clicking next!</p>
+  </div>
+</div>
+
+<!-- To track activity on page -->
+<input id = activity_indicator type="text" name="slider_activity_1" value="no_interaction" style = "display: none;">
+
+<script>
+var slider = document.getElementById("individual_confidence_1");
+var output = document.getElementById("sliderValue");
+var button = document.getElementById('next_button');
+var message = document.getElementById('message');
+var activity_indicator = document.getElementById('activity_indicator');
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+    // Activate button
+  button.disabled = false;
+  message.style.display = "none";
+  activity_indicator.value = "interacted"
+
+}
+</script>
+
+
+<div class="otree-timer alert alert-warning" id = "timer">
+  <p>Time left to complete this page:
+      <span style="font-weight: bold">
+          <span class="otree-timer__time-left"></span>
+      </span>
+  </p>
+</div>
+
+{{ endblock }}

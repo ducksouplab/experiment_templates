@@ -1,0 +1,35 @@
+{{ block title }}
+<p style = "font-size: 18px;">Round {{round}} out of {{total_round}} is starting soon...</p>
+
+{{ endblock }}
+
+{{ block content }}
+
+<style>
+  .otree-timer{
+    position: relative;
+    display: none;
+  }
+
+  #timer{
+    display: block;
+    top: 20px;
+  }
+</style>
+
+<p>The next round of judgements will start in 5 seconds. Please stay focused!</p>
+
+<br></br>
+
+<p style = "text-decoration: underline red;">Remember to always stay on the experiment page and be active in all interactions.</p>
+
+
+<div class="otree-timer alert alert-warning" id = "timer">
+    <p>Time left to complete this page:
+        <span style="font-weight: bold">
+            <span class="otree-timer__time-left"></span>
+        </span>
+    </p>
+  </div>
+
+{{ endblock }}

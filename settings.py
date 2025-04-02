@@ -129,6 +129,16 @@ SESSION_CONFIGS = [
 			participant_label_file = '_rooms/n8.txt',
 			num_participants_allowed=[1],
 			doc="The number of participants must be 1 for demo"
+		), 
+        
+        	dict(
+			id = 'interactive_psychophysics',
+			name = 'interactive_psychophysics',
+			app_sequence = ['interactive_psychophysics'],
+			num_demo_participants = 6,
+			participant_label_file = '_rooms/n8.txt',
+			num_participants_allowed=[4,6],
+			doc="The number of participants must be 4 or 6"
 		)
 ]
 			

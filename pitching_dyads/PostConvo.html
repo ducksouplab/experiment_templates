@@ -1,4 +1,3 @@
-{% extends "base.html" %}  <!-- Change "base.html" to your actual base template name -->
 
 {% block content %}
 <!DOCTYPE html>
@@ -51,82 +50,34 @@
         button:hover {
             background-color: #218838;
         }
-    </style>
+
+        .horizontal-radio .form-check {
+    display: inline-block;
+    margin-right: 10px;
+    text-align: center;
+    vertical-align: top;
+  }
+  
+  .horizontal-radio .form-check-input {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+  
+  .horizontal-radio .form-check-label {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9em;
+  }
+</style>
+
 </head>
 <body>
-    <h1>Post-Convo Survey</h1>
-    <form id="post-convo-form">
-        <label for="post_convo_weight">Weight (kg):</label>
-        <input type="range" id="post_convo_weight" name="post_convo_weight" min="50" max="120" step="1" oninput="updateWeightValue(this.value)">
-        <input type="number" id="weight_value" value="85" readonly>
 
-        <label for="post_convo_height">Height (cm):</label>
-        <input type="range" id="post_convo_height" name="post_convo_height" min="150" max="210" step="1" oninput="updateHeightValue(this.value)">
-        <input type="number" id="height_value" value="180" readonly>
-
-        <label for="trustworthiness">Trustworthiness:</label>
-        <input type="number" id="trustworthiness" name="trustworthiness" min="1" max="6" required>
-
-        <h3>Others' Dominance Questions:</h3>
-        <label for="others_dominance_q1">Question 1:</label>
-        <input type="number" id="others_dominance_q1" name="others_dominance_q1" min="1" max="6" required>
-
-        <label for="others_dominance_q2">Question 2:</label>
-        <input type="number" id="others_dominance_q2" name="others_dominance_q2" min="1" max="6" required>
-
-        <label for="others_dominance_q3">Question 3:</label>
-        <input type="number" id="others_dominance_q3" name="others_dominance_q3" min="1" max="6" required>
-
-        <label for="others_dominance_q4">Question 4:</label>
-        <input type="number" id="others_dominance_q4" name="others_dominance_q4" min="1" max="6" required>
-
-        <label for="others_dominance_q5">Question 5:</label>
-        <input type="number" id="others_dominance_q5" name="others_dominance_q5" min="1" max="6" required>
-
-        <label for="others_dominance_q6">Question 6:</label>
-        <input type="number" id="others_dominance_q6" name="others_dominance_q6" min="1" max="6" required>
-
-        <label for="others_dominance_q7">Question 7:</label>
-        <input type="number" id="others_dominance_q7" name="others_dominance_q7" min="1" max="6" required>
-
-        <label for="others_dominance_q8">Question 8:</label>
-        <input type="number" id="others_dominance_q8" name="others_dominance_q8" min="1" max="6" required>
-
-        <label for="others_dominance_q9">Question 9:</label>
-        <input type="number" id="others_dominance_q9" name="others_dominance_q9" min="1" max="6" required>
-
-        <label for="others_dominance_q10">Question 10:</label>
-        <input type="number" id="others_dominance_q10" name="others_dominance_q10" min="1" max="6" required>
-
-        <label for="others_dominance_q11">Question 11:</label>
-        <input type="number" id="others_dominance_q11" name="others_dominance_q11" min="1" max="6" required>
-
-        <label for="others_dominance_q12">Question 12:</label>
-        <input type="number" id="others_dominance_q12" name="others_dominance_q12" min="1" max="6" required>
-
-        <label for="others_dominance_q13">Question 13:</label>
-        <input type="number" id="others_dominance_q13" name="others_dominance_q13" min="1" max="6" required>
-
-        <label for="others_dominance_q14">Question 14:</label>
-        <input type="number" id="others_dominance_q14" name="others_dominance_q14" min="1" max="6" required>
-
-        <label for="others_dominance_q15">Question 15:</label>
-        <input type="number" id="others_dominance_q15" name="others_dominance_q15" min="1" max="6" required>
-
-        <label for="others_dominance_q16">Question 16:</label>
-        <input type="number" id="others_dominance_q16" name="others_dominance_q16" min="1" max="6" required>
-
-        <button type="submit">Submit</button>
-    </form>
-
-    <script>
-        function updateWeightValue(val) {
-            document.getElementById('weight_value').value = val;
-        }
-
-        function updateHeightValue(val) {
-            document.getElementById('height_value').value = val;
-        }
-    </script>
+    
+<div class="horizontal-radio">
+    {{ formfields }}
+  </div>
+    
 </body>
 {% endblock %}

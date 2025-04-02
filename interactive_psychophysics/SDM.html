@@ -1,0 +1,400 @@
+{{ block title }}
+Questions about you
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+<link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
+{{ endblock }}
+
+{{ block content }}
+<form>
+  <div class="app-survey">
+
+
+<!-- New Question-->
+<div class="mb-5">
+  <div class="row">
+    <div class="col">
+      <p style="margin-bottom: 0;">
+        <!-- I have no problems talking in front of a group -->
+        <strong>I have no problems talking in front of a group</strong>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col app-range">
+      <div class="app-range-item">
+        <label for="xliked_1" class="app-range-label-up">1</label>
+        <input id="xliked_1" type="radio" name="social_dominance_1" value="1" required>
+        <!-- <div class="app-range-label-down">Not at all</div> -->
+        <div class="app-range-label-down">Completely disagree</div>
+      </div>
+      <div class="app-range-item">
+        <label for="xliked_2" class="app-range-label-up">2</label>
+        <input id="xliked_2" type="radio" name="social_dominance_1" value="2">
+      </div>
+      <div class="app-range-item">
+        <label for="xliked_3" class="app-range-label-up">3</label>
+        <input id="xliked_3" type="radio" name="social_dominance_1" value="3">
+      </div>
+      <div class="app-range-item">
+        <label for="xliked_4" class="app-range-label-up">4</label>
+        <input id="xliked_4" type="radio" name="social_dominance_1" value="4">
+        <div class="app-range-label-down">Neutral</div>
+      </div>
+      <div class="app-range-item">
+        <label for="xliked_5" class="app-range-label-up">5</label>
+        <input id="xliked_5" type="radio" name="social_dominance_1" value="5">
+      </div>
+      <div class="app-range-item">
+        <label for="xliked_6" class="app-range-label-up">6</label>
+        <input id="xliked_6" type="radio" name="social_dominance_1" value="6">
+      </div>
+      <div class="app-range-item">
+        <label for="xliked_7" class="app-range-label-up">7</label>
+        <input id="xliked_7" type="radio" name="social_dominance_1" value="7">
+        <!-- <div class="app-range-label-down">A lot</div> -->
+        <div class="app-range-label-down">Completely agree</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- New Question-->
+<div class="mb-5">
+  <div class="row">
+    <div class="col">
+      <p style="margin-bottom: 0;">
+        <!-- At school I found it easy to talk in front of the class -->
+        <strong>At school I found it easy to talk in front of the class</strong>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col app-range">
+      <div class="app-range-item">
+        <label for="liked_1" class="app-range-label-up">1</label>
+        <input id="liked_1" type="radio" name="social_dominance_2" value="1" required>
+        <!-- <div class="app-range-label-down">Not at all</div> -->
+        <div class="app-range-label-down">Completely disagree</div>
+      </div>
+      <div class="app-range-item">
+        <label for="liked_2" class="app-range-label-up">2</label>
+        <input id="liked_2" type="radio" name="social_dominance_2" value="2">
+      </div>
+      <div class="app-range-item">
+        <label for="liked_3" class="app-range-label-up">3</label>
+        <input id="liked_3" type="radio" name="social_dominance_2" value="3">
+      </div>
+      <div class="app-range-item">
+        <label for="liked_4" class="app-range-label-up">4</label>
+        <input id="liked_4" type="radio" name="social_dominance_2" value="4">
+        <div class="app-range-label-down">Neutral</div>
+      </div>
+      <div class="app-range-item">
+        <label for="liked_5" class="app-range-label-up">5</label>
+        <input id="liked_5" type="radio" name="social_dominance_2" value="5">
+      </div>
+      <div class="app-range-item">
+        <label for="liked_6" class="app-range-label-up">6</label>
+        <input id="liked_6" type="radio" name="social_dominance_2" value="6">
+      </div>
+      <div class="app-range-item">
+        <label for="liked_7" class="app-range-label-up">7</label>
+        <input id="liked_7" type="radio" name="social_dominance_2" value="7">
+        <!-- <div class="app-range-label-down">A lot</div> -->
+        <div class="app-range-label-down">Completely agree</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mb-5">
+  <div class="row">
+    <div class="col">
+      <p style="margin-bottom: 0;">
+        <strong>No doubt I’ll make a good leader I like taking responsibility </strong>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col app-range">
+      <div class="app-range-item">
+        <label for="cool_1" class="app-range-label-up">1</label>
+        <input id="cool_1" type="radio" name="social_dominance_3" value="1" required>
+        <div class="app-range-label-down">Completely disagree</div>
+      </div>
+      <div class="app-range-item">
+        <label for="cool_2" class="app-range-label-up">2</label>
+        <input id="cool_2" type="radio" name="social_dominance_3" value="2">
+      </div>
+      <div class="app-range-item">
+        <label for="cool_3" class="app-range-label-up">3</label>
+        <input id="cool_3" type="radio" name="social_dominance_3" value="3">
+      </div>
+      <div class="app-range-item">
+        <label for="cool_4" class="app-range-label-up">4</label>
+        <input id="cool_4" type="radio" name="social_dominance_3" value="4">
+        <div class="app-range-label-down">Neutral</div>
+      </div>
+      <div class="app-range-item">
+        <label for="cool_5" class="app-range-label-up">5</label>
+        <input id="cool_5" type="radio" name="social_dominance_3" value="5">
+      </div>
+      <div class="app-range-item">
+        <label for="cool_6" class="app-range-label-up">6</label>
+        <input id="cool_6" type="radio" name="social_dominance_3" value="6">
+      </div>
+      <div class="app-range-item">
+        <label for="cool_7" class="app-range-label-up">7</label>
+        <input id="cool_7" type="radio" name="social_dominance_3" value="7">
+        <div class="app-range-label-down">Completely agree</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- New Question-->
+<div class="mb-5">
+  <div class="row">
+    <div class="col">
+      <p style="margin-bottom: 0;">
+        <strong>I certainly have self-confidence</strong> 
+    </div>
+  </div>
+  <div class="row">
+    <div class="col app-range">
+      <div class="app-range-item">
+        <label for="video_conf_quality_1" class="app-range-label-up">1</label>
+        <input id="video_conf_quality_1" type="radio" name="social_dominance_4" value="1" required>
+        <div class="app-range-label-down">Completely disagree</div>
+      </div>
+      <div class="app-range-item">
+        <label for="video_conf_quality_2" class="app-range-label-up">2</label>
+        <input id="video_conf_quality_2" type="radio" name="social_dominance_4" value="2">
+      </div>
+      <div class="app-range-item">
+        <label for="video_conf_quality_3" class="app-range-label-up">3</label>
+        <input id="video_conf_quality_3" type="radio" name="social_dominance_4" value="3">
+      </div>
+      <div class="app-range-item">
+        <label for="video_conf_quality_4" class="app-range-label-up">4</label>
+        <input id="video_conf_quality_4" type="radio" name="social_dominance_4" value="4">
+        <div class="app-range-label-down">Neutral</div>
+      </div>
+      <div class="app-range-item">
+        <label for="video_conf_quality_5" class="app-range-label-up">5</label>
+        <input id="video_conf_quality_5" type="radio" name="social_dominance_4" value="5">
+      </div>
+      <div class="app-range-item">
+        <label for="video_conf_quality_6" class="app-range-label-up">6</label>
+        <input id="video_conf_quality_6" type="radio" name="social_dominance_4" value="6">
+      </div>
+      <div class="app-range-item">
+        <label for="video_conf_quality_7" class="app-range-label-up">7</label>
+        <input id="video_conf_quality_7" type="radio" name="social_dominance_4" value="7">
+        <div class="app-range-label-down">Completely agree</div>
+      </div>
+    </div>
+  </div>
+</div>  
+
+
+<!-- New Question-->
+<div class="mb-5">
+  <div class="row">
+    <div class="col">
+      <p style="margin-bottom: 0;">
+        <strong>For me it is not difficult to start a conversation in a group</strong> 
+    </div>
+  </div>
+  <div class="row">
+    <div class="col app-range">
+      <div class="app-range-item">
+        <label for="final_manipulation_1" class="app-range-label-up">1</label>
+        <input id="final_manipulation_1" type="radio" name="social_dominance_5" value="1" required>
+        <div class="app-range-label-down">Completely disagree</div>
+      </div>
+      <div class="app-range-item">
+        <label for="final_manipulation_2" class="app-range-label-up">2</label>
+        <input id="final_manipulation_2" type="radio" name="social_dominance_5" value="2">
+      </div>
+      <div class="app-range-item">
+        <label for="final_manipulation_3" class="app-range-label-up">3</label>
+        <input id="final_manipulation_3" type="radio" name="social_dominance_5" value="3">
+      </div>
+      <div class="app-range-item">
+        <label for="final_manipulation_4" class="app-range-label-up">4</label>
+        <input id="final_manipulation_4" type="radio" name="social_dominance_5" value="4">
+        <div class="app-range-label-down">Neutral</div>
+      </div>
+      <div class="app-range-item">
+        <label for="final_manipulation_5" class="app-range-label-up">5</label>
+        <input id="final_manipulation_5" type="radio" name="social_dominance_5" value="5">
+      </div>
+      <div class="app-range-item">
+        <label for="final_manipulation_6" class="app-range-label-up">6</label>
+        <input id="final_manipulation_6" type="radio" name="social_dominance_5" value="6">
+      </div>
+      <div class="app-range-item">
+        <label for="final_manipulation_7" class="app-range-label-up">7</label>
+        <input id="final_manipulation_7" type="radio" name="social_dominance_5" value="7">
+        <div class="app-range-label-down">Completely agree</div>
+      </div>
+    </div>
+  </div>
+</div>  
+
+<!-- New Question-->
+<div class="mb-5">
+  <div class="row">
+    <div class="col">
+      <p style="margin-bottom: 0;">
+        <!-- I am not shy with strangers -->
+        <strong>I am not shy with strangers</strong>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col app-range">
+      <div class="app-range-item">
+        <label for="final_quality_1" class="app-range-label-up">1</label>
+        <input id="final_quality_1" type="radio" name="social_dominance_6" value="1" required>
+        <!-- <div class="app-range-label-down">Not at all</div> -->
+        <div class="app-range-label-down">Completely disagree</div>
+      </div>
+      <div class="app-range-item">
+        <label for="final_quality_2" class="app-range-label-up">2</label>
+        <input id="final_quality_2" type="radio" name="social_dominance_6" value="2">
+      </div>
+      <div class="app-range-item">
+        <label for="final_quality_3" class="app-range-label-up">3</label>
+        <input id="final_quality_3" type="radio" name="social_dominance_6" value="3">
+      </div>
+      <div class="app-range-item">
+        <label for="final_quality_4" class="app-range-label-up">4</label>
+        <input id="final_quality_4" type="radio" name="social_dominance_6" value="4">
+        <div class="app-range-label-down">Neutral</div>
+      </div>
+      <div class="app-range-item">
+        <label for="final_quality_5" class="app-range-label-up">5</label>
+        <input id="final_quality_5" type="radio" name="social_dominance_6" value="5">
+      </div>
+      <div class="app-range-item">
+        <label for="final_quality_6" class="app-range-label-up">6</label>
+        <input id="final_quality_6" type="radio" name="social_dominance_6" value="5">
+      </div>
+      <div class="app-range-item">
+        <label for="final_quality_7" class="app-range-label-up">7</label>
+        <input id="final_quality_7" type="radio" name="social_dominance_6" value="7">
+        <!-- <div class="app-range-label-down">A lot</div> -->
+        <div class="app-range-label-down">Completely agree</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Question-->
+<div class="mb-5">
+  <div class="row">
+    <div class="col">
+      <p style="margin-bottom: 0;">
+        <!-- People turn to me for decisions-->
+        <strong>People turn to me for decisions</strong>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col app-range">
+      <div class="app-range-item">
+        <label for="final_conversation_fidelity_1" class="app-range-label-up">1</label>
+        <input id="final_conversation_fidelity_1" type="radio" name="social_dominance_7" value="1" required>
+        <!-- <div class="app-range-label-down">Not at all</div> -->
+        <div class="app-range-label-down">Completely disagree</div>
+      </div>
+      <div class="app-range-item">
+        <label for="final_conversation_fidelity_2" class="app-range-label-up">2</label>
+        <input id="final_conversation_fidelity_2" type="radio" name="social_dominance_7" value="2">
+      </div>
+      <div class="app-range-item">
+        <label for="final_conversation_fidelity_3" class="app-range-label-up">3</label>
+        <input id="final_conversation_fidelity_3" type="radio" name="social_dominance_7" value="3">
+      </div>
+      <div class="app-range-item">
+        <label for="final_conversation_fidelity_4" class="app-range-label-up">4</label>
+        <input id="final_conversation_fidelity_4" type="radio" name="social_dominance_7" value="4">
+        <div class="app-range-label-down">Neutral</div>
+      </div>
+      <div class="app-range-item">
+        <label for="final_conversation_fidelity_5" class="app-range-label-up">5</label>
+        <input id="final_conversation_fidelity_5" type="radio" name="social_dominance_7" value="5">
+      </div>
+      <div class="app-range-item">
+        <label for="final_conversation_fidelity_6" class="app-range-label-up">6</label>
+        <input id="final_conversation_fidelity_6" type="radio" name="social_dominance_7" value="6">
+      </div>
+      <div class="app-range-item">
+        <label for="final_conversation_fidelity_7" class="app-range-label-up">7</label>
+        <input id="final_conversation_fidelity_7" type="radio" name="social_dominance_7" value="7">
+        <!-- <div class="app-range-label-down">A lot</div> -->
+        <div class="app-range-label-down">Completely agree</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- New Question-->
+<div class="mb-5">
+  <div class="row">
+    <div class="col">
+      <p style="margin-bottom: 0;">
+        <!-- I generally put people into contact with each other-->
+        <strong>I generally put people into contact with each other</strong>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col app-range">
+      <div class="app-range-item">
+        <label for="1cool_1" class="app-range-label-up">1</label>
+        <input id="1cool_1" type="radio" name="social_dominance_8" value="1" required>
+        <!-- <div class="app-range-label-down">Not at all</div> -->
+        <div class="app-range-label-down">Completely disagree</div>
+      </div>
+      <div class="app-range-item">
+        <label for="1cool_2" class="app-range-label-up">2</label>
+        <input id="1cool_2" type="radio" name="social_dominance_8" value="2">
+      </div>
+      <div class="app-range-item">
+        <label for="1cool_3" class="app-range-label-up">3</label>
+        <input id="1cool_3" type="radio" name="social_dominance_8" value="3">
+      </div>
+      <div class="app-range-item">
+        <label for="1cool_4" class="app-range-label-up">4</label>
+        <input id="1cool_4" type="radio" name="social_dominance_8" value="4">
+        <div class="app-range-label-down">Neutral</div>
+      </div>
+      <div class="app-range-item">
+        <label for="1cool_5" class="app-range-label-up">5</label>
+        <input id="1cool_5" type="radio" name="social_dominance_8" value="5">
+      </div>
+      <div class="app-range-item">
+        <label for="1cool_6" class="app-range-label-up">6</label>
+        <input id="1cool_6" type="radio" name="social_dominance_8" value="6">
+      </div>
+      <div class="app-range-item">
+        <label for="1cool_7" class="app-range-label-up">7</label>
+        <input id="1cool_7" type="radio" name="social_dominance_8" value="7">
+        <!-- <div class="app-range-label-down">A lot</div> -->
+        <div class="app-range-label-down">Completely agree</div>
+      </div>
+    </div>
+  </div>
+</div>
+<button class="otree-btn-next btn btn-primary">Next</button>
+</form>
+{{ endblock }}

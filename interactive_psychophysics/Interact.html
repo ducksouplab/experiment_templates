@@ -1,0 +1,344 @@
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/interact.css' }}" type="text/css">
+{{ endblock }}
+
+{% block global_scripts %}
+<script src="{{ ducksoupJsUrl }}"></script>
+<script src="{{ static 'global/scripts/player_ug-CDICAPRF.js' }}"></script>
+<script src="{{ static 'global/scripts/listeners-LSXNKGQD.js' }}"></script>
+<script src="{{ static 'global/scripts/ducksoup_now-4MHTN4TI.js' }}"></script>
+{% endblock %}
+
+{{ block content }}
+
+
+<style> 
+/* Connecting... dot animation */
+.dot {
+    opacity: 0;
+    animation: dot 1.5s infinite;
+    font-size: 25px;
+}
+
+.dot1 {
+    animation-delay: 0.5s;
+}
+
+.dot2 {
+    animation-delay: 1s;
+}
+
+.dot3 {
+    animation-delay: 1.5s;
+}
+
+@keyframes dot {
+    0% {opacity: 0;}
+    50% {opacity: 1;}
+    100% {opacity: 0;}
+}
+/* Connecting... dot animation */
+
+/* Connected blink animation */
+@keyframes blink {
+    0% {opacity: 1;}
+    50% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+  .blink-text {
+    animation: blink 1s step-end 3;
+    align-self: flex-start;
+}
+
+.ducksoup-container {
+  display: grid;
+}
+
+.overlay.connected {
+  display: grid;
+  background: transparent;
+  pointer-events: none;
+}
+
+.decision_div {
+    display: inline-block;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 5px; /* Slightly rounded corners */
+    border: 1px solid #ccc; /* Light grey border */
+    padding: 15px; /* Adequate padding */
+    background-color: #f9f9f9; /* Light background color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    font-family: 'Arial', sans-serif; /* Simple font */
+    color: #333; /* Dark grey text */
+    margin: 20px; /* Space around the div */
+}
+
+.left_right button {
+    background-color: #007bff; /* Blue background for button */
+    border: none; /* Remove border */
+    color: white; /* White text */
+    padding: 6px 10px; /* Button padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline-block display */
+    font-size: 16px; /* Font size */
+    margin-top: 10px; /* Margin on top */
+    border-radius: 5px; /* Slightly rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for background color */
+    background-color: #f9f9f9; /* Light background color */
+    font-family: 'Arial', sans-serif; /* Simple font */
+    color: #333; /* Dark grey text */
+}
+
+.left_right button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+.left_right p {
+  margin: 0;
+}
+
+.left_right{
+  align-self: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Add space between buttons */
+  border: 1px solid black;
+  padding: 10px 20px; /* Add padding inside the buttons */
+  margin: 0 10px; /* Add margin around the buttons */
+  border-radius: 5px; /* Slightly rounded corners */
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9; /* Light background color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  
+
+}
+
+.button-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px; /* Add space between the buttons */
+        }
+
+.flex_wrap{
+  display:flex;
+  justify-content: space-around;
+}
+
+
+.choice_interface{
+  display: none; 
+  height: 30%;
+  align-self: center;
+
+}
+
+.agreement_reached {
+  text-align: center;
+  margin-top: 20px;
+  width: inherit;
+  height: auto;
+  align-self: center;
+  z-index: 20;
+}
+
+.agree {
+  background-color: rgb(120, 189, 245); /* Green background */
+  color: white; /* White text */
+  padding: 10px 20px; /* Basic padding */
+  font-size: 16px; /* Simple, readable font */
+  border: none; /* No borders */
+  border-radius: 5px; /* Slightly rounded corners */
+  cursor: pointer; /* Pointer cursor */
+}
+
+.agree:hover {
+  background-color:rgb(0, 0, 124); /* Slightly darker on hover */
+}
+</style>
+
+{{if player.id_in_group == 1}}
+<div id="stopped" class="d-none">
+  <p id="stopped-message">Conversation ended</p>
+</div>
+<div id="failed" class="d-none">
+  <p>Errors</p>
+</div>
+<div class="ducksoup-container">
+  <div class="d-none" id="ducksoup-root"></div>
+  <div class="overlay connecting d-none">
+    <div style="color: red; background-color: transparent; top: 0;">Connecting
+      <span class="dot dot1">.</span>
+      <span class="dot dot2">.</span>
+      <span class="dot dot3">.</span>
+    </div>
+  </div>
+  <div class="overlay connected d-none">
+    <div class="blink-text" style="color: rgb(0, 255, 0); background-color: transparent; font-size: 26px; top: 0;">
+      Connected. Talk with the other person to reach a group decision!
+    </div>
+  </div>
+  <div class="overlay ending strong d-none" style = "pointer-events: none;">
+    <div>Conversation over in 15 seconds</div>
+  </div>
+  
+  <div class="agreement_reached">
+    <p style="font-size: 20px;"><strong>Click the button below when you reach an agreement with your partner!</strong></p>
+    <button style="font-size: 24px;" type="button" class="agree" id="1_agree" onclick="agree(this)">Agreement reached</button>
+  </div>
+
+  <div class="choice_interface">
+    <div class="flex_wrap">
+      <div class="left_right">
+        <p style="font-size: 18px;"><strong>Click 'Left' or 'Right' NOW to give the group decision!</strong></p>
+        <p style="font-size: 12px; color: #666; line-height: 0.1;"><em>You and your partner have to give the same answer to proceed.</em></p>
+        <div class="button-container">
+          <button style="border: 1px solid black; font-size: 24px; padding: 15px 30px; margin: 5px;" type="button" id="1_Left" onclick="left(this)">Left</button>
+          <button style="border: 1px solid black; font-size: 24px; padding: 15px 30px; margin: 5px;" type="button" id="1_Right" onclick="right(this)">Right</button>
+        </div>
+      </div>
+
+      <div class="decision_div">
+        <p>Your status: <span id="p1"></span></p>
+        <p>Partner status: <span id="player_id2_status"></span></p>
+
+        <!-- Hidden elements -->
+        <p style="display: none">Partner status: <span id="player_id1_status"></span></p>
+        <p style="display: none">Your status: <span id="p2"></span></p>
+        <button style="display: none;" type="button" id="2_Left" onclick="left(this)">Left</button>
+        <button style="display: none;" type="button" id="2_Right" onclick="right(this)">Right</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{else}}
+
+<div id="stopped" class="d-none">
+  <p id="stopped-message">Conversation ended</p>
+</div>
+<div id="failed" class="d-none">
+  <p>Errors</p>
+</div>
+<div class="ducksoup-container">
+  <div class="d-none" id="ducksoup-root"></div>
+  <div class="overlay connecting d-none" style = "pointer-events: none;">
+    <div style="color: red; background-color: transparent; top: 0;">Connecting
+      <span class="dot dot1">.</span>
+      <span class="dot dot2">.</span>
+      <span class="dot dot3">.</span>
+    </div>
+  </div>
+  <div class="overlay connected d-none">
+    <div class="blink-text" style="color: rgb(0, 255, 0); background-color: transparent; font-size: 26px; top: 0;">
+      Connected. Talk with the other person to reach a group decision!
+    </div>
+  </div>
+  <div class="overlay ending strong d-none" style = "pointer-events: none;" > 
+    <div>Conversation over in 15 seconds</div>
+  </div>
+
+  <div class="agreement_reached">
+    <p style="font-size: 20px;"><strong>Click the button below when you reach an agreement with your partner!</strong></p>
+    <button style="font-size: 24px;" type="button" class="agree" id="2_agree" onclick="agree(this)">Agreement reached</button>
+  </div>
+
+  <div class="choice_interface">
+    <div class="flex_wrap">
+      <div class="left_right">
+        <p style="font-size: 18px;"><strong>Click 'Left' or 'Right' NOW to give the group decision!</strong></p>
+        <p style="font-size: 12px; color: #666; line-height: 0.1;"><em>You and your partner have to give the same answer to proceed.</em></p>
+        <div class="button-container">
+          <button style="border: 1px solid black; font-size: 24px; padding: 15px 30px; margin: 5px;" type="button" id="2_Left" onclick="left(this)">Left</button>
+          <button style="border: 1px solid black; font-size: 24px; padding: 15px 30px; margin: 5px;" type="button" id="2_Right" onclick="right(this)">Right</button>
+        </div>
+      </div>
+
+      <div class="decision_div">
+        <p>Your status: <span id="p2"></span></p>
+        <p>Partner status: <span id="player_id1_status"></span></p>
+
+        <!-- Hidden elements -->
+        <p style="display: none">Partner status: <span id="player_id2_status"></span></p>
+        <p style="display: none">Your status: <span id="p1"></span></p>
+        <button style="display: none;" type="button" id="1_Left" onclick="left(this)">Left</button>
+        <button style="display: none;" type="button" id="1_Right" onclick="right(this)">Right</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{endif}}
+
+<form id="form" class="d-none">
+  <input type="hidden" id="inspect_visibility" name="inspect_visibility" />
+</form>
+{{ endblock }}
+
+
+{{ block scripts }}
+<script>
+
+
+function agree(button){
+  var grp_id   = button.id.substring(0,1); //Extract the number in the button id: "id  = 'x_Left'", where x = 1 or x = 2. 
+  console.log(grp_id);
+  document.getElementById(`${grp_id}_agree`).style.background = "green";
+  liveSend({"id": grp_id, "agreement_reached": true})
+}
+ 
+function left(button) {
+  var grp_id   = button.id.substring(0,1); //Extract the number in the button id: "id  = 'x_Left'", where x = 1 or x = 2. 
+  console.log(grp_id);
+  liveSend({"id": grp_id, "choice": "Left"})
+}
+
+function right(button) {
+  var grp_id = button.id.substring(0,1); //Extract the number in the button id: "id  = 'x_Right'", where x = 1 or x = 2. 
+  console.log(grp_id);
+  liveSend({"id": grp_id, "choice": "Right"})
+}
+ 
+
+function liveRecv(data){
+  if (data.hasOwnProperty('id') && data.id) {
+      var id            = "p" + data["id"]
+      var partner_txt   = "player_id"+data['id']+"_status"
+      console.log(partner_txt);
+      var choice        = data["choice"]
+      document.getElementById(id).textContent          = choice //player status text
+      document.getElementById(partner_txt).textContent = choice
+
+
+      if (data['agreement_reached']){
+        console.log("initial agreement reached");
+        document.getElementsByClassName('agreement_reached')[0].style.display = "none";
+        document.getElementsByClassName('choice_interface')[0].style.display = "block";
+        const blinkTextElement = document.getElementsByClassName('blink-text')[0];
+      }
+
+      if (choice == "Left"){
+        var left_btn      = data['id'] + "_Left"
+        var right_btn     = data['id'] + "_Right"
+        document.getElementById(left_btn).style.background = "green"
+        document.getElementById(right_btn).style.background = "white"
+      }
+      if (choice == "Right"){
+        var right_btn      = data['id'] + "_Right"
+        var left_btn     = data['id'] + "_Left"
+        document.getElementById(right_btn).style.background = "green"
+        document.getElementById(left_btn).style.background  = "white"
+      }
+    }
+
+    if (data["both_agree"]){
+    document.getElementById("form").submit()
+    console.log('both agreed')
+  }
+}
+
+</script>
+{{ endblock }}
+

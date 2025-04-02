@@ -1,0 +1,88 @@
+{{ block title }}
+    <h1>Experiment Instructions</h1>
+{{ endblock }}
+
+
+{{block global styles}}
+
+<link rel="stylesheet" href="{{ static 'global/styles/interact.css' }}" type="text/css">
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+
+<style>
+
+    #instr_div{
+        position: inherit;
+        height: inherit;
+        width: inherit;
+    }
+
+    .img_div {
+        display: flex; 
+        justify-content:space-around;
+        position: relative;
+        padding-bottom: 20px;
+        width: 100%; /* Set width of div */
+        height: 100%; /* Allow height to adjust automatically */
+         /* Ensure image doesn't exceed div width */
+    }
+    
+    .img_div img {
+        width: 50%; /* Set width of image to fill the div */
+        height: auto; /* Allow height to adjust automatically */
+    }
+</style>
+{{ endblock }}
+
+
+{{ block content }}
+
+<div id = "instr_div">
+    <p>We are investigating if groups of individuals are better than single individuals when making decisions.
+        In each trial, you are going to see two circles with dots inside appear quickly on the screen (see image below). 
+        Your task is to say which circle has the most dots — the one on the left or the one on the right. 
+        After the circles disappear from the screen, you will be able to give your answer and rate how confident you are in your response.
+    </p>
+
+    <p>You will then interact vocally with another participant from Prolific's large pool of participants, who also saw two circles. If you were shown the most amount of dots in the left circle, the other person was also shown the most amount of dots in the left circle.  However, crucially, the spatial location of the dots and the number of dots in the circles, can be different between participants. For example, one participant might be shown 25 dots in the left cirle and 16 in the right, while the other pariticpant might be shown 23 dots on the left and 21 on the right. In both cases the correct response is "Left", but the difficulty will not be the same for each participant.
+    Moreover, the dots will overlapp differently as well as have different transparencies for each participant. For instance, one participant might be shown very closely packed and partially overlapping dots, while the other one will be shown widely scattered and almost transparent dots. These numerous combinations should bias participants' perceptual systems, creating illusions and misperceptions, making it sometimes very hard to judge which circle had the most dots, thus making it even more important to work together!
+    </p>
+
+    <p> The goal of the interaction is to talk with the other person to decide what is the correct response. When you reach an agreement, you must 
+        press the "Agreement reached" button and then confirm the group decision by clicking the button "left" or "right".
+        <strong>Note: </strong>It is crucial that both you <strong>and</strong> your interaction partner press "left" or "right" on the screen before the maximum interaction time, which is 40 seconds (you will be notified when 15 seconds remain).
+        After the interaction, you will be asked to reassess your confidence in your original answer — that is, the answer you gave <strong>before</strong> the interaction.
+    </p>
+        
+    <p> We kindly ask you to stay focused and actively engaged throughout the experiment. Please note that we will be monitoring participant activity to
+        ensure the integrity of the data. <strong>Instances of inactivity or lack of engagement may result in rejection</strong>. The goal is to give 
+        as many correct responses as possible, both at the personal and at the group level. Across the experiment, we will compute a score indicating the 
+        amount of correct responses you have given so please try to give as many correct reponses as possible.
+    </p>
+</div>
+
+
+
+<strong>Example stimuli:</strong>
+<div class = "img_div">
+    <img src="{{ static 'psychopy_exp/dot_circle.webp' }}"/>
+
+    <button style = "
+    background: blue; 
+    border: none; 
+    color: white; 
+    padding: 15px 28px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block;
+    width: 10%;
+    height: 10%;
+    font-size: 16px; 
+    margin: 4px 2px; 
+    cursor: pointer;
+    border-radius: 20px; 
+    border: 4px solid transparent;
+    ">Next</button>
+    </div>
+    
+    
+{{ endblock }}
