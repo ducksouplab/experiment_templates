@@ -11,8 +11,10 @@ _static_root
 _bots*s
 __temp*
 __pycache__/
+__pycache__
 *.py[cod]
 .DS_Store
 *.otreezip
 *.pem
 node_modules
+__MACOSX/
