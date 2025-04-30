@@ -102,23 +102,6 @@ SESSION_CONFIGS = [
 			participant_label_file = '_rooms/n8.txt',
 			num_participants_allowed=[1],
 			doc="The number of participants must be 1"),
-
-
-		dict(id = 'self_feedback_master',
-		name = 'self_feedback_master',
-		app_sequence = ['self_feedback_master'],
-		num_demo_participants = 1,
-		participant_label_file = '_rooms/n8.txt',
-		num_participants_allowed=[1],
-		doc="The number of participants must be 1"),
-
-		dict(id = 'pitching_dyads',
-		name = 'pitching_dyads',
-		app_sequence = ['pitching_dyads'],
-		num_demo_participants = 1,
-		participant_label_file = '_rooms/n8.txt',
-		num_participants_allowed=[6],
-		doc="The number of participants must be 1"),
             
 		dict(
 			id='technical_prescreen',

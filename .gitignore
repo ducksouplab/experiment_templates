@@ -11,6 +11,8 @@ _static_root
 _bots*s
 __temp*
 __pycache__/
+__pycache__
+__MACOSX
 *.py[cod]
 .DS_Store
 *.otreezip
