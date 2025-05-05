@@ -1,0 +1,92 @@
+{{ block title }}
+<p>Post test-survey</p>
+{{ endblock }}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post test-survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .horizontal-radio .form-check {
+            display: inline-block;
+            margin-right: 10px;
+            text-align: center;
+            vertical-align: top;
+        }
+        
+        .horizontal-radio .form-check-input {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+        
+        .horizontal-radio .form-check-label {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="instruction">
+        <p><strong>Part 1: Instructions:</strong></p>
+        <p>Please answer the following questions about yourself. 
+            
+            Please state your age in years. State your weight (in kilograms) and height (in centimenters). 
+            
+            Also rate your own trustworthiness on a scale from 1 to 6, 
+            
+            1 being the least trustworthy and 6 being the most trustworthy.</p>
+    </div>
+
+    <div class="horizontal-radio">
+    {{ formfield 'age' }}
+    {{ formfield 'weight' }}
+    {{ formfield 'height' }}
+    {{ formfield 'trustworthiness' }}
+    </div>
+
+    <div class="instruction">
+        <p><strong>Instructions</strong></p>
+        <p>You will be presented with 16 statements about yourself. 
+            
+         Please read each statement carefully and rate how much you agree with each statement 
+         
+         on a scale from 1 to 6, 1 being the least and 6 being the most. 
+         
+         Answer on intuition, do not think too long for each answer. 
+         
+         When you have rated all of the statements, click the next-button.</p>
+    </div>
+
+    <form method="post">
+        <div class="horizontal-radio">
+        {% for field_name in dominance_fields %}
+            {{ formfield field_name }}
+        {% endfor %}
+        </div>
+    </form>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="btn btn-primary" type="submit">Next</button>
+        </div>
+    </form>
+</body>
+</html>
+{% endblock %}

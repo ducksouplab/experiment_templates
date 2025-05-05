@@ -1,0 +1,61 @@
+{% block title %}
+    Debrief page
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    <div class="instruction">
+        <p><strong>Instructions:</strong></p>
+        <p>Thank you for participating in our study today! 
+
+            You will be asked to answer some final questions about your experience. 
+        </p>
+    </div>
+
+    <div class="horizontal-radio">
+            {% for field_name in debrief_fields %}
+                <div class="form-group mb-4">
+                    {{ formfield field_name }}
+            {% endfor %}
+            </div>
+
+
+    <div style="text-align: center; margin-top: 30px;">
+        <button class="btn btn-primary" type="submit">Next</button>
+    </div>
+</form>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 20px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .horizontal-radio .form-check {
+        display: inline-block;
+        margin-right: 10px;
+        text-align: center;
+        vertical-align: top;
+    }
+    
+    .horizontal-radio .form-check-input {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+    
+    .horizontal-radio .form-check-label {
+        display: block;
+        margin-top: 5px;
+        font-size: 0.9em;
+    }
+</style>
+{% endblock %}
