@@ -5,7 +5,7 @@ import random
 import time
 
 CONNECTING_DURATION   = 1 # seconds (5 seconds in "connecting" state)
-INTERACTION_DURATION  = 40 # seconds (not including CONNECTING_DURATION)
+INTERACTION_DURATION  = 50 # seconds (not including CONNECTING_DURATION)
 TIMEOUT               = 18 # seconds, 12 is a minimum to temper with signaling potential delay
 
 
