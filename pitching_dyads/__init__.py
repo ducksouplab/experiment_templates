@@ -4,8 +4,8 @@ from config import Env
 import random
 import time
 
-CONNECTING_DURATION   = 1 # seconds (5 seconds in "connecting" state)
-INTERACTION_DURATION  = 50 # seconds (not including CONNECTING_DURATION)
+CONNECTING_DURATION   = 1 # seconds (1 seconds in "connecting" state)
+INTERACTION_DURATION  = 90 # seconds (not including CONNECTING_DURATION)
 TIMEOUT               = 18 # seconds, 12 is a minimum to temper with signaling potential delay
 
 
@@ -140,6 +140,10 @@ class Player(BasePlayer):
 
 
 # PAGES
+
+class DropoutCheck(Page):
+  def is_displayed(player):
+    return player.round_number == 1
 
 class Introduction(Page):
     @staticmethod
@@ -313,4 +317,4 @@ class Debrief(Page):
         if not values['prolific_id']:
             errors['prolific_id'] = 'Please enter your Prolific ID'
 
-page_sequence = [Introduction, AudioConfig, FirstRound, Interact, PostConvo, NewRound, PostTest, Debrief]
+page_sequence = [DropoutCheck, Introduction, AudioConfig, FirstRound, Interact, PostConvo, NewRound, PostTest, Debrief]
