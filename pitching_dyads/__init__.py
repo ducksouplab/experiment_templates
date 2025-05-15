@@ -6,7 +6,7 @@ import time
 
 CONNECTING_DURATION   = 1 # seconds (1 seconds in "connecting" state)
 INTERACTION_DURATION  = 90 # seconds (not including CONNECTING_DURATION)
-TIMEOUT               = 18 # seconds, 12 is a minimum to temper with signaling potential delay
+TIMEOUT               = 12 # seconds, 12 is a minimum to temper with signaling potential delay
 
 
 class C(BaseConstants):
@@ -71,14 +71,18 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     sid = models.StringField() # session id
     num_rounds = models.IntegerField()
+    primary    = models.BooleanField() # acts as leading/primary participant in dyad (JS wise)
     user_id = models.StringField() # p1, p2...
     other_id = models.StringField()
     other_id_in_group = models.IntegerField()
+    dyad              = models.StringField() # contains user_id and other_id
+    audio_source_id = models.StringField()
+    inspect_visibility = models.LongStringField()
+    
+    manipulation    = models.StringField(initial="no_manipulation")
+    partner_history = models.LongStringField()  # Keeps track of past partners
     start_time = models.FloatField()
     end_time = models.FloatField()
-    partner_history = models.LongStringField()  # Keeps track of past partners
-    call_link = models.StringField()  # URL for the voice call
-    audio_source_id = models.StringField()
     
     # Post-conversation rating questions
     post_convo_age = models.StringField(label="How old do you think this person is?", initial="")
@@ -172,29 +176,123 @@ class FirstRound(Page):
     def is_displayed(player):
         return player.round_number == 1
 
+class InteractionWait(WaitPage):
+  title_text = "Waiting room"
+  body_text  = "Please wait for the interaction to start."
+
+  def after_all_players_arrive(group):
+    for player in group.get_players():
+      other                    = player.get_others_in_group()[0]
+      player.primary           = player.participant.id_in_session < other.participant.id_in_session
+      player.other_id_in_group = other.id_in_group
+      player.other_id          = other.user_id
+      player.dyad              = ''.join(map(str, sorted([player.user_id, player.other_id])))
+
 class Interact(Page):
     timeout_seconds = INTERACTION_DURATION + TIMEOUT
-
     def js_vars(player):
 
-        return dict(
-            # How long each phase lasts
-            connectingDuration=CONNECTING_DURATION,
-            interactionDuration=INTERACTION_DURATION,
-            
-            # DuckSoup connection settings
-            playerOptions=dict(
-                ducksoupURL=Env.DUCKSOUP_URL,
-            ),
-                
-                # Use the devices they selected
-                audio=dict(
-                    deviceId=dict(
-                        ideal=player.participant.audio_source_id
-                    ),
-                ),
-                ),
+        #Define interaction variables
+        namespace         = player.sid
+        interaction_name  = f'{str(player.round_number)}-{player.dyad}'
+        manipulation      = player.manipulation
+        audio_fx = ""
 
+        # default_props = f'noise-bias = -100 ! audioamplify amplification=1.6'
+        
+        # if manipulation == "dominant":
+        # audio_fx  = f'avocoder env-freq-scaling=0.91 pitch=0.91 {default_props}'
+        
+        # elif manipulation == "submissive":
+        # audio_fx  = f'avocoder  env-freq-scaling=1.1 pitch=1.1 {default_props}'
+        
+        # elif manipulation == "no_manip":
+        # audio_fx  = f'avocoder env-freq-scaling=1 pitch=1 {default_props}'
+        
+        # else:
+        # audio_fx=""
+
+        return dict(
+                    # common options used by several scripts
+                    connectingDuration  = CONNECTING_DURATION,
+                    interactionDuration = INTERACTION_DURATION,
+                    
+                    # DuckSoup player options
+                    playerOptions=dict(
+                    ducksoupURL=Env.DUCKSOUP_URL,
+                    ),
+                    
+                    # DuckSoup player embed options
+                    embedOptions=dict(
+                    debug=True,
+                    stats=True,
+                    ),
+                    
+                    # DuckSoup player peer options
+                    peerOptions=dict(
+                                gpu         = Env.DUCKSOUP_REQUEST_GPU,
+                                videoFormat = Env.DUCKSOUP_FORMAT,
+                                width       = Env.DUCKSOUP_WIDTH,
+                                height      = Env.DUCKSOUP_HEIGHT,
+                                frameRate   = Env.DUCKSOUP_FRAMERATE,
+                                namespace   = namespace,
+                                interactionName = interaction_name,
+                                size            = 2,
+                                userId          = player.user_id,
+                                audioFx         = audio_fx,
+                                audioOnly       = True,
+                                audio=dict(
+                                    deviceId=dict(ideal=player.participant.audio_source_id),
+                                ),
+                                video = dict(
+                                        width      = dict(ideal=Env.DUCKSOUP_WIDTH),
+                                        height     = dict(ideal=Env.DUCKSOUP_HEIGHT),
+                                        frameRate  = dict(ideal=Env.DUCKSOUP_FRAMERATE),
+                                        facingMode = dict(ideal="user"),
+                                ),
+                    ),
+                    
+                    # necessary for quality_control
+                    listenerOptions=dict(
+                    widthThreshold = 800,
+                    ),
+                    # necessary for quality_control
+                    xpOptions=dict(
+                    alpha = 1.0,
+                    ),
+                )
+
+    def live_method(player, data):
+        group = player.group
+        kind = data.get('kind', None) 
+
+        if kind is not None:
+            kind = data['kind']
+            payload = data.get('payload', '')
+            
+            if kind == 'to-primary':
+                if not player.primary:
+                    response = dict(kind="from-secondary", other=player.user_id, payload=payload)
+                    return { player.other_id_in_group: response }
+            
+            elif kind == 'files':
+                for id in payload:
+                    if id == player.user_id:
+                        player.participant_videos = payload[id]
+                else:
+                    player.other_videos = payload[id]
+            
+            elif kind == 'visibility':
+                player.inspect_visibility = payload
+            
+            elif kind == 'end':
+                return {player.id_in_group: dict(kind="next")}
+
+    def vars_for_template(player):
+        return dict(
+            ducksoupJsUrl=Env.DUCKSOUP_JS_URL,
+        )
+  
 
 class PostConvo(Page):
     timeout_seconds = 120
@@ -317,4 +415,11 @@ class Debrief(Page):
         if not values['prolific_id']:
             errors['prolific_id'] = 'Please enter your Prolific ID'
 
-page_sequence = [DropoutCheck, Introduction, AudioConfig, FirstRound, Interact, PostConvo, NewRound, PostTest, Debrief]
+class MeetingProlificCompensation(Page):
+    template_name = '_pages/meeting/ProlificCompensation.html'
+    form_model    = 'player'
+
+    def is_displayed(player):
+        return player.round_number == C.NUM_ROUNDS
+
+page_sequence = [DropoutCheck, Introduction, AudioConfig, FirstRound, InteractionWait, Interact, PostConvo, NewRound, PostTest, Debrief, MeetingProlificCompensation]
