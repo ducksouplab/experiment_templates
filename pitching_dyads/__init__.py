@@ -172,9 +172,7 @@ class AudioConfig(Page):
     
 class FirstRound(Page):
     timeout_seconds = 6
-    @staticmethod
-    def is_displayed(player):
-        return player.round_number == 1
+
 
 class InteractionWait(WaitPage):
   title_text = "Waiting room"
