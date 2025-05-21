@@ -24,21 +24,14 @@ This tutorial provides step-by-step guidance for conducting a prescreening exper
    The code for the prescreen session is in the `technical_prescreen` experiment.
 
 2. **Adjust Dates**  
-   Make sure to change the dates accordingly in all the session files before launching, by adjusting these variables:
-   #######################################################################
-   #########SPECIFY DATE(S) AND TIMESLOT(S) FOR YOUR EXPERIMENT###########
-   #######################################################################
-
+   Make sure to change the dates accordingly in all the session files before launching, by adjusting these variables in the init.py file. It is crucial to follow this coding scheme when defining your timeslots: 'DATE_DAY_TIME_AMPM'.
+   
    global TRACKTIMESLOT 
    TRACKTIMESLOT = {
       '2025-05-23_Friday_10:00_AM': 3, 
       '2025-05-22_Thursday_11:00_AM': 2 
    }
-   # It is crucial to follow this coding scheme when defining your timeslots: 'DATE_DAY_TIME_AMPM' 
-
-   #######################################################################
-   #########SPECIFY DATE(S) AND TIMESLOT(S) FOR YOUR EXPERIMENT###########
-   #######################################################################
+   
 
 3. **Push to Production**  
    Push the updated repository to production so the changes are live.
