@@ -68,42 +68,98 @@ transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitio
 {{ block script }}
 
 <script>
-var timeslots = '{{timeslots}}'
-timeslots = JSON.parse(timeslots)
+// Parse the timeslots from the server
+var timeslots = '{{timeslots}}';
+timeslots = JSON.parse(timeslots);
 
-var timeslot_1 = timeslots['thursday_2:00_PM']
-//document.getElementById('timeslot_1_label').textContent = `- Timeslots open: ${timeslots['2:00']}`;
-if (timeslots['thursday_2:00_PM'] == 0) {
-    document.getElementById("timeslot_1").disabled = true;
-    document.getElementById('timeslot_1_label').textContent = `Timeslot is full`
-    document.getElementById('timeslot_1_label').classList.add("disabled");
+// Function to create timeslot elements dynamically
+function createTimeslotElements() {
+    const timeslotsContainer = document.getElementById('timeslots-container');
+    
+    // Clear any existing content
+    timeslotsContainer.innerHTML = '';
+    
+    // Create radio options for each timeslot
+    let index = 1;
+    for (const [timeslot, spotsAvailable] of Object.entries(timeslots)) {
+        // Format the display string for the timeslot
+        const [date, day, time, ampm] = timeslot.split('_');
+        const formattedDay = day.charAt(0).toUpperCase() + day.slice(1);
+        const formattedTime = time.replace('_', ' ');
+        
+        // Create the timeslot element
+        const timeslotDiv = document.createElement('div');
+        timeslotDiv.className = 'app-range-item';
+        if (index > 1) {
+            timeslotDiv.style.paddingTop = '20px';
+        }
+        
+        // Create the radio input
+        const radioInput = document.createElement('input');
+        radioInput.id = `timeslot_${index}`;
+        radioInput.type = 'radio';
+        radioInput.name = 'available_times';
+        radioInput.value = timeslot;
+        radioInput.required = true;
+        
+        // Disable if no spots available
+        if (spotsAvailable == 0) {
+            radioInput.disabled = true;
+        }
+        
+        // Create the label for the radio
+        const radioLabel = document.createElement('label');
+        radioLabel.htmlFor = `timeslot_${index}`;
+        radioLabel.className = 'app-range-label-up';
+        radioLabel.textContent = `I confirm I am available ${formattedDay}, ${date} at ${time} ${ampm} GMT`;
+        
+        // Create the status label
+        const statusLabel = document.createElement('label');
+        statusLabel.htmlFor = `timeslot_${index}`;
+        statusLabel.className = 'timeslot_text';
+        statusLabel.id = `timeslot_${index}_label`;
+        
+        if (spotsAvailable == 0) {
+            statusLabel.textContent = 'Timeslot is full';
+            statusLabel.classList.add('disabled');
+        } else {
+            statusLabel.textContent = `Timeslot is open`;
+        }
+        
+        // Append all elements to the container
+        timeslotDiv.appendChild(radioInput);
+        timeslotDiv.appendChild(radioLabel);
+        timeslotDiv.appendChild(statusLabel);
+        timeslotsContainer.appendChild(timeslotDiv);
+        
+        index++;
+    }
+    
+    // Add the "Not available" option as the last option
+    const notAvailableDiv = document.createElement('div');
+    notAvailableDiv.className = 'app-range-item';
+    notAvailableDiv.style.paddingTop = '20px';
+    
+    const notAvailableRadio = document.createElement('input');
+    notAvailableRadio.id = 'timeslot_not_available';
+    notAvailableRadio.type = 'radio';
+    notAvailableRadio.name = 'available_times';
+    notAvailableRadio.value = 'Not_available';
+    
+    const notAvailableLabel = document.createElement('label');
+    notAvailableLabel.htmlFor = 'timeslot_not_available';
+    notAvailableLabel.className = 'app-range-label-up';
+    notAvailableLabel.textContent = 'I am not available at these times but I am happy to be contacted by the researcher for an experiment in the near future.';
+    
+    notAvailableDiv.appendChild(notAvailableRadio);
+    notAvailableDiv.appendChild(notAvailableLabel);
+    timeslotsContainer.appendChild(notAvailableDiv);
 }
 
-var timeslot_2 = timeslots['thursday_4:00_PM']
-//document.getElementById('timeslot_2_label').textContent = `- Timeslots open: ${timeslots['3:30']}`;
-if (timeslots['thursday_4:00_PM'] == 0) {
-    document.getElementById("timeslot_2").disabled = true;
-    document.getElementById('timeslot_2_label').textContent = `Timeslot is full`
-    document.getElementById('timeslot_2_label').classList.add("disabled");
-}
-
-
-var timeslot_3 = timeslots['friday_10:00_AM']
-//document.getElementById('timeslot_3_label').textContent = `- Timeslots open: ${timeslots['5:00']}`;
-if (timeslots['friday_10:00_AM'] == 0) {
-    document.getElementById("timeslot_3").disabled = true;
-    document.getElementById('timeslot_3_label').textContent = `Timeslot is full`
-    document.getElementById('timeslot_3_label').classList.add("disabled");
-}
-
-
-var timeslot_4 = timeslots['friday_1:00_PM']
-//document.getElementById('timeslot_3_label').textContent = `- Timeslots open: ${timeslots['5:00']}`;
-if (timeslots['friday_1:00_PM'] == 0) {
-    document.getElementById("timeslot_4").disabled = true;
-    document.getElementById('timeslot_4_label').textContent = `Timeslot is full`
-    document.getElementById('timeslot_4_label').classList.add("disabled");
-}
+// Call the function when the page loads
+window.onload = function() {
+    createTimeslotElements();
+};
 
 </script>
 
@@ -111,28 +167,20 @@ if (timeslots['friday_1:00_PM'] == 0) {
 
 {{ block content }}
 
-<p> You <strong>passed</strong> the pre-screening audio test and are eligible to participate in the full 60 minute experiment. 
-    The full experiment will be run on <strong>Monday, 2025-03-03 at 16:00PM</strong>. Please confirm if you are available at that time for the full experiment.
+<p>
+    You <strong>passed</strong> the pre-screening audio test and are eligible to participate in the full experiment.
+    Please select from the available time slots below.
 </p>
 
-<div class="row" >
-    <div class="col app-range">
-        <div class="app-range-item">
-            <input id="timeslot_1" type="radio" name="available_times" value="monday_4:00_PM" required>
-            <label for="timeslot_1" class="app-range-label-up">I confirm I am available Monday, 2025-03-03 at 4:00 PM GMT</label>
-            <label for="timeslot_1" class="timeslot_text" id="timeslot_1_label"> Timeslot is open</label>
-        </div>
-
-        <div class="app-range-item" style = "padding-top: 20px;">
-            <input id="timeslot_2" type="radio" name="available_times" value="Not_available">
-            <label for="timeslot_2" class="app-range-label-up">I am not available at this time but I am happy to be contacted by the researcher for an experiment in the near future.</label>
-        </div>
+<div class="row">
+    <div class="col app-range" id="timeslots-container">
+        <!-- Timeslot elements will be dynamically inserted here -->
     </div>
 
-    <div id = "prolific_div">
-    <label for="prolific_id">Enter your Prolific ID: </label>
-    <input id="prolific_id" name="prolific_id" type="text" minlength="24" maxlength="24" pattern=".{24}" required>
-    <p class="error-message" id="error-msg">Prolific ID must be exactly 24 characters long.</p>
+    <div id="prolific_div">
+        <label for="prolific_id">Enter your Prolific ID: </label>
+        <input id="prolific_id" name="prolific_id" type="text" minlength="24" maxlength="24" pattern=".{24}" required>
+        <p class="error-message" id="error-msg">Prolific ID must be exactly 24 characters long.</p>
     </div>
 </div>
 

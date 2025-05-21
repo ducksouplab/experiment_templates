@@ -26,13 +26,14 @@ Thank you for your participation!
         <!-- Available at some timeslot -->
 
             <script>
-            var selected_day = '{{selected_day}}'
+            var selected_day  = '{{selected_day}}'
             var selected_time = '{{selected_time}}'
             var am_pm         = '{{am_pm}}'
+            var date          = '{{date}}'
             </script>
 
-            <p>Thank you very much for completing this pre-screening experiment and for showing interest in our full 60 minute experiment. 
-            We have confirmed your booking for <span style = "color:red"><strong>Monday, 2025-03-03 at 4:00 PM</strong>.</span>
+            <p>Thank you very much for completing this pre-screening experiment and for showing interest in our full experiment. 
+            We have confirmed your booking for <span><strong>{{selected_day}} {{selected_time}} {{am_pm}}, {{date}}</strong>.</span>
                 We will send you a message concerning the details of your sign-up for the full experiment soon. If you have any questions, please message us directly using Prolific's "contact researcher" feature in your <a href="https://app.prolific.com/submissions?_gl=1*1j8ob7x*_gcl_au*NDExOTA0MTUzLjE2OTc1NTEzNTA." target="_blank">submission page</a>. More info <a href="https://participant-help.prolific.com/hc/en-gb/articles/4417210889234-How-can-I-contact-a-researcher-" target="_blank">here</a>. </p>
 
 

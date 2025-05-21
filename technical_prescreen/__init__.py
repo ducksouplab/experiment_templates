@@ -28,10 +28,21 @@ class C(BaseConstants):
   NUM_ROUNDS = 1
 
 
+#######################################################################
+#########SPECIFY DATE(S) AND TIMESLOT(S) FOR YOUR EXPERIMENT###########
+#######################################################################
+
 global TRACKTIMESLOT 
 TRACKTIMESLOT = {
-    'monday_4:00_PM': 26,  # Set to 18 participants for the 4 PM slot
+    '2025-05-23_Friday_10:00_AM': 3, 
+    '2025-05-22_Thursday_11:00_AM': 2 
 }
+# It is crucial to follow this coding scheme when defining your timeslots: 'DATE_DAY_TIME_AMPM' 
+
+#######################################################################
+#########SPECIFY DATE(S) AND TIMESLOT(S) FOR YOUR EXPERIMENT###########
+#######################################################################
+
 # ----------------------------------------
 # Models
 # ----------------------------------------
@@ -55,10 +66,10 @@ class Player(BasePlayer):
   #audio test variables
   medianVolume   = models.FloatField()
   medianNoise    = models.FloatField()
-  passed_test    = models.BooleanField()
+  passed_test    = models.BooleanField(initial=False)
   available_times = models.StringField()
   prolific_id    = models.StringField(label = "Enter your prolific id.")
-  times_left     = models.StringField()
+  times_left     = models.IntegerField()
 
 # ----------------------------------------
 # Session creation logic
@@ -78,6 +89,15 @@ def creating_session(subsession):
 class Instructions(Page):
   def is_displayed(player):
     return player.round_number == 1
+
+  # def vars_for_template(player):
+  #   keys = list(TRACKTIMESLOT.keys())
+  #   first_key = keys[0]
+  #   selected_day, selected_time, am_pm = first_key.split("_")
+  #   return dict(
+  #       selected_day=selected_day,
+  #       date=DATE
+  #   )
 
 class Prolific_audio_Settings(Page):
   form_model  = 'player'
@@ -201,22 +221,23 @@ class PassedTest(Page):
   def before_next_page(player, timeout_happened):
     if player.available_times != 'Not_available':
       TRACKTIMESLOT[player.available_times] = TRACKTIMESLOT[player.available_times] - 1
-    player.times_left = f'{TRACKTIMESLOT["monday_4:00_PM"]}'
+      player.times_left = TRACKTIMESLOT[player.available_times]
 
 class PrescreenProlificCompensation(Page):
     def vars_for_template(player):
         unavailable = player.field_maybe_none('available_times') == 'Not_available'
-        selected_day, selected_time, am_pm = None, None, None
+        date, selected_day, selected_time, am_pm = None, None, None, None
         
         if (not unavailable) and (player.passed_test):
-            selected_day, selected_time, am_pm = player.available_times.split("_")
+            date, selected_day, selected_time, am_pm = player.available_times.split("_")
             
         return dict(
             passed_test=player.passed_test,
             selected_day=selected_day,
             selected_time=selected_time,
             am_pm=am_pm,
-            unavailable=unavailable
+            unavailable=unavailable,
+            date=date
         )
 # ----------------------------------------
 # Page sequence (shared and custom)
