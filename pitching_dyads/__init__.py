@@ -86,48 +86,22 @@ class Player(BasePlayer):
     
     # Post-conversation rating questions
     post_convo_age = models.StringField(label="How old do you think this person is?", initial="")
-    post_convo_height = models.IntegerField(label="How tall do you estimate this person to be in centimeters?", widget=widgets.RadioSelect, choices=[150, 160, 170, 180, 190, 200, 210])
+    post_convo_height = models.FloatField(label="How tall do you estimate this person to be in centimeters?", widget=widgets.RadioSelect, choices=[150, 160, 170, 180, 190, 200, 210])
     post_convo_weight = models.FloatField(label="How much do you estimate that this person weighs in kilograms?", widget=widgets.RadioSelect, choices=[50, 60, 70, 80, 90, 100, 110, 120])
+    post_convo_likeability = models.IntegerField(label= "How much did you enjoy talking to this person? (1 = not at all, 6 = very much)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
+    post_convo_masculinity = models.IntegerField(label="Hor masculine does this person seem to you? (1 = least masculine, 6 = most masculine)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
     post_convo_trustworthiness = models.IntegerField(label="How trustworthy does this person seem to you? (1 = least trustworthy, 6 = most trustworthy)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q1 = models.IntegerField(label="They have no problems talking in front of a group (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q2 = models.IntegerField(label="At school they found it easy to talk in front of the class (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q3 = models.IntegerField(label="No doubt they’ll make a good leader (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q4 = models.IntegerField(label="They like taking responsibility (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q5 = models.IntegerField(label="They certainly have self-confidence (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q6 = models.IntegerField(label="For the, it is not difficult to start a conversation in a group", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q7 = models.IntegerField(label="They are not shy with strangers(1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q8 = models.IntegerField(label="People turn to them for decisions (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q9 = models.IntegerField(label="They generally put people into contact with each other (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q10 = models.IntegerField(label="When a person is annoying, they put him in his place (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q11 = models.IntegerField(label="If they need something they borrow it from a friend without his approval", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q12 = models.IntegerField(label="They like it when other persons serve them (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q13 = models.IntegerField(label="They quickly feel aggressive with people (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q14 = models.IntegerField(label="They find it important to get their way (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q15 = models.IntegerField(label="They enjoy being in positions where they can give directions to others (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    others_dominance_q16 = models.IntegerField(label="They think that achieving their goals is more important than respecting others (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
+    post_convo_dominance = models.IntegerField(label="If this man got in a fistfight with an average male undergraduate student, this man would probably win. (1 = strongly disagree, 10 = strongly agree)", choices=[1, 2, 3,4,5,6,7,8,9,10], widget=widgets.RadioSelect, blank = True)
 
     
     # Posttest questions
     age = models.StringField(label="How old are you?", initial="")
-    height = models.IntegerField(label="How tall are you in centimeters?", widget=widgets.RadioSelect, choices=[150, 160, 170, 180, 190, 200, 210])
+    height = models.FloatField(label="How tall are you in centimeters?", widget=widgets.RadioSelect, choices=[150, 160, 170, 180, 190, 200, 210])
     weight = models.FloatField(label="How much do you weigh in kilograms?", widget=widgets.RadioSelect, choices=[50, 60, 70, 80, 90, 100, 110, 120])
+    masculinity = models.IntegerField(label="How masculine do you consider yourself to be? (1 = least masculine, 6 = most masculine)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
     trustworthiness = models.IntegerField(label="How trustworthy do you think you are? (1 = least trustworthy, 6 = most trustworthy)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q1 = models.IntegerField(label="I have no problems talking in front of a group (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q2 = models.IntegerField(label="At school I found it easy to talk in front of the class (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q3 = models.IntegerField(label="No doubt I’ll make a good leader (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q4 = models.IntegerField(label="I like taking responsibility (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q5 = models.IntegerField(label="I certainly have self-confidence (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q6 = models.IntegerField(label="For me it is not difficult to start a conversation in a group (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q7 = models.IntegerField(label="I am not shy with strangers (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q8 = models.IntegerField(label="People turn to me for decisions(1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q9 = models.IntegerField(label="I generally put people into contact with each other (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q10 = models.IntegerField(label="When a person is annoying, I put him in his place (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q11 = models.IntegerField(label="If I need something I borrow it from a friend without his approval (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q12 = models.IntegerField(label="I like it when other persons serve me (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q13 = models.IntegerField(label="I quickly feel aggressive with people (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q14 = models.IntegerField(label="I find it important to get my way (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q15 = models.IntegerField(label="I enjoy being in positions where I can give directions to others (1 = least true, 6 = most true)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance_q16 = models.IntegerField(label="I think that achieving my goals is more important than respecting others (1 = least true, 6 = most true)" , choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
+    dominance = models.IntegerField(label="If I got in a fistfight with an average male undergraduate student, I would probably win. (1 = strongly disagree, 10 = strongly agree)", choices=[1,2,3,4,5,6,7,8,9,10], widget=widgets.RadioSelect, blank = True)
+
 
     # Debiref variables
     prolific_id = models.StringField(label="Please enter your Prolific ID:",initial="")
@@ -136,7 +110,7 @@ class Player(BasePlayer):
     final_conversation_fidelity = models.IntegerField(label="How well could you understand the conversation? (1 = the worst understanding, 6 = the best understanding)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
     final_conversation_fidelity_comment = models.StringField(label="Additional comments about the conversation clarity:",initial="")
     unique_interactions = models.IntegerField(label="During the experiment, you interacted with different individuals. Reflecting on your experience, please indicate how many different individuals you felt you interacted with during the experiment. Enter a numeric value.")
-    stim_manip_detec = models.StringField(label="Did you notice anything unusual or unexpected about the task or the discussion with your partner?")
+    stim_manip_detec = models.StringField(label="Did you notice anything unusual or unexpected about the conversation with your partner?")
     manip_yes_no = models.BooleanField(label="Did you notice any manipulations in the experiment?",blank=True)
     detection_degree = models.IntegerField(label="On a scale from 0 to 100, how confident are you that there was a manipulation?",min=0, max=100)
     final_manipulation_comment = models.StringField(label="If you noticed any manipulations in the experiment, please describe them:",initial="", blank=True)
@@ -154,6 +128,10 @@ class Introduction(Page):
     def is_displayed(player):
         return player.round_number == 1
     
+class TechnicalSpecs(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
 
 class AudioConfig(Page):
   form_model  = 'player'
@@ -301,29 +279,10 @@ class PostConvo(Page):
         'post_convo_age', 
         'post_convo_weight', 
         'post_convo_height', 
-        'post_convo_trustworthiness', 
-        'others_dominance_q1', 
-        'others_dominance_q2', 
-        'others_dominance_q3', 
-        'others_dominance_q4',
-        'others_dominance_q5', 
-        'others_dominance_q6', 
-        'others_dominance_q7', 
-        'others_dominance_q8', 
-        'others_dominance_q9', 
-        'others_dominance_q10',
-        'others_dominance_q11', 
-        'others_dominance_q12', 
-        'others_dominance_q13', 
-        'others_dominance_q14', 
-        'others_dominance_q15', 
-        'others_dominance_q16'
-    ]
-    
-    def vars_for_template(self):
-        return {
-            'others_dominance_fields': ['others_dominance_q' + str(i) for i in range(1, 17)]
-        }
+        'post_convo_likeability',
+        'post_convo_masculinity',
+        'post_convo_trustworthiness',
+        'post_convo_dominance']
 
 class NewRound(Page):
   timeout_seconds = 6
@@ -342,84 +301,33 @@ class PostTest(Page):
         'age', 
         'height', 
         'weight', 
-        'trustworthiness', 
-        'dominance_q1', 
-        'dominance_q2', 
-        'dominance_q3', 
-        'dominance_q4',
-        'dominance_q5', 
-        'dominance_q6', 
-        'dominance_q7', 
-        'dominance_q8', 
-        'dominance_q9', 
-        'dominance_q10',
-        'dominance_q11', 
-        'dominance_q12', 
-        'dominance_q13', 
-        'dominance_q14', 
-        'dominance_q15', 
-        'dominance_q16'
-    ]
+        'trustworthiness',
+        'masculinity',
+        'dominance']
   
     @staticmethod
     def is_displayed(player):
         return player.round_number == C.NUM_ROUNDS
 
-    def vars_for_template(self):
-        return {
-            'dominance_fields': ['dominance_q' + str(i) for i in range(1, 17)]
-        }
+class Debrief_1(Page):
+   form_model  = 'player'
+   form_fields = ['final_quality', 'final_quality_comment', 'final_conversation_fidelity', 'final_conversation_fidelity_comment', 'final_xp_goal', 'stim_manip_detec']
+   def is_displayed(player):
+    return player.round_number == C.NUM_ROUNDS
 
-class Debrief(Page):
-    form_model = 'player'
-    form_fields = [
-        'prolific_id',
-        'final_quality', 
-        'final_quality_comment', 
-        'final_conversation_fidelity',
-        'final_conversation_fidelity_comment',
-        'unique_interactions',
-        'stim_manip_detec',
-        'manip_yes_no',
-        'detection_degree',
-        'final_manipulation_comment',
-        'final_xp_goal',
-    ]
 
-    @staticmethod
-    def is_displayed(player):
-        return player.round_number == C.NUM_ROUNDS
-    
-    def vars_for_template(player):
-        return {
-            'debrief_fields': [
-                'prolific_id',
-                'final_quality', 
-                'final_quality_comment', 
-                'final_conversation_fidelity',
-                'final_conversation_fidelity_comment',
-                'unique_interactions',
-                'stim_manip_detec',
-                'manip_yes_no',
-                'detection_degree',
-                'final_manipulation_comment',
-                'final_xp_goal',
-            ]
-        }
-    
-    def error_message(player, values):
-        errors = {}
-        
-        # Add validation if needed
-        # For example, require Prolific ID if you're using Prolific for recruitment
-        if not values['prolific_id']:
-            errors['prolific_id'] = 'Please enter your Prolific ID'
+class Debrief_2(Page):
+  form_model  = 'player'
+  form_fields = ['final_manipulation_comment', 'manip_yes_no','prolific_id','detection_degree']
 
-class MeetingProlificCompensation(Page):
-    template_name = '_pages/meeting/ProlificCompensation.html'
+  def is_displayed(player):
+    return player.round_number == C.NUM_ROUNDS
+
+
+class ProlificCompensation(Page):
     form_model    = 'player'
 
     def is_displayed(player):
         return player.round_number == C.NUM_ROUNDS
 
-page_sequence = [DropoutCheck, Introduction, AudioConfig, FirstRound, InteractionWait, Interact, PostConvo, NewRound, PostTest, Debrief, MeetingProlificCompensation]
+page_sequence = [DropoutCheck, Introduction, TechnicalSpecs, AudioConfig, FirstRound, InteractionWait, Interact, PostConvo, NewRound, PostTest, Debrief_1, Debrief_2, ProlificCompensation]

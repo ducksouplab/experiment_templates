@@ -1,0 +1,185 @@
+{{ block title }}
+Final questionnaire
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
+<style>
+.slidecontainer {
+  position:relative;
+  top: 20px;
+  width: 60%; /* Width of the outside container */
+}
+
+.slider {
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;  
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: black;
+  cursor: pointer;
+  }
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: black;
+  cursor: pointer;
+}
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+</style>
+
+{{ endblock }}
+
+{{ block content }}
+  <div class="app-survey">
+
+
+
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            Possibility of a vocal manipulation
+          </p>
+          <p class="fw-light">
+            For some randomly selected participants in the experiment, the voice they heard of their conversation partner was filtered to make the person appear either more dominant (lower pitch) or less dominant (higher pitch) than they actually were. 
+            These participants interacted with a real person who was unaware that we had manipulated the pitch of their voice. This digital manipulation, for the participants for whom it occurred, is quite realistic. 
+            However, a certain number of participants had completely normal interactions without any voices being filtered.
+          </p>
+
+          <div class = "mb-3 _formfield">
+            <label class = "fw-light" for= "id_manip">Did you at any point during the experiment notice vocal manipulation of the participant you were interacting with?</label>
+          <div class = "controls">
+          <div class = "form_check" style = "position: relative; top: 10px;">
+            <input class="form-check-input" type = "radio" id = "id_manip_0" name = "manip_yes_no" required
+            value = "True">
+            <label for="id_manip-0">Yes</label>
+            <input class="form-check-input" type = "radio" id = "id_manip_1" name = "manip_yes_no" required
+            value = "False">
+            <label for="id_manip-1">No</label>
+          
+          </div>
+        </div>
+      </div>
+
+
+          <p class="fw-light" id = "question_div" style = "display: none; position: relative; top:20px;">
+            In how many percent of trials do you suspect that your conversation partner had a manipulated voice?
+          </p>
+        </div>
+      </div>
+      <div class="slidecontainer" style = "display: none; position: relative; left: 40px; top: 25px;">
+        <input type="range" min="0" max="100" value="50" class="slider" id="myRange" name = 'detection_degree'>
+        <span class="slider-label">0%</span>
+        <span id="sliderValue" style = "position: relative; left: 42%;">50</span>
+        <span class="slider-label" style = 'position: absolute; left: 98%'>100%</span>
+      </div>
+    </div>
+
+    <div class="mb-5" id = "respond_div" style = "position: relative; display: none; top: 20px;">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            What allows you to respond this way?
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="final_manipulation_comment" class="form-control" id = form_control_id></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div class="row">
+        <div class="col">
+          <p style="margin-bottom: 0;">
+            Please enter your prolific-ID in the following box:
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <textarea name="prolific_id" class="form-control" required></textarea>
+        </div>
+      </div>
+    </div>
+
+
+    <button class="otree-btn-next btn btn-primary">Next</button>
+  </form>
+  </div>
+
+<script>
+  /*Elements for eventlistening*/
+  const yes_button = document.querySelector("#id_manip_0")
+  const no_button = document.querySelector("#id_manip_1")
+
+  /*Conditionally hidden elements*/
+  const question_div = document.querySelector("#question_div");
+  const respond_div = document.querySelector("#respond_div");
+  const slider_div = document.querySelector(".slidecontainer")
+
+   /*Conditional "requirement=True"-elements*/
+  var final_manipulation_radio = document.querySelectorAll('input[name="final_manipulation"]');
+  var final_manipulation_comment = document.querySelectorAll('textarea[name="final_manipulation_comment"]');
+  
+  yes_button.addEventListener("click", e => {
+    question_div.style.display = "block"; /*Hidden inline by default*/
+    respond_div.style.display = "block"; /*Hidden inline by default*/
+    slider_div.style.display = "block";/*Hidden inline by default*/
+    final_manipulation_radio.forEach(radio => {
+          radio.setAttribute("required", "");
+        });
+    document.getElementById("form_control_id").required = true;
+    slider.value = "50";
+  
+  })
+
+var slider = document.getElementById("myRange");
+var output = document.getElementById("sliderValue");
+output.innerHTML = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+
+  no_button.addEventListener("click", e => {
+    question_div.style.display = "none";
+    respond_div.style.display = "none";
+    slider_div.style.display = "none";
+    final_manipulation_radio.forEach(radio => {
+          radio.removeAttribute("required");
+        });
+        final_manipulation_comment.forEach(comment => {
+          comment.removeAttribute("required");
+        });
+    slider.value = "-1";
+  })
+
+
+
+  </script>
+
+{{ endblock }}
+
+

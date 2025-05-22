@@ -1,0 +1,33 @@
+{{ block title }}
+Technical Specs
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+{{ endblock }}
+
+{{ block content }}
+
+<h4>Technical settings</h4>
+
+
+<p style = "font-size: 18px;">In order to ensure that participants can hear you correctly, <span style = "color: red;">please make sure that you comply with all the following points:</span> </p>
+<ul>
+  <li>You are using a laptop or a desktop computer (not a smartphone).</li>
+  <li>You are <strong>close to your microphone</strong> and in an environment <strong>without background noise</strong>.</li>
+  <li>You have headphones, preferably in-ear, to listen to other participants.</li>
+	<li>You are using the <strong>latest version of the Chrome browser</strong> (Other browsers DO NOT WORK). If you are not using the latest version of Chrome please update your software.</li>
+  <!-- <li>If you use a VPN or a Firewall, turn it OFF. </li>-->
+  <li>You have a good internet connection (prefer an ethernet connection to wifi or 4G)</li>
+	<li>Please <strong>stay on the experiment window</strong> throughout the experiment and do not do anything else during the experiment.</li>
+  <li>Please close other applications that use your webcam or microphone (like Zoom or Skype).</li>
+	<li>Please close all tabs (or applications) that consume bandwidth (e.g., Netflix, Youtube or download applications).</li>
+  <!-- <li>If you have problems during the experiment send an SMS to +46767813500</li> -->
+</ul>
+
+When you are ready click Next.
+
+<div class="float-end mt-4">
+  <button class="otree-btn-next btn btn-primary">Next</button>
+</div>
+{{ endblock }}

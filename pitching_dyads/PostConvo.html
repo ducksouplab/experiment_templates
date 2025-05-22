@@ -5,49 +5,22 @@
 {% block content %}
 <form method="post">
     <div class="instruction">
-        <p><strong>Part 1: Instructions:</strong></p>
+        <p><strong>Instructions:</strong></p>
         <p>Please answer the following questions based on your perception of the person you just spoke with. 
             
             Try your best to answer each questions carefully even though you only talked for a little bit. 
             Trust your gut instinct.
-
-            <br /><br />
-            
-            Estimate their age in years. Estimate their weight (in kilograms) and height (in centimenters). 
-            
-            Also rate their trustworthiness on a scale from 1 to 6, 
-            
-            1 being the least trustworthy and 6 being the most trustworthy.</p>
     </div>
 
     <div class="horizontal-radio">
     {{ formfield 'post_convo_age' }}
     {{ formfield 'post_convo_weight' }}
     {{ formfield 'post_convo_height' }}
+    {{ formfield 'post_convo_likeability' }}
+    {{ formfield 'post_convo_masculinity' }}
     {{ formfield 'post_convo_trustworthiness' }}
+    {{ formfield 'post_convo_dominance' }}
     </div>
-
-    <div class="instruction">
-        <p><strong>Part 2: Instructions:</strong></p>
-        <p>You will be presented with 16 statements about the person you just spoke with. 
-            
-         Please read each statement carefully and rate how much you agree with each statement 
-         on a scale from 1 to 6, 1 being the least and 6 being the most. 
-
-         <br /><br />
-         
-         Answer on intuition, do not think too long for each answer. 
-         
-         When you have rated all of the statements, click the next-button.</p>
-    </div>
-
-    <form method="post">
-        <div class="horizontal-radio">
-        {% for field_name in others_dominance_fields %}
-            {{ formfield field_name }}
-        {% endfor %}
-        </div>
-    </form>
 
     <div style="text-align: center; margin-top: 30px;">
         <button class="btn btn-primary" type="submit">Next</button>
