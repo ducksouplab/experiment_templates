@@ -1,0 +1,56 @@
+{{ extends 'otree/Page.html' }}
+{{ block title }}
+Settings
+{{ endblock }}
+
+{{ block global_styles }}
+<link rel="stylesheet" href="{{ static 'global/styles/settings.css' }}" type="text/css">
+{{ endblock }}
+
+{% block global_scripts %}
+<script src="{{ static 'global/scripts/settings-5X6DVK3O.js' }}"></script>
+{% endblock %}
+
+{{ block content }}
+<div class="row">
+  <div class="col-5">
+    <div class="mb-3">
+      <label for="video-source" class="form-label">Choice of webcam</label>
+      <select id="video-source" class="form-select form-select-sm"></select>
+    </div>
+    <div class="mb-3">
+      <label for="audio-source" class="form-label">
+        Choice of audio input
+        <div class="progress">
+          <div id="meter" class="progress-bar bg-info" role="progressbar" style="width: 0%"></div>
+        </div>
+      </label>
+      <select id="audio-source" class="form-select form-select-sm"></select>
+    </div>
+  </div>
+  <div class="col-7">
+    <p>Make sure the audio input is properly configured :  you see the blue meter (on the left of the screen) move when you speak.</p>
+    <p>The other participants will see you as below. Keep your position <strong>centered in front of the camera</strong> and find a suitable brightness setting.</p>
+    <div id="selfie">
+      <video playsinline autoplay id="stream"></video>
+    </div>
+    <div id="selfie-ux">
+      <button class="btn btn-primary float-end d-none" id="ok">Start</button>
+    </div>
+    <p class="mt-5">In case of problems during the experiment:</p>
+    <ul>
+      <li>Make sure you are using the latest version of the Chrome browser and that you are connected to the internet</li>
+      <li>Wait a few seconds and reload the page</li>
+      <li>Contact the experimenter</li>
+
+    </ul>
+  </div>
+</div>
+
+<div class="d-none">
+  <form>
+    <input type="hidden" id="audio_source_id" name="audio_source_id" />
+    <input type="hidden" id="video_source_id" name="video_source_id" />
+  </form>
+</div>
+{{ endblock }}

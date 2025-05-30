@@ -122,7 +122,17 @@ SESSION_CONFIGS = [
 			participant_label_file = '_rooms/n8.txt',
 			num_participants_allowed=[4,6],
 			doc="The number of participants must be 4 or 6"
-		)
+		),
+			dict(
+			id='meeting_visual_smile_CK_brainstorm', 
+			name='meeting_visual_smile_CK_brainstorm',
+			display_name='meeting_visual_smile_CK_brainstorm',
+			app_sequence=['meeting_visual_smile_CK_brainstorm'],
+			num_demo_participants=8,
+			participant_label_file='_rooms/n8.txt',
+			num_participants_allowed=[2, 4, 6, 8, 10, 12, 14],
+			doc="The number of participants must be between 2 and 14"
+			)
 ]
 			
 

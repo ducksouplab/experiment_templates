@@ -1,0 +1,119 @@
+{% extends "global/Page.html" %}
+
+{% block global_styles %}
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+<link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
+<style>
+  .radio-inline {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+
+  .radio-inline input[type="radio"] {
+    margin: 0;
+    margin-right: 4px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<form>
+  <div class="app-survey">
+    <h3>Section A: Demographics</h3>
+
+    <p>1. Age:</p>
+    <input type="number" name="age" class="form-control" required>
+
+    <p>2. Gender:</p>
+    <select name="gender" class="form-control" required>
+      <option value="">Select...</option>
+      <option value="Female">Female</option>
+      <option value="Male">Male</option>
+      <option value="Non-binary">Non-binary</option>
+      <option value="Prefer not to say">Prefer not to say</option>
+    </select>
+
+    <p>3. Are you a native English speaker?</p>
+    <div class="radio-inline"><input type="radio" name="native_english" value="1" required> Yes</div>
+    <div class="radio-inline"><input type="radio" name="native_english" value="0"> No</div>
+
+    <p>4. How confident are you with video calls? (1 = Not at all, 7 = Very)</p>
+    {% for i in range(1,8) %}
+      <div class="radio-inline"><input type="radio" name="video_confidence" value="{{ i }}" required> {{ i }}</div>
+    {% endfor %}
+
+    <h3>Section B: Mood & Affect (PANAS)</h3>
+    <p>Please rate how you feel right now (1 = Very slightly or not at all, 5 = Extremely)</p>
+
+    <p>Interested:</p>
+    {% for i in range(1,6) %}
+      <div class="radio-inline"><input type="radio" name="mood_interested" value="{{ i }}" required> {{ i }}</div>
+    {% endfor %}
+
+    <p>Alert:</p>
+    {% for i in range(1,6) %}
+      <div class="radio-inline"><input type="radio" name="mood_alert" value="{{ i }}" required> {{ i }}</div>
+    {% endfor %}
+
+    <p>Inspired:</p>
+    {% for i in range(1,6) %}
+      <div class="radio-inline"><input type="radio" name="mood_inspired" value="{{ i }}" required> {{ i }}</div>
+    {% endfor %}
+
+    <p>Determined:</p>
+    {% for i in range(1,6) %}
+      <div class="radio-inline"><input type="radio" name="mood_determined" value="{{ i }}" required> {{ i }}</div>
+    {% endfor %}
+
+    <p>Attentive:</p>
+    {% for i in range(1,6) %}
+      <div class="radio-inline"><input type="radio" name="mood_attentive" value="{{ i }}" required> {{ i }}</div>
+    {% endfor %}
+
+    <p>Nervous:</p>
+    {% for i in range(1,6) %}
+      <div class="radio-inline"><input type="radio" name="mood_nervous" value="{{ i }}" required> {{ i }}</div>
+    {% endfor %}
+
+    <p>Upset:</p>
+    {% for i in range(1,6) %}
+      <div class="radio-inline"><input type="radio" name="mood_upset" value="{{ i }}" required> {{ i }}</div>
+    {% endfor %}
+
+    <p>Hostile:</p>
+    {% for i in range(1,6) %}
+      <div class="radio-inline"><input type="radio" name="mood_hostile" value="{{ i }}" required> {{ i }}</div>
+    {% endfor %}
+
+    <p>Ashamed:</p>
+    {% for i in range(1,6) %}
+      <div class="radio-inline"><input type="radio" name="mood_ashamed" value="{{ i }}" required> {{ i }}</div>
+    {% endfor %}
+
+    <p>Jittery:</p>
+    {% for i in range(1,6) %}
+      <div class="radio-inline"><input type="radio" name="mood_jittery" value="{{ i }}" required> {{ i }}</div>
+    {% endfor %}
+
+    <h3>Section C: Dispositional Traits</h3>
+
+    <p>I enjoy exploring new ideas.</p>
+    {% for i in range(1,8) %}
+      <div class="radio-inline"><input type="radio" name="exploring_ideas" value="{{ i }}" required> {{ i }}</div>
+    {% endfor %}
+
+    <p>I consider myself a creative person.</p>
+    {% for i in range(1,8) %}
+      <div class="radio-inline"><input type="radio" name="creative_self" value="{{ i }}" required> {{ i }}</div>
+    {% endfor %}
+
+    <p>I enjoy interacting with others, even in unfamiliar settings.</p>
+    {% for i in range(1,8) %}
+      <div class="radio-inline"><input type="radio" name="social_enjoyment" value="{{ i }}" required> {{ i }}</div>
+    {% endfor %}
+
+    <button class="otree-btn-next btn btn-primary">Next</button>
+  </div>
+</form>
+{% endblock %}

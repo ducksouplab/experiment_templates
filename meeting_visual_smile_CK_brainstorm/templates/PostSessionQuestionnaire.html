@@ -1,0 +1,102 @@
+{% extends "global/Page.html" %}
+
+{% block global_styles %}
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+<link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
+{% endblock %}
+
+{% block content %}
+<form>
+  <div class="app-survey">
+
+    <h3>Section A: Cognitive Focus</h3>
+    <p>How mentally focused were you during the interaction?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="cognitive_focus" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <p>How much attention did you pay to your screen during the task?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="screen_attention" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <p>To what extent were you focused on your partner’s face or expressions?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="zoomed_in" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <p>How much did you notice things happening around you (outside the screen)?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="peripheral_notice" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <h3>Section B: Creative Engagement</h3>
+    <p>How many different ideas did you or your partner generate?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="idea_variety" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <p>How original or creative did the ideas seem?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="idea_creativity" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <p>How difficult was it to come up with new ideas?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="idea_struggle" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <p>How easily were you able to switch between different ideas or directions?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="mental_flexibility" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <h3>Section C: Emotional and Social Dynamics</h3>
+    <p>Overall, how positive did you feel during the interaction?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="positive_feeling" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <p>How friendly did your partner seem to you?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="partner_friendly" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <p>How natural or comfortable did the conversation feel?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="natural_interaction" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <p>How much did you notice your partner smiling during the interaction?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="noticed_smile" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <p>How much did you smile during the interaction?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="smiled_self" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <h3>Section D: Smile Manipulation Awareness</h3>
+    <p>Did the video or visual experience feel unusual or strange in any way?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="video_unusual" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <p>Did your partner’s facial expressions appear altered or artificial?</p>
+    {% for i in range(1,8) %}
+      <label><input type="radio" name="expression_altered" value="{{ i }}" required> {{ i }}</label>
+    {% endfor %}
+
+    <h3>Section E: Post-Mood Check (PANAS)</h3>
+    {% for field in ['interested', 'alert', 'inspired', 'determined', 'attentive', 'nervous', 'upset', 'hostile', 'ashamed', 'jittery'] %}
+      <p>{{ field }}</p>
+      {% for i in range(1,6) %}
+        <label><input type="radio" name="post_mood_{{ field }}" value="{{ i }}" required> {{ i }}</label>
+      {% endfor %}
+    {% endfor %}
+
+    <button class="otree-btn-next btn btn-primary">Next</button>
+  </div>
+</form>
+{% endblock %}
