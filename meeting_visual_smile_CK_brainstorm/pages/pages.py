@@ -14,17 +14,17 @@ class BrainstormWaitBeforeInteract(WaitPage):
             player.dyad = ''.join(map(str, sorted([player.user_id, player.other_id])))
 
 class BrainstormComment(Page):
-    template_name = 'Comment.en.html'
+    template_name = 'meeting_visual_smile_CK_brainstorm/templates/Comment.en.html'
     form_model = 'player'
     form_fields = ['liked', 'other_liked', 'conversation_quality', 'video_conf_quality']
 
 class BrainstormTopic(Page):
     timeout_seconds = 6
-    template_name = 'Topic.en.html'
+    template_name = 'meeting_visual_smile_CK_brainstorm/templates/Topic.en.html'
 
 class TopicInstructions(Page):
     form_model = 'player'
-    template_name = 'TopicInstructions.html'
+    template_name = 'meeting_visual_smile_CK_brainstorm/templates/TopicInstructions.html'
 
     def vars_for_template(player):
         return {
@@ -32,7 +32,7 @@ class TopicInstructions(Page):
         }
 
 class BrainstormDebriefing1(Page):
-    template_name = 'debriefing_1_bm.en.html'
+    template_name = 'meeting_visual_smile_CK_brainstorm/templates/debriefing_1_bm.en.html'
     form_model = 'player'
     form_fields = [
         'final_quality', 'final_quality_comment',
@@ -44,21 +44,27 @@ class BrainstormDebriefing1(Page):
         return player.round_number == 5
 
 class BrainstormDebriefing2(Page):
-    template_name = 'debriefing_2_bm.en.html'
+    template_name = 'meeting_visual_smile_CK_brainstorm/templates/debriefing_2_bm.en.html'
     form_model = 'player'
     form_fields = ['final_manipulation', 'final_manipulation_comment']
 
     def is_displayed(player):
         return player.round_number == 5
 
+class DropoutCheck(Page):
+    template_name = 'meeting_visual_smile_CK_brainstorm/templates/DropoutCheck.html'
+
+    def is_displayed(player):
+        return player.round_number == 1
+
 class BaseIntroduction(Page):
-    template_name = 'Introduction.en.html'
+    template_name = 'meeting_visual_smile_CK_brainstorm/templates/Introduction.en.html'
 
     def is_displayed(player):
         return player.round_number == 1
 
 class ProlificIntroduction(Page):
-    template_name = 'ProlificIntroduction.en.html'
+    template_name = 'meeting_visual_smile_CK_brainstorm/templates/ProlificIntroduction.en.html'
 
     def is_displayed(player):
         return player.round_number == 1
@@ -85,7 +91,7 @@ class ProlificWaitForAll(WaitPage):
     )
 
 class BaseSettings(Page):
-    template_name = 'Settings.en.html'
+    template_name = 'meeting_visual_smile_CK_brainstorm/templates/Settings.en.html'
     form_model = 'player'
     form_fields = ['audio_source_id', 'video_source_id']
 
@@ -102,7 +108,7 @@ class BaseSettings(Page):
             return {player.id_in_group: 'start'}
 
 class ProlificSettings(Page):
-    template_name = 'ProlificSettings.en.html'
+    template_name = 'meeting_visual_smile_CK_brainstorm/templates/ProlificSettings.en.html'
     form_model = 'player'
     form_fields = ['audio_source_id', 'video_source_id']
 
@@ -119,7 +125,7 @@ class ProlificSettings(Page):
             return {player.id_in_group: 'start'}
 
 class BasePicture(Page):
-    template_name = 'Picture.en.html'
+    template_name = 'meeting_visual_smile_CK_brainstorm/templates/Picture.en.html'
     form_model = 'player'
     form_fields = ['audio_source_id', 'video_source_id', 'image_data']
 
@@ -137,31 +143,9 @@ class BasePicture(Page):
             return {player.id_in_group: 'start'}
 
 class BaseEnd(Page):
-    template_name = 'End.en.html'
+    template_name = 'meeting_visual_smile_CK_brainstorm/templates/End.en.html'
     form_model = 'player'
 
     def is_displayed(player):
         return player.round_number == 5
 
-# ----------------------------
-# French-language versions
-# ----------------------------
-
-class BaseIntroductionFr(BaseIntroduction):
-    template_name = 'Introduction.fr.html'
-
-class BaseWaitForAllFr(BaseWaitForAll):
-    title_text = "Veuillez patienter"
-    body_text = (
-        "Merci de participer à cette expérience. Nous attendons que tous les participants soient connectés "
-        "pour commencer l'expérience. Merci de patienter quelques minutes. Le temps d'attente est d'environ cinq minutes."
-    )
-
-class BaseSettingsFr(BaseSettings):
-    template_name = 'Settings.fr.html'
-
-class BasePictureFr(BasePicture):
-    template_name = 'Picture.fr.html'
-
-class BaseEndFr(BaseEnd):
-    template_name = 'End.fr.html'

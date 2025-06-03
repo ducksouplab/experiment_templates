@@ -9,7 +9,9 @@ from config import Env
 # from _lib.brainstorm.pages import *
 # from _lib.meeting.pages import *
 from .pages.pages import (
+    DropoutCheck,
     BaseIntroduction,
+    ProlificSettings,
     BaseSettings,
     BaseWaitForAll,
     TopicInstructions,
@@ -72,17 +74,27 @@ TRANSFORMATION = [
   [None, False, True, False, True],  # M3
   [None, False, True, False, True],  # M4
 ]
+
+def generate_shuffled_transformation(matrix):
+    num_rounds = len(matrix[0])
+    column_order = list(range(num_rounds))
+    random.shuffle(column_order)
+    return [
+        [row[i] for i in column_order]
+        for row in matrix
+    ]
+
 class C(BaseConstants):
   NAME_IN_URL = 'meeting_visual_smile_CK_brainstorm'
   PLAYERS_PER_GROUP = 2
   NUM_ROUNDS = 5
   TOPICS = [
-    ("TinCan", "During the next interaction, we would like you to brainstorm with the other person as many alternative uses for an empty tin can as possible."),
-    ("Sponge", "During the next interaction, we would like you to brainstorm with the other person as many alternative uses for a sponge as possible."),
-    ("Shoebox", "During the next interaction, we would like you to brainstorm with the other person as many alternative uses for a shoebox as possible."),
-    ("Paperclip", "During the next interaction, we would like you to brainstorm with the other person as many alternative uses for a paperclip as possible."),
-    ("Towel", "During the next interaction, we would like you to brainstorm with the other person as many alternative uses for a towel as possible.")
-          ]
+    ("TinCan", "In the next interaction, your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for an <b style='color:red;'>empty tin can</b> as you can. Don't hold back — the more imaginative, the better!"),
+    ("Sponge", "In the next interaction, your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for a <b style='color:red;'>sponge</b> as you can. Don't hold back — the more imaginative, the better!"),
+    ("Shoebox", "In the next interaction, your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for a <b style='color:red;'>shoebox</b> as you can. Don't hold back — the more imaginative, the better!"),
+    ("Paperclip", "In the next interaction, your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for a <b style='color:red;'>paperclip</b> as you can. Don't hold back — the more imaginative, the better!"),
+    ("Towel", "In the next interaction, your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for a <b style='color:red;'>towel</b> as you can. Don't hold back — the more imaginative, the better!"),
+  ]
   shuffle(TOPICS)
 
 # ----------------------------------------
@@ -133,8 +145,8 @@ class Player(BasePlayer):
   share_prolific_id                   = models.StringField(initial="")
   # --- Baseline Questionnaire ---
   age = models.IntegerField()
-  gender = models.StringField(choices=['Female', 'Male', 'Non-binary', 'Prefer not to say'])
-  native_english = models.BooleanField()
+  gender = models.StringField(choices=['Female', 'Male', 'Non-binary', 'Other', 'Prefer not to say'])
+  native_english = models.StringField(choices=['Yes', 'No', 'Non-binary', 'Other', 'Prefer not to say'])
   video_confidence = models.IntegerField(min=1, max=7)
 
   mood_interested = models.IntegerField(min=1, max=5)
@@ -200,6 +212,8 @@ def other_id_in_round(participant_id, round_index):
       return pair[0]
 
 def creating_session(subsession):
+  if 'TRANSFORMATION' not in subsession.session.vars:
+    subsession.session.vars['TRANSFORMATION'] = generate_shuffled_transformation(TRANSFORMATION)
   num_participants = len(subsession.get_players())
   if num_participants != 8: raise ValueError("There must be 8 participants")
 
@@ -223,13 +237,13 @@ def creating_session(subsession):
     player.sid = subsession.session.config['id']
 
     # Handle Smile / Unsmile / Control (None)
-    participant_transformation = TRANSFORMATION[participant_index][round_index]
+    participant_transformation = subsession.session.vars['TRANSFORMATION'][participant_index][round_index]
     if participant_transformation is None:
         player.participant_condition = 'N'
     else:
         player.participant_condition = 'S' if participant_transformation else 'U'
 
-    other_transformation = TRANSFORMATION[other_index][round_index]
+    other_transformation = subsession.session.vars['TRANSFORMATION'][other_index][round_index]
     if other_transformation is None:
         player.other_condition = 'N'
     else:
@@ -270,7 +284,7 @@ class Interact(Page):
     interaction_name = f'{str(player.round_number)}-{player.dyad}'
     participant_index = player.participant.id_in_session - 1
     round_index = player.round_number - 1
-    has_smile = TRANSFORMATION[participant_index][round_index]
+    has_smile = player.session.vars['TRANSFORMATION'][participant_index][round_index]
 
 
     video_fx_name = "video_fx"
@@ -369,7 +383,7 @@ class BaselineQuestionnaire(Page):
 class PostSessionQuestionnaire(Page):
     template_name = 'meeting_visual_smile_CK_brainstorm/templates/PostSessionQuestionnaire.html'
     form_model = 'player'
-    def is_displayed(player): return player.round_number == C.NUM_ROUNDS
+    def is_displayed(player): return True
     form_fields = [
         'cognitive_focus', 'screen_attention', 'zoomed_in', 'peripheral_notice',
         'idea_variety', 'idea_creativity', 'idea_struggle', 'mental_flexibility',
@@ -382,4 +396,4 @@ class PostSessionQuestionnaire(Page):
 # ----------------------------------------
 # Page sequence (shared and custom)
 # ----------------------------------------
-page_sequence = [ BaselineQuestionnaire, BaseIntroduction, BaseSettings, BaseWaitForAll, TopicInstructions, BrainstormWaitBeforeInteract, Interact, BrainstormComment, BrainstormDebriefing1, BrainstormDebriefing2, PostSessionQuestionnaire, ProlificCompensation]
+page_sequence = [DropoutCheck, BaseIntroduction, BaselineQuestionnaire, ProlificSettings, BaseWaitForAll, TopicInstructions, BrainstormWaitBeforeInteract, Interact, BrainstormComment, PostSessionQuestionnaire, BrainstormDebriefing1, BrainstormDebriefing2, ProlificCompensation]

@@ -1,0 +1,27 @@
+
+{{ block content }}
+
+<style>
+.otree-timer{
+    display:none;
+}
+
+p{
+    font-size: 20px;
+}
+</style>
+
+<!--SOUND FOR WHEN EXPERIMENT STARTS-->
+<iframe  style="display: none" src="/meeting_visual_smile_CK_brainstorm/sounds/started.wav" allow="autoplay" id="audio"></iframe> <!--To trigger autoplay filter first load-->
+<audio id="player"  style="display: none" autoplay controls><source src="meeting_visual_smile_CK_brainstorm/sounds/started.wav" type="audio/wav"></audio> <!--So that we can then play the ping sound-->
+
+<h1 style="text-align: center;">Engagement Notice</h1>
+<div>
+<p>Dear Participant,</p>
+<p>The experiment just begun. Thank you for joining our experiment. We appreciate your time and commitment. Note that finishing the experiment is extremely important for the integrity of the experiment and for the experience of other participants. Indeed, disconnections and dropouts are very challenging to manage by researchers. Therefore, it is crucial that you complete the <strong>entire experiment</strong>.  Even if you experience technical problems, you will be compensated for your participation. </p> <strong><p style="color: red; font-size: 24px;"> Please click "Next" as soon as possible to continue with the experiment </p></strong>
+
+
+</div>
+<button class="otree-btn-next btn btn-primary">Next</button>
+{{ endblock }}
+

@@ -3,117 +3,218 @@
 {% block global_styles %}
 <link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
 <link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
-<style>
-  .radio-inline {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 10px;
-  }
 
-  .radio-inline input[type="radio"] {
-    margin: 0;
-    margin-right: 4px;
-  }
-</style>
 {% endblock %}
 
 {% block content %}
 <form>
   <div class="app-survey">
+
     <h3>Section A: Demographics</h3>
 
-    <p>1. Age:</p>
-    <input type="number" name="age" class="form-control" required>
+    <div class="mb-4">
+      <p class="fw-bold">1. Age:</p>
+      <input type="number" name="age" class="form-control" required>
+    </div>
 
-    <p>2. Gender:</p>
-    <select name="gender" class="form-control" required>
-      <option value="">Select...</option>
-      <option value="Female">Female</option>
-      <option value="Male">Male</option>
-      <option value="Non-binary">Non-binary</option>
-      <option value="Prefer not to say">Prefer not to say</option>
-    </select>
+    <div class="mb-4">
+      <p class="fw-bold">2. Gender:</p>
+      <select name="gender" class="form-control" required>
+        <option value="">Select...</option>
+        <option value="Female">Female</option>
+        <option value="Male">Male</option>
+        <option value="Non-binary">Non-binary</option>
+        <option value="Other">Other</option>
+        <option value="Prefer not to say">Prefer not to say</option>
+      </select>
+    </div>
 
-    <p>3. Are you a native English speaker?</p>
-    <div class="radio-inline"><input type="radio" name="native_english" value="1" required> Yes</div>
-    <div class="radio-inline"><input type="radio" name="native_english" value="0"> No</div>
+    <div class="mb-4">
+      <p class="fw-bold">3. Are you a native English speaker?</p>
+      <select name="native_english" class="form-control" required>
+        <option value="">Select...</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
 
-    <p>4. How confident are you with video calls? (1 = Not at all, 7 = Very)</p>
-    {% for i in range(1,8) %}
-      <div class="radio-inline"><input type="radio" name="video_confidence" value="{{ i }}" required> {{ i }}</div>
-    {% endfor %}
+    <div class="mb-4">
+      <p class="fw-bold">4. How familiar are you with video calls?<br>(1 = Not at all, 7 = Very)</p>
+      <div class="app-range">
+        {% for i in range(1,8) %}
+        <div class="app-range-item">
+          <label class="app-range-label-up" for="video_confidence_{{ i }}">{{ i }}</label>
+          <input id="video_confidence_{{ i }}" type="radio" name="video_confidence" value="{{ i }}" required>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
 
-    <h3>Section B: Mood & Affect (PANAS)</h3>
-    <p>Please rate how you feel right now (1 = Very slightly or not at all, 5 = Extremely)</p>
+<h3>Section B: Mood & Affect (PANAS)</h3>
+<p class="fw-bold">Please rate how you feel right now (1 = Not at all, 5 = Extremely)</p>
 
-    <p>Interested:</p>
+<div class="mb-4">
+  <p class="fw-bold">Interested:</p>
+  <div class="app-range">
     {% for i in range(1,6) %}
-      <div class="radio-inline"><input type="radio" name="mood_interested" value="{{ i }}" required> {{ i }}</div>
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="mood_interested_{{ i }}">{{ i }}</label>
+        <input id="mood_interested_{{ i }}" type="radio" name="mood_interested" value="{{ i }}" required>
+      </div>
     {% endfor %}
+  </div>
+</div>
 
-    <p>Alert:</p>
+<div class="mb-4">
+  <p class="fw-bold">Alert:</p>
+  <div class="app-range">
     {% for i in range(1,6) %}
-      <div class="radio-inline"><input type="radio" name="mood_alert" value="{{ i }}" required> {{ i }}</div>
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="mood_alert_{{ i }}">{{ i }}</label>
+        <input id="mood_alert_{{ i }}" type="radio" name="mood_alert" value="{{ i }}" required>
+      </div>
     {% endfor %}
+  </div>
+</div>
 
-    <p>Inspired:</p>
+<div class="mb-4">
+  <p class="fw-bold">Inspired:</p>
+  <div class="app-range">
     {% for i in range(1,6) %}
-      <div class="radio-inline"><input type="radio" name="mood_inspired" value="{{ i }}" required> {{ i }}</div>
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="mood_inspired_{{ i }}">{{ i }}</label>
+        <input id="mood_inspired_{{ i }}" type="radio" name="mood_inspired" value="{{ i }}" required>
+      </div>
     {% endfor %}
+  </div>
+</div>
 
-    <p>Determined:</p>
+<div class="mb-4">
+  <p class="fw-bold">Determined:</p>
+  <div class="app-range">
     {% for i in range(1,6) %}
-      <div class="radio-inline"><input type="radio" name="mood_determined" value="{{ i }}" required> {{ i }}</div>
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="mood_determined_{{ i }}">{{ i }}</label>
+        <input id="mood_determined_{{ i }}" type="radio" name="mood_determined" value="{{ i }}" required>
+      </div>
     {% endfor %}
+  </div>
+</div>
 
-    <p>Attentive:</p>
+<div class="mb-4">
+  <p class="fw-bold">Attentive:</p>
+  <div class="app-range">
     {% for i in range(1,6) %}
-      <div class="radio-inline"><input type="radio" name="mood_attentive" value="{{ i }}" required> {{ i }}</div>
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="mood_attentive_{{ i }}">{{ i }}</label>
+        <input id="mood_attentive_{{ i }}" type="radio" name="mood_attentive" value="{{ i }}" required>
+      </div>
     {% endfor %}
+  </div>
+</div>
 
-    <p>Nervous:</p>
+<div class="mb-4">
+  <p class="fw-bold">Nervous:</p>
+  <div class="app-range">
     {% for i in range(1,6) %}
-      <div class="radio-inline"><input type="radio" name="mood_nervous" value="{{ i }}" required> {{ i }}</div>
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="mood_nervous_{{ i }}">{{ i }}</label>
+        <input id="mood_nervous_{{ i }}" type="radio" name="mood_nervous" value="{{ i }}" required>
+      </div>
     {% endfor %}
+  </div>
+</div>
 
-    <p>Upset:</p>
+<div class="mb-4">
+  <p class="fw-bold">Upset:</p>
+  <div class="app-range">
     {% for i in range(1,6) %}
-      <div class="radio-inline"><input type="radio" name="mood_upset" value="{{ i }}" required> {{ i }}</div>
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="mood_upset_{{ i }}">{{ i }}</label>
+        <input id="mood_upset_{{ i }}" type="radio" name="mood_upset" value="{{ i }}" required>
+      </div>
     {% endfor %}
+  </div>
+</div>
 
-    <p>Hostile:</p>
+<div class="mb-4">
+  <p class="fw-bold">Hostile:</p>
+  <div class="app-range">
     {% for i in range(1,6) %}
-      <div class="radio-inline"><input type="radio" name="mood_hostile" value="{{ i }}" required> {{ i }}</div>
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="mood_hostile_{{ i }}">{{ i }}</label>
+        <input id="mood_hostile_{{ i }}" type="radio" name="mood_hostile" value="{{ i }}" required>
+      </div>
     {% endfor %}
+  </div>
+</div>
 
-    <p>Ashamed:</p>
+<div class="mb-4">
+  <p class="fw-bold">Ashamed:</p>
+  <div class="app-range">
     {% for i in range(1,6) %}
-      <div class="radio-inline"><input type="radio" name="mood_ashamed" value="{{ i }}" required> {{ i }}</div>
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="mood_ashamed_{{ i }}">{{ i }}</label>
+        <input id="mood_ashamed_{{ i }}" type="radio" name="mood_ashamed" value="{{ i }}" required>
+      </div>
     {% endfor %}
+  </div>
+</div>
 
-    <p>Jittery:</p>
+<div class="mb-4">
+  <p class="fw-bold">Jittery:</p>
+  <div class="app-range">
     {% for i in range(1,6) %}
-      <div class="radio-inline"><input type="radio" name="mood_jittery" value="{{ i }}" required> {{ i }}</div>
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="mood_jittery_{{ i }}">{{ i }}</label>
+        <input id="mood_jittery_{{ i }}" type="radio" name="mood_jittery" value="{{ i }}" required>
+      </div>
     {% endfor %}
+  </div>
+</div>
+
+
 
     <h3>Section C: Dispositional Traits</h3>
 
-    <p>I enjoy exploring new ideas.</p>
-    {% for i in range(1,8) %}
-      <div class="radio-inline"><input type="radio" name="exploring_ideas" value="{{ i }}" required> {{ i }}</div>
-    {% endfor %}
+    <div class="mb-4">
+      <p class="fw-bold">I enjoy exploring new ideas.<br>(1 = Not at all, 7 = Very)</p>
+      <div class="app-range">
+        {% for i in range(1,8) %}
+        <div class="app-range-item">
+          <label class="app-range-label-up" for="exploring_ideas_{{ i }}">{{ i }}</label>
+          <input id="exploring_ideas_{{ i }}" type="radio" name="exploring_ideas" value="{{ i }}" required>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
 
-    <p>I consider myself a creative person.</p>
-    {% for i in range(1,8) %}
-      <div class="radio-inline"><input type="radio" name="creative_self" value="{{ i }}" required> {{ i }}</div>
-    {% endfor %}
+    <div class="mb-4">
+      <p class="fw-bold">I consider myself a creative person.<br>(1 = Not at all, 7 = Very)</p>
+      <div class="app-range">
+        {% for i in range(1,8) %}
+        <div class="app-range-item">
+          <label class="app-range-label-up" for="creative_self_{{ i }}">{{ i }}</label>
+          <input id="creative_self_{{ i }}" type="radio" name="creative_self" value="{{ i }}" required>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
 
-    <p>I enjoy interacting with others, even in unfamiliar settings.</p>
-    {% for i in range(1,8) %}
-      <div class="radio-inline"><input type="radio" name="social_enjoyment" value="{{ i }}" required> {{ i }}</div>
-    {% endfor %}
+    <div class="mb-4">
+      <p class="fw-bold">I enjoy interacting with others, even in unfamiliar settings.<br>(1 = Not at all, 7 = Very)</p>
+      <div class="app-range">
+        {% for i in range(1,8) %}
+        <div class="app-range-item">
+          <label class="app-range-label-up" for="social_enjoyment_{{ i }}">{{ i }}</label>
+          <input id="social_enjoyment_{{ i }}" type="radio" name="social_enjoyment" value="{{ i }}" required>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
 
     <button class="otree-btn-next btn btn-primary">Next</button>
+
   </div>
 </form>
 {% endblock %}
