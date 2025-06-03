@@ -3,8 +3,8 @@
 {% endblock %}
 
 {% block content %}
-<form method="post">
-    <div class="instruction">
+
+<div class="instruction">
         <p><strong>Instructions:</strong></p>
         <p>Please answer the following questions based on your perception of the person you just spoke with. 
             
@@ -12,20 +12,90 @@
             Trust your gut instinct.
     </div>
 
-    <div class="horizontal-radio">
-    {{ formfield 'post_convo_age' }}
-    {{ formfield 'post_convo_weight' }}
-    {{ formfield 'post_convo_height' }}
-    {{ formfield 'post_convo_likeability' }}
-    {{ formfield 'post_convo_masculinity' }}
-    {{ formfield 'post_convo_trustworthiness' }}
-    {{ formfield 'post_convo_dominance' }}
+<div class="horizontal-radio randomizable-container">
+    <div class="question-item" data-question="age">
+        {{ formfield 'post_convo_age' }}
     </div>
+    
+    <div class="question-item" data-question="height">
+        <div class="slider_div">
+            <p>How tall do you estimate this person to be in centimeters?</p>
+            <div class="slidecontainer">
+                <input type="range" min="150" value="" max="210" class="slider" id="post_convo_height" name='post_convo_height'>
+                <span class="slider-label">150</span>
+                <span id="HeightsliderValue" style="position: relative; left: 42%;"></span>
+                <span class="slider-label" style='position: absolute; left: 98%'>210</span>
+            </div>
+        </div>
+        {{ formfield_errors 'post_convo_height' }}
+    </div>
+    
+    <div class="question-item" data-question="weight">
+        <div class="slider_div">
+            <p>How much do you estimate that this person weighs in kilograms?</p>
+            <div class="slidecontainer">
+                <input type="range" min="50" value="" max="120" class="slider" id="post_convo_weight" name='post_convo_weight'>
+                <span class="slider-label">50</span>
+                <span id="WeightsliderValue" style="position: relative; left: 42%;"></span>
+                <span class="slider-label" style='position: absolute; left: 98%'>120</span>
+            </div>
+        </div>
+        {{ formfield_errors 'post_convo_weight' }}
+    </div>
+    
+    <div class="question-item" data-question="likeability">
+        {{ formfield 'post_convo_likeability' }}
+    </div>
+    
+    <div class="question-item" data-question="masculinity">
+        {{ formfield 'post_convo_masculinity' }}
+    </div>
+    
+    <div class="question-item" data-question="trustworthiness">
+        {{ formfield 'post_convo_trustworthiness' }}
+    </div>
+    
+    <div class="question-item" data-question="dominance">
+        {{ formfield 'post_convo_dominance' }}
+    </div>
+</div>
 
     <div style="text-align: center; margin-top: 30px;">
         <button class="btn btn-primary" type="submit">Next</button>
     </div>
 </form>
+
+<script>
+    var weight_slider = document.getElementById("post_convo_weight");
+    var weight_output = document.getElementById("WeightsliderValue");
+    weight_slider.oninput = function() {
+        weight_output.innerHTML = this.value  + " " + "kg";
+    }
+
+    var height_slider = document.getElementById("post_convo_height");
+    var height_output = document.getElementById("HeightsliderValue");
+    height_slider.oninput = function() {
+        height_output.innerHTML = this.value + " " + "cm";
+    }
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('.randomizable-container');
+    const questions = Array.from(container.children);
+    
+    // Shuffle the questions array
+    for (let i = questions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questions[i], questions[j]] = [questions[j], questions[i]];
+    }
+    
+    // Clear container and append in new order
+    container.innerHTML = '';
+    questions.forEach(question => container.appendChild(question));
+});
+</script>
 
 <style>
     body {
@@ -59,5 +129,62 @@
         margin-top: 5px;
         font-size: 0.9em;
     }
+    
+    /* Slider styling */
+    .slidecontainer {
+    position:relative;
+    width: 70%; /* Width of the outside container */
+    justify-self: center;
+    }
+
+    .slider {
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;  
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    }
+
+    .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; 
+    background: black;
+    cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: black;
+    cursor: pointer;
+    }
+
+    /* Mouse-over effects */
+    .slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+    }
+
+    .slider_div{
+    display: grid;
+    }
+
+    /* Randomization of question order */
+
+    .randomizable-container {
+    display: flex;
+    flex-direction: column;
+    }
+
+    .question-item {
+        margin-bottom: 20px;
+    }
+    
 </style>
 {% endblock %}

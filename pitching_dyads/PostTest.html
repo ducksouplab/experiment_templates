@@ -10,37 +10,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post test-survey</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-        }
-        .question {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 20px;
+    }
+    .question {
+        margin-bottom: 15px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
 
-        .horizontal-radio .form-check {
-            display: inline-block;
-            margin-right: 10px;
-            text-align: center;
-            vertical-align: top;
-        }
-        
-        .horizontal-radio .form-check-input {
-            margin-left: auto;
-            margin-right: auto;
-            display: block;
-        }
-        
-        .horizontal-radio .form-check-label {
-            display: block;
-            margin-top: 5px;
-            font-size: 0.9em;
-        }
+    .horizontal-radio .form-check {
+        display: inline-block;
+        margin-right: 10px;
+        text-align: center;
+        vertical-align: top;
+    }
+
+    .horizontal-radio .form-check-input {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+    .horizontal-radio .form-check-label {
+        display: block;
+        margin-top: 5px;
+        font-size: 0.9em;
+    }
+
+    /* Slider styling */
+    .slidecontainer {
+    position:relative;
+    width: 70%; /* Width of the outside container */
+    justify-self: center;
+    }
+
+    .slider {
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;  
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    }
+
+    .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; 
+    background: black;
+    cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: black;
+    cursor: pointer;
+    }
+
+    /* Mouse-over effects */
+    .slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+    }
+
+    .slider_div{
+    display: grid;
+    }
+
+    /* Randomization of question order */
+    .randomizable-container {
+    display: flex;
+    flex-direction: column;
+    }
+
+    .question-item {
+        margin-bottom: 20px;
+    }
     </style>
 </head>
 <body>
@@ -55,13 +110,48 @@
             1 being the least trustworthy and 6 being the most trustworthy.</p>
     </div>
 
-    <div class="horizontal-radio">
-    {{ formfield 'age' }}
-    {{ formfield 'weight' }}
-    {{ formfield 'height' }}
-    {{ formfield 'trustworthiness' }}
-    {{ formfield 'masculinity' }}
-    {{ formfield 'dominance' }}
+    <div class="horizontal-radio randomizable-container">
+        <div class="question-item" data-question="age">
+            {{ formfield 'age' }}
+        </div>
+        
+        <div class="question-item" data-question="height">
+            <div class="slider_div">
+                <p>How tall are you in centimeters?</p>
+                <div class="slidecontainer">
+                    <input type="range" min="150" value="" max="210" class="slider" id="height" name='height'>
+                    <span class="slider-label">150</span>
+                    <span id="HeightsliderValue" style="position: relative; left: 42%;"></span>
+                    <span class="slider-label" style='position: absolute; left: 98%'>210</span>
+                </div>
+            </div>
+            {{ formfield_errors 'height' }}
+        </div>
+        
+        <div class="question-item" data-question="weight">
+            <div class="slider_div">
+                <p>How much do you weigh in kilograms?</p>
+                <div class="slidecontainer">
+                    <input type="range" min="50" value="" max="120" class="slider" id="weight" name='weight'>
+                    <span class="slider-label">50</span>
+                    <span id="WeightsliderValue" style="position: relative; left: 42%;"></span>
+                    <span class="slider-label" style='position: absolute; left: 98%'>120</span>
+                </div>
+            </div>
+            {{ formfield_errors 'weight' }}
+        </div>
+        
+        <div class="question-item" data-question="trustworthiness">
+            {{ formfield 'trustworthiness' }}
+        </div>
+        
+        <div class="question-item" data-question="masculinity">
+            {{ formfield 'masculinity' }}
+        </div>
+        
+        <div class="question-item" data-question="dominance">
+            {{ formfield 'dominance' }}
+        </div>
     </div>
 
 
@@ -70,5 +160,38 @@
         </div>
     </form>
 </body>
+
+<script>
+    var weight_slider = document.getElementById("weight");
+    var weight_output = document.getElementById("WeightsliderValue");
+    weight_slider.oninput = function() {
+        weight_output.innerHTML = this.value  + " " + "kg";
+    }
+
+    var height_slider = document.getElementById("height");
+    var height_output = document.getElementById("HeightsliderValue");
+    height_slider.oninput = function() {
+        height_output.innerHTML = this.value + " " + "cm";
+    }
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('.randomizable-container');
+    const questions = Array.from(container.children);
+    
+    // Shuffle the questions array using Fisher-Yates algorithm
+    for (let i = questions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questions[i], questions[j]] = [questions[j], questions[i]];
+    }
+    
+    // Clear container and append in new order
+    container.innerHTML = '';
+    questions.forEach(question => container.appendChild(question));
+});
+</script>
+
 </html>
 {% endblock %}
