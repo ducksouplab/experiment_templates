@@ -1,0 +1,17 @@
+{% block title %}
+Please observe the image.
+{% endblock %}
+
+{% extends "global/Page.html" %}
+{% block title %}Image Presentation{% endblock %}
+
+{% block content %}
+<p class="text-muted text-end" style="margin-top: -20px;">
+  Round {{ player.round_number }} of {{ C.NUM_ROUNDS }}
+</p>
+
+  <div class="text-center mt-5">
+    <img src="{% static image_path %}" alt="Stimulus Image" style="max-width: 100%; max-height: 70vh;">
+  </div>
+{% endblock %}
+

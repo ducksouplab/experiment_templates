@@ -9,27 +9,44 @@ from _lib.pages import *
 from _lib.brainstorm.session import brainstorm_creating_session, check_2_4_6_8_10_12_14
 
 doc = """
-self_feedback_master
+SFH_mirror_Filip
 """
 
 # ----------------------------------------
 # Constants
 # ----------------------------------------
 
-CONNECTING_DURATION = 1 # seconds (10 seconds in "connecting" state)
-TIMEOUT = 18 # seconds, 12 is a minimum to temper with signaling potential delay
+CONNECTING_DURATION = 1  # seconds (unchanged)
+TIMEOUT = 0             # no extra timeout, so the interaction lasts exactly 4 minutes
+INTERACTION_DURATION = 240  # trial duration: 4 minutes (240 seconds)
+NUMBER_OF_TRIALS = 3    # Three rounds in the experiment
 
-#######PARAMETERS OF THE EXPERIMENT#########
-INTERACTION_DURATION = 25 # Trial duration 
-NUMBER_OF_TRIALS = 10 # Number of trials in the experiment
-MANIPULATION_ALPHAS = ["-0.8", "-0.6",  "-0.4", "-0.2", "1.0", "1.2"] # intensity range of smile filter
+MANIPULATION_ALPHAS = { # Intensity range of smile-manipulation 
+    'neutral': "1.0",
+    'negative': "-0.6",
+    'positive': "1.2",
+}
+IMAGE_FILENAMES = [
+    "Fire 8.jpg",
+    "Thunderstorm 3.jpg",
+    "Lava 1.jpg",
+]
 QUESTION = "Did you feel like the person on the video was really you?"
 ANSWER_OPTIONS = ["Yes, it was really me on the video", "No, it was not me"]
-ANSWER_TIME_LIMIT = 25 #timeout on the decision page
+ANSWER_TIME_LIMIT = 25  # timeout on the decision page
+
+# Global constants for category size limits
+# CATEGORY_LIMITS = {
+ #   "Category 1": 20,
+ #   "Category 2": 20,
+ #   "Category 3": 20,
+# }
 #######PARAMETERS OF THE EXPERIMENT#########
 
+
+
 class C(BaseConstants):
-  NAME_IN_URL = 'self_feedback_master'
+  NAME_IN_URL = 'SFH_mirror_Filip'
   PLAYERS_PER_GROUP = None
   NUM_ROUNDS = NUMBER_OF_TRIALS
 
@@ -46,28 +63,43 @@ class Group(BaseGroup):
   pass
 
 class Player(BasePlayer):
-  sid = models.StringField() # session id
-  round_nb = models.IntegerField()
-  num_rounds = models.IntegerField()
-  user_id = models.StringField() # p1, p2...
-
-  #Mirror variables
-  smile_intensity = models.StringField(initial="")
-  me_notme = models.BooleanField(choices=[(True, ANSWER_OPTIONS[0]),(False, ANSWER_OPTIONS[1])],
-                                                    label=QUESTION,
-                                                    widget=widgets.RadioSelect
-                                                    )
-  reactiontime = models.FloatField(blank=True)
-
-  primary = models.BooleanField() # acts as leading/primary participant in dyad (JS wise)
-  inspect_visibility = models.LongStringField()
-  participant_videos = models.StringField(initial="")
-  other_videos = models.StringField(initial="")
-  audio_source_id = models.StringField()
-  video_source_id = models.StringField()
+    sid = models.StringField()  # session id
+    round_nb = models.IntegerField()
+    num_rounds = models.IntegerField()
+    user_id = models.StringField()  # p1, p2...
+    image_filename = models.StringField() # Images 
+    # Affect_Slide fields - storing input
+    bf_valence = models.IntegerField(label="BF Valence", min=-100, max=100)
+    bf_arousal = models.IntegerField(label="BF Arousal", min=-100, max=100)
+    af_valence = models.IntegerField(label="AF Valence", min=-100, max=100)
+    af_arousal = models.IntegerField(label="AF Arousal", min=-100, max=100)
+    # Detection of manipulation-fields (ParticipantDetection)
+    subjective_notice   = models.StringField(blank=True)
+    noticed_rounds      = models.StringField(blank=True)
+    participant_feedback = models.LongStringField(blank=True)
 
 
-  """                                             
+    # Mirror variables
+    smile_intensity = models.StringField(initial="")
+    me_notme = models.BooleanField(
+        choices=[(True, ANSWER_OPTIONS[0]), (False, ANSWER_OPTIONS[1])],
+        label=QUESTION,
+        widget=widgets.RadioSelect
+    )
+    reactiontime = models.FloatField(blank=True)
+
+    primary = models.BooleanField()  # acts as leading/primary participant in dyad (JS wise)
+    inspect_visibility = models.LongStringField()
+    participant_videos = models.StringField(initial="")
+    other_videos = models.StringField(initial="")
+    audio_source_id = models.StringField()
+    video_source_id = models.StringField()
+
+    # Hidden category for data export
+   # hidden_category = models.StringField()
+  
+    
+"""                                             
   smile_direction = models.StringField(
       choices=["Increased", "Decreased"],
       label="If manipulated, in which direction do you think your smile changed?",
@@ -79,24 +111,39 @@ class Player(BasePlayer):
 # ----------------------------------------
 # Session creation logic
 # ----------------------------------------
-
 def creating_session(subsession):
-    round_index = subsession.round_number
+    if subsession.round_number == 1:
+        for participant in subsession.session.get_participants():
+            # Randomize the 3 images and 3 manipulations
+            randomized_images = random.sample(IMAGE_FILENAMES, k=3)
+            randomized_manipulations = random.sample(list(MANIPULATION_ALPHAS.items()), k=3)
+
+            participant.vars['round_assignments'] = [
+                {
+                    'image': randomized_images[i],
+                    'label': randomized_manipulations[i][0],
+                    'alpha': randomized_manipulations[i][1],
+                }
+                for i in range(NUMBER_OF_TRIALS)
+            ]
+
     for player in subsession.get_players():
-        if round_index == 1: 
-            player.participant.vars['manipulation_order'] = random.choices(MANIPULATION_ALPHAS, k = NUMBER_OF_TRIALS)
-        
+        assignment = player.participant.vars['round_assignments'][subsession.round_number - 1]
+
+        player.image_filename = assignment['image']
+        player.manipulation_label = assignment['label']
+        player.manipulation_alpha = assignment['alpha']
+        player.smile_intensity = player.manipulation_alpha
+
         player.sid = subsession.session.config['id']
         player.user_id = 'p' + str(player.participant.id_in_session)
-        player.round_nb = round_index
-        player.smile_intensity = player.participant.vars['manipulation_order'][round_index - 1]
-        
+        player.round_nb = subsession.round_number
 
 # ----------------------------------------
 # Custom pages
 # ----------------------------------------
 
-class BaseSettingsMirror(Page):
+class BasicSettingsSFH(Page):
   form_model = 'player'
   form_fields = ['audio_source_id', 'video_source_id']
   def is_displayed(player):
@@ -115,83 +162,101 @@ class Instructions(Page):
   def vars_for_template(player):
     return dict(trial_duration = INTERACTION_DURATION)
 
+class BF_Slider(Page): 
+    form_model = 'player'
+    form_fields = ['bf_valence', 'bf_arousal']
+
+class AF_Slider(Page): 
+    form_model = 'player'
+    form_fields = ['af_valence', 'af_arousal']
+   
+
 class ParticipantDetection(Page):
-  timeout_seconds = ANSWER_TIME_LIMIT
   form_model = "player"
-  form_fields = ["me_notme"]
+  form_fields = ["me_notme",
+               "subjective_notice",
+               "noticed_rounds",
+               "participant_feedback"]  
   
   @staticmethod
-  def vars_for_template(player):
-    player.participant.vars['start_time']= time.time()*1000
+  def is_displayed(player):
+     # visas bara efter att alla rundor är klara
+    return player.round_number == C.NUM_ROUNDS
 
-  @staticmethod
-  def before_next_page(player, timeout_happened):
-    end_time            = time.time()*1000
-    player.reactiontime = round(end_time-player.participant.vars['start_time'],1)
+class ImageStim(Page):
+    timeout_seconds = 30  # 0.5 minutes
+    
+    @staticmethod
+    def vars_for_template(player):
+      filename = player.image_filename or "Fire 8.jpg"
+      return dict(
+          image_path=f'global/img/{filename}'
+    )
+    
+class MemoryQ(Page):
+      form_model = 'player'
+
 
 class Interact(Page):
-  timeout_seconds = INTERACTION_DURATION + TIMEOUT
+    timeout_seconds = 45
 
-  def vars_for_template(player):
-    return dict(
-      ducksoupJsUrl=Env.DUCKSOUP_JS_URL
-    )
-      
-  def js_vars(player):
-    namespace = player.sid
-    interaction_name = f'{str(player.round_number)}-mirror'
-    alpha     = player.smile_intensity
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            ducksoupJsUrl=Env.DUCKSOUP_JS_URL
+        )
+
+    @staticmethod
+    def js_vars(player):
+        namespace = player.sid
+        interaction_name = f'{str(player.round_number)}-mirror'
+        base_alpha = float(player.smile_intensity)
+
+        video_fx_name = "video_fx"
+        mozza_user_id = f'ns-{namespace}-n-{interaction_name}-u-{player.user_id}'
+        default_props = f'name={video_fx_name} deform=plugins/smile10.dfm beta=0.001 fc=1.0 user-id={mozza_user_id}'
+        video_fx = f'mozza alpha={base_alpha} {default_props}'
+
+        return dict(
+            ducksoupJsUrl=Env.DUCKSOUP_JS_URL,
+            connectingDuration=CONNECTING_DURATION,
+            interactionDuration=INTERACTION_DURATION,
+            playerOptions=dict(
+                ducksoupURL=Env.DUCKSOUP_URL,
+            ),
+            embedOptions=dict(
+                debug=True,
+                stats=True,
+            ),
+            peerOptions=dict(
+                gpu=Env.DUCKSOUP_REQUEST_GPU,
+                videoFormat=Env.DUCKSOUP_FORMAT,
+                width=Env.DUCKSOUP_WIDTH,
+                height=Env.DUCKSOUP_HEIGHT,
+                frameRate=Env.DUCKSOUP_FRAMERATE,
+                namespace=namespace,
+                interactionName=interaction_name,
+                size=1,
+                userId=player.user_id,
+                videoFx=video_fx,
+                video=dict(
+                    width=dict(ideal=Env.DUCKSOUP_WIDTH),
+                    height=dict(ideal=Env.DUCKSOUP_HEIGHT),
+                    frameRate=dict(ideal=Env.DUCKSOUP_FRAMERATE),
+                    facingMode=dict(ideal="user"),
+                ),
+            ),
+            listenerOptions=dict(
+                widthThreshold=800,
+            ),
+            xpOptions=dict(
+                alpha=1.0,
+            ),
+        )
 
 
-    video_fx_name = "video_fx"
-    mozza_user_id = f'ns-{namespace}-n-{interaction_name}-u-{player.user_id}'
-    default_props = f'name={video_fx_name} deform=plugins/smile10.dfm beta=0.001 fc=1.0 user-id={mozza_user_id}'
-    video_fx = f'mozza alpha={alpha} {default_props}' 
 
-
-    return dict(
-       # common options used by several scripts
-      connectingDuration=CONNECTING_DURATION,
-      interactionDuration=INTERACTION_DURATION,
-      # DuckSoup player options
-      playerOptions=dict(
-        ducksoupURL=Env.DUCKSOUP_URL,
-      ),
-      # DuckSoup player embed options
-      embedOptions=dict(
-        debug=True,
-        stats=True,
-      ),
-      # DuckSoup player peer options
-      peerOptions=dict(
-        gpu= Env.DUCKSOUP_REQUEST_GPU,
-        videoFormat=Env.DUCKSOUP_FORMAT,
-        width=Env.DUCKSOUP_WIDTH,
-        height=Env.DUCKSOUP_HEIGHT,
-        frameRate=Env.DUCKSOUP_FRAMERATE,
-        namespace=namespace,
-        interactionName=interaction_name,
-        size=1, # Size 1 for mirror mode
-        userId=player.user_id,
-        videoFx=video_fx,
-        video=dict(
-          width=dict(ideal=Env.DUCKSOUP_WIDTH),
-          height=dict(ideal=Env.DUCKSOUP_HEIGHT),
-          frameRate=dict(ideal=Env.DUCKSOUP_FRAMERATE),
-          facingMode=dict(ideal="user"),
-        ),
-      ),
-      # necessary for quality_control
-      listenerOptions=dict(
-        widthThreshold=800,
-      ),
-      # necessary for quality_control
-      xpOptions=dict(
-        alpha=1.0,
-      ),
-    )
-
-  def live_method(player, data):
+def live_method(player, data):
     kind = data['kind']
     payload = data.get('payload', '')
     if kind == 'to-primary':
@@ -209,14 +274,31 @@ class Interact(Page):
     elif kind == 'end':
       return {player.id_in_group: dict(kind="next")}
 
-class MeetingProlificCompensation(Page):
-  template_name = '_pages/meeting/ProlificCompensation.html'
+class TransitionScreen(Page):
+    timeout_seconds = 3  # Adjust this if needed
+
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number < C.NUM_ROUNDS  # Only before the final round
+
+
+
+class Ending_Compensation(Page):
   form_model    = 'player'
   
   def is_displayed(player):
-    return player.round_number == C.NUM_ROUNDS
-# ----------------------------------------
+    return player.round_number == C.NUM_ROUNDS# ----------------------------------------
 # Page sequence (shared and custom)
 # ----------------------------------------
 
-page_sequence = [ProlificIntroduction, BaseSettingsMirror, Instructions, Interact, ParticipantDetection, MeetingProlificCompensation]
+page_sequence = [ProlificIntroduction,
+                  BasicSettingsSFH, 
+                  Instructions,
+                  ImageStim, 
+                  BF_Slider, 
+                  Interact, 
+                  AF_Slider,
+                  MemoryQ,
+                  TransitionScreen,
+                  ParticipantDetection,
+                  Ending_Compensation]

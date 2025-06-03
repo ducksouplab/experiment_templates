@@ -1,45 +1,32 @@
-
-
 {{ block title }}
-Face Perception Question
+Final Comments
 {{ endblock }}
 
 {{ block content }}
-<link rel="stylesheet" href="{{ static 'global/styles/survey.css' }}" type="text/css">
-<style>
 
-.otree-timer{
-    position: relative;
-    display: none;
-  }
+<div class="participant-detection">
+  <p>
+    Did anything during the study feel unusual, unclear, or different from what you expected?
+  </p>
 
-  #timer{
-    display: block;
-    top: 20px;
-  }
+  <select name="subjective_notice" required>
+    <option value="">Select one</option>
+    <option value="no">No, everything seemed consistent and clear</option>
+    <option value="mild">Maybe a little, but I wasn’t sure</option>
+    <option value="yes">Yes, I noticed something that felt unusual</option>
+  </select>
 
-</style>
+  <br><br>
 
+  <p>If you selected “Yes” or “Maybe”, and remember when it occurred, please indicate which round(s) it applied to:</p>
 
-{{ formfield 'me_notme' }}
+  <label><input type="checkbox" name="noticed_rounds" value="round1"> Round 1</label><br>
+  <label><input type="checkbox" name="noticed_rounds" value="round2"> Round 2</label><br>
+  <label><input type="checkbox" name="noticed_rounds" value="round3"> Round 3</label><br><br>
 
-
-<script>
-/*
-document.querySelectorAll('input[name="me_notme"]').forEach(input => {
-    input.addEventListener("change", function() {
-        let smileDirectionField = document.getElementById("smile-direction-field");
-        if (this.value === "True") {
-            smileDirectionField.style.display = "block";
-        } else {
-            smileDirectionField.style.display = "none";
-            document.querySelectorAll('input[name="smile_direction"]').forEach(input => input.checked = false);
-        }
-    });
-});
-*/
-</script>
-
+  <p>If you'd like, feel free to describe what you noticed:</p>
+  <textarea name="participant_feedback" rows="5" cols="60" placeholder="Optional: What did you notice?"></textarea>
+</div>
 
 
     <button style ="

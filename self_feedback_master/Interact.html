@@ -1,3 +1,7 @@
+{% block title %}
+Solo-Reflection: Reflect upon the image
+{% endblock %}
+
 {{ block global_styles }}
 <link rel="stylesheet" href="{{ static 'global/styles/interact.css' }}" type="text/css">
 {{ endblock }}
@@ -10,6 +14,11 @@
 {% endblock %}
 
 {{ block content }}
+
+<p class="text-muted text-end" style="margin-top: -20px;">
+  Round {{ player.round_number }} of {{ C.NUM_ROUNDS }}
+</p>
+
 <div id="stopped" class="d-none">
   <p id="stopped-message">Conversation ended</p>
 </div>

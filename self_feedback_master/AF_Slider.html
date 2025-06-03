@@ -1,0 +1,45 @@
+{% extends "global/Page.html" %}
+{% block title %}Please indicate how you feel right now.{% endblock %}
+
+
+
+
+
+{% block content %}
+<p class="text-muted text-end" style="margin-top: -20px;">
+    Round {{ player.round_number }} of {{ C.NUM_ROUNDS }}
+  </p>
+
+  <h3></h3>
+
+  <form method="post">
+    <div class="form-group" style="margin-top: 50px; margin-bottom: 65px;">
+       
+      <div class="d-flex justify-content-between">
+        <img src="{% static 'global/img/AS_unhappy.png' %}" alt="Unhappy" width="80">
+        <input type="range" name="af_valence" id="id_af_valence"
+           min="-100" max="100" value="0"
+           style="width: 60%;" />
+        <img src="{% static 'global/img/AS_happy.png' %}" alt="Happy" width="80">
+      </div>
+    </div>
+
+    <br />
+
+    <div class="form-group">
+      <div class="d-flex justify-content-between">
+        <img src="{% static 'global/img/AS_sleepy.png' %}" alt="Sleepy" width="80">
+        <input type="range" name="af_arousal" id="id_af_arousal"
+       min="-100" max="100" value="0"
+       style="width: 60%;" />
+        <img src="{% static 'global/img/AS_wideawake.png' %}" alt="Wide Awake" width="80">
+      </div>
+    </div>
+
+    <br />
+
+    <div style="display: flex; justify-content: flex-end; margin-top: 40px;">
+        <button class="btn btn-primary">Next</button>
+      </div>
+  </form>
+{% endblock %}

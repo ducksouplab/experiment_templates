@@ -328,4 +328,4 @@ class ProlificCompensation(Page):
     def is_displayed(player):
         return player.round_number == C.NUM_ROUNDS
 
-page_sequence = [DropoutCheck, Introduction, TechnicalSpecs, AudioConfig, FirstRound, InteractionWait, Interact, PostConvo, NewRound, PostTest, Debrief_1, Debrief_2, ProlificCompensation]
+page_sequence = [DropoutCheck, TechnicalSpecs, AudioConfig, Introduction, FirstRound, InteractionWait, Interact, PostConvo, NewRound, PostTest, Debrief_1, Debrief_2, ProlificCompensation]
