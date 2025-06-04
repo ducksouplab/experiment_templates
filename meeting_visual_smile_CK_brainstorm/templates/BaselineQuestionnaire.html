@@ -10,7 +10,7 @@
 <form>
   <div class="app-survey">
 
-    <h3>Section A: Demographics</h3>
+    <h3>Demographics</h3>
 
     <div class="mb-4">
       <p class="fw-bold">1. Age:</p>
@@ -50,52 +50,16 @@
       </div>
     </div>
 
-<h3>Section B: Mood & Affect (PANAS)</h3>
+<h3>Mood & Affect</h3>
 <p class="fw-bold">Please rate how you feel right now (1 = Not at all, 5 = Extremely)</p>
 
 <div class="mb-4">
-  <p class="fw-bold">Interested:</p>
+  <p class="fw-bold">Active:</p>
   <div class="app-range">
     {% for i in range(1,6) %}
       <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_interested_{{ i }}">{{ i }}</label>
-        <input id="mood_interested_{{ i }}" type="radio" name="mood_interested" value="{{ i }}" required>
-      </div>
-    {% endfor %}
-  </div>
-</div>
-
-<div class="mb-4">
-  <p class="fw-bold">Alert:</p>
-  <div class="app-range">
-    {% for i in range(1,6) %}
-      <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_alert_{{ i }}">{{ i }}</label>
-        <input id="mood_alert_{{ i }}" type="radio" name="mood_alert" value="{{ i }}" required>
-      </div>
-    {% endfor %}
-  </div>
-</div>
-
-<div class="mb-4">
-  <p class="fw-bold">Inspired:</p>
-  <div class="app-range">
-    {% for i in range(1,6) %}
-      <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_inspired_{{ i }}">{{ i }}</label>
-        <input id="mood_inspired_{{ i }}" type="radio" name="mood_inspired" value="{{ i }}" required>
-      </div>
-    {% endfor %}
-  </div>
-</div>
-
-<div class="mb-4">
-  <p class="fw-bold">Determined:</p>
-  <div class="app-range">
-    {% for i in range(1,6) %}
-      <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_determined_{{ i }}">{{ i }}</label>
-        <input id="mood_determined_{{ i }}" type="radio" name="mood_determined" value="{{ i }}" required>
+        <label class="app-range-label-up" for="mood_active_{{ i }}">{{ i }}</label>
+        <input id="mood_active_{{ i }}" type="radio" name="mood_active" value="{{ i }}" required>
       </div>
     {% endfor %}
   </div>
@@ -114,24 +78,36 @@
 </div>
 
 <div class="mb-4">
-  <p class="fw-bold">Nervous:</p>
+  <p class="fw-bold">Alert:</p>
   <div class="app-range">
     {% for i in range(1,6) %}
       <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_nervous_{{ i }}">{{ i }}</label>
-        <input id="mood_nervous_{{ i }}" type="radio" name="mood_nervous" value="{{ i }}" required>
+        <label class="app-range-label-up" for="mood_alert_{{ i }}">{{ i }}</label>
+        <input id="mood_alert_{{ i }}" type="radio" name="mood_alert" value="{{ i }}" required>
       </div>
     {% endfor %}
   </div>
 </div>
 
 <div class="mb-4">
-  <p class="fw-bold">Upset:</p>
+  <p class="fw-bold">Determined:</p>
   <div class="app-range">
     {% for i in range(1,6) %}
       <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_upset_{{ i }}">{{ i }}</label>
-        <input id="mood_upset_{{ i }}" type="radio" name="mood_upset" value="{{ i }}" required>
+        <label class="app-range-label-up" for="mood_determined_{{ i }}">{{ i }}</label>
+        <input id="mood_determined_{{ i }}" type="radio" name="mood_determined" value="{{ i }}" required>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="mb-4">
+  <p class="fw-bold">Inspired:</p>
+  <div class="app-range">
+    {% for i in range(1,6) %}
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="mood_inspired_{{ i }}">{{ i }}</label>
+        <input id="mood_inspired_{{ i }}" type="radio" name="mood_inspired" value="{{ i }}" required>
       </div>
     {% endfor %}
   </div>
@@ -162,12 +138,36 @@
 </div>
 
 <div class="mb-4">
-  <p class="fw-bold">Jittery:</p>
+  <p class="fw-bold">Upset:</p>
   <div class="app-range">
     {% for i in range(1,6) %}
       <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_jittery_{{ i }}">{{ i }}</label>
-        <input id="mood_jittery_{{ i }}" type="radio" name="mood_jittery" value="{{ i }}" required>
+        <label class="app-range-label-up" for="mood_upset_{{ i }}">{{ i }}</label>
+        <input id="mood_upset_{{ i }}" type="radio" name="mood_upset" value="{{ i }}" required>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="mb-4">
+  <p class="fw-bold">Afraid:</p>
+  <div class="app-range">
+    {% for i in range(1,6) %}
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="mood_afraid_{{ i }}">{{ i }}</label>
+        <input id="mood_afraid_{{ i }}" type="radio" name="mood_afraid" value="{{ i }}" required>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="mb-4">
+  <p class="fw-bold">Nervous:</p>
+  <div class="app-range">
+    {% for i in range(1,6) %}
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="mood_nervous_{{ i }}">{{ i }}</label>
+        <input id="mood_nervous_{{ i }}" type="radio" name="mood_nervous" value="{{ i }}" required>
       </div>
     {% endfor %}
   </div>
@@ -175,7 +175,7 @@
 
 
 
-    <h3>Section C: Dispositional Traits</h3>
+    <h3>Dispositional Traits</h3>
 
     <div class="mb-4">
       <p class="fw-bold">I enjoy exploring new ideas.<br>(1 = Not at all, 7 = Very)</p>

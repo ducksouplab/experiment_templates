@@ -89,11 +89,11 @@ class C(BaseConstants):
   PLAYERS_PER_GROUP = 2
   NUM_ROUNDS = 5
   TOPICS = [
-    ("TinCan", "In the next interaction, your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for an <b style='color:red;'>empty tin can</b> as you can. Don't hold back — the more imaginative, the better!"),
-    ("Sponge", "In the next interaction, your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for a <b style='color:red;'>sponge</b> as you can. Don't hold back — the more imaginative, the better!"),
-    ("Shoebox", "In the next interaction, your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for a <b style='color:red;'>shoebox</b> as you can. Don't hold back — the more imaginative, the better!"),
-    ("Paperclip", "In the next interaction, your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for a <b style='color:red;'>paperclip</b> as you can. Don't hold back — the more imaginative, the better!"),
-    ("Towel", "In the next interaction, your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for a <b style='color:red;'>towel</b> as you can. Don't hold back — the more imaginative, the better!"),
+    ("TinCan", "The next interaction is about to begin! Your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for an <b style='color:red;'>empty tin can</b> as you can. Don't hold back — the more imaginative, the better!"),
+    ("Sponge", "The next interaction is about to begin! Your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for a <b style='color:red;'>sponge</b> as you can. Don't hold back — the more imaginative, the better!"),
+    ("Shoebox", "The next interaction is about to begin! Your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for a <b style='color:red;'>shoebox</b> as you can. Don't hold back — the more imaginative, the better!"),
+    ("Paperclip", "The next interaction is about to begin! Your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for a <b style='color:red;'>paperclip</b> as you can. Don't hold back — the more imaginative, the better!"),
+    ("Towel", "The next interaction is about to begin! Your goal is to be as creative and original as possible! Work together with your partner to come up with as many unusual, clever, or even wild alternative uses for a <b style='color:red;'>towel</b> as you can. Don't hold back — the more imaginative, the better!"),
   ]
   shuffle(TOPICS)
 
@@ -143,28 +143,31 @@ class Player(BasePlayer):
   second_date                         = models.StringField(initial="")
   prolific_id                         = models.StringField(initial="")
   share_prolific_id                   = models.StringField(initial="")
-  # --- Baseline Questionnaire ---
+ # --- Baseline Questionnaire ---
   age = models.IntegerField()
   gender = models.StringField(choices=['Female', 'Male', 'Non-binary', 'Other', 'Prefer not to say'])
-  native_english = models.StringField(choices=['Yes', 'No', 'Non-binary', 'Other', 'Prefer not to say'])
+  native_english = models.StringField(choices=['Yes', 'No'])
   video_confidence = models.IntegerField(min=1, max=7)
 
-  mood_interested = models.IntegerField(min=1, max=5)
-  mood_alert = models.IntegerField(min=1, max=5)
-  mood_inspired = models.IntegerField(min=1, max=5)
-  mood_determined = models.IntegerField(min=1, max=5)
+  # I-PANAS-SF Mood & Affect (Pre-Session)
+  mood_active = models.IntegerField(min=1, max=5)
   mood_attentive = models.IntegerField(min=1, max=5)
-  mood_nervous = models.IntegerField(min=1, max=5)
-  mood_upset = models.IntegerField(min=1, max=5)
+  mood_alert = models.IntegerField(min=1, max=5)
+  mood_determined = models.IntegerField(min=1, max=5)
+  mood_inspired = models.IntegerField(min=1, max=5)
+
   mood_hostile = models.IntegerField(min=1, max=5)
   mood_ashamed = models.IntegerField(min=1, max=5)
-  mood_jittery = models.IntegerField(min=1, max=5)
+  mood_upset = models.IntegerField(min=1, max=5)
+  mood_afraid = models.IntegerField(min=1, max=5)
+  mood_nervous = models.IntegerField(min=1, max=5)
 
+  # Dispositional Traits
   exploring_ideas = models.IntegerField(min=1, max=7)
   creative_self = models.IntegerField(min=1, max=7)
   social_enjoyment = models.IntegerField(min=1, max=7)
 
-  # --- Post-Session Questionnaire ---
+  # --- Post-Interaction Questionnaire ---
   cognitive_focus = models.IntegerField(min=1, max=7)
   screen_attention = models.IntegerField(min=1, max=7)
   zoomed_in = models.IntegerField(min=1, max=7)
@@ -184,17 +187,18 @@ class Player(BasePlayer):
   video_unusual = models.IntegerField(min=1, max=7)
   expression_altered = models.IntegerField(min=1, max=7)
 
-  post_mood_interested = models.IntegerField(min=1, max=5)
-  post_mood_alert = models.IntegerField(min=1, max=5)
-  post_mood_inspired = models.IntegerField(min=1, max=5)
-  post_mood_determined = models.IntegerField(min=1, max=5)
+  # I-PANAS-SF Mood & Affect (Post-Session)
+  post_mood_active = models.IntegerField(min=1, max=5)
   post_mood_attentive = models.IntegerField(min=1, max=5)
-  post_mood_nervous = models.IntegerField(min=1, max=5)
-  post_mood_upset = models.IntegerField(min=1, max=5)
+  post_mood_alert = models.IntegerField(min=1, max=5)
+  post_mood_determined = models.IntegerField(min=1, max=5)
+  post_mood_inspired = models.IntegerField(min=1, max=5)
+
   post_mood_hostile = models.IntegerField(min=1, max=5)
   post_mood_ashamed = models.IntegerField(min=1, max=5)
-  post_mood_jittery = models.IntegerField(min=1, max=5)
-
+  post_mood_upset = models.IntegerField(min=1, max=5)
+  post_mood_afraid = models.IntegerField(min=1, max=5)
+  post_mood_nervous = models.IntegerField(min=1, max=5)
 # ----------------------------------------
 # Session creation logic
 # ----------------------------------------
@@ -373,27 +377,42 @@ class BaselineQuestionnaire(Page):
     form_model = 'player'
     form_fields = [
         'age', 'gender', 'native_english', 'video_confidence',
-        'mood_interested', 'mood_alert', 'mood_inspired', 'mood_determined', 'mood_attentive',
-        'mood_nervous', 'mood_upset', 'mood_hostile', 'mood_ashamed', 'mood_jittery',
+
+        # I-PANAS-SF (Pre-Session)
+        'mood_active', 'mood_attentive', 'mood_alert', 'mood_determined', 'mood_inspired',
+        'mood_hostile', 'mood_ashamed', 'mood_upset', 'mood_afraid', 'mood_nervous',
+
+        # Traits
         'exploring_ideas', 'creative_self', 'social_enjoyment'
     ]
+
     def is_displayed(player):
         return player.round_number == 1
 
-class PostSessionQuestionnaire(Page):
-    template_name = 'meeting_visual_smile_CK_brainstorm/templates/PostSessionQuestionnaire.html'
+class PostInteractionQuestionnaire(Page):
+    template_name = 'meeting_visual_smile_CK_brainstorm/templates/PostInteractionQuestionnaire.html'
     form_model = 'player'
-    def is_displayed(player): return True
     form_fields = [
+        # Post-task assessments
         'cognitive_focus', 'screen_attention', 'zoomed_in', 'peripheral_notice',
         'idea_variety', 'idea_creativity', 'idea_struggle', 'mental_flexibility',
         'positive_feeling', 'partner_friendly', 'natural_interaction', 'noticed_smile', 'smiled_self',
         'video_unusual', 'expression_altered',
-        'post_mood_interested', 'post_mood_alert', 'post_mood_inspired', 'post_mood_determined', 'post_mood_attentive',
-        'post_mood_nervous', 'post_mood_upset', 'post_mood_hostile', 'post_mood_ashamed', 'post_mood_jittery'
+
+        # I-PANAS-SF (Post-Session)
+        'post_mood_active', 'post_mood_attentive', 'post_mood_alert', 'post_mood_determined', 'post_mood_inspired',
+        'post_mood_hostile', 'post_mood_ashamed', 'post_mood_upset', 'post_mood_afraid', 'post_mood_nervous'
     ]
+
+    def is_displayed(player):
+        return True
+
+class BrainstormingIntroduction(Page):
+    template_name = 'meeting_visual_smile_CK_brainstorm/templates/BrainstormingIntroduction.html'
+    def is_displayed(player):
+        return player.round_number == 1
 
 # ----------------------------------------
 # Page sequence (shared and custom)
 # ----------------------------------------
-page_sequence = [DropoutCheck, BaseIntroduction, BaselineQuestionnaire, ProlificSettings, BaseWaitForAll, TopicInstructions, BrainstormWaitBeforeInteract, Interact, BrainstormComment, PostSessionQuestionnaire, BrainstormDebriefing1, BrainstormDebriefing2, ProlificCompensation]
+page_sequence = [DropoutCheck, BaseIntroduction, BaselineQuestionnaire, ProlificSettings, BaseWaitForAll,BrainstormingIntroduction, TopicInstructions, BrainstormWaitBeforeInteract, Interact, BrainstormComment, PostInteractionQuestionnaire, BrainstormDebriefing1, BrainstormDebriefing2, ProlificCompensation]
