@@ -183,7 +183,9 @@ class Player(BasePlayer):
   natural_interaction = models.IntegerField(min=1, max=7)
   noticed_smile = models.IntegerField(min=1, max=7)
   smiled_self = models.IntegerField(min=1, max=7)
-
+  predictability = models.IntegerField(min=1, max=7)
+  energy = models.IntegerField(min=1, max=7)
+  
   video_unusual = models.IntegerField(min=1, max=7)
   expression_altered = models.IntegerField(min=1, max=7)
 
@@ -215,6 +217,17 @@ def other_id_in_round(participant_id, round_index):
     elif pair[1] == participant_id:
       return pair[0]
 
+def error_message(self, values):
+    errors = {}
+
+    if self.round_number == 5:
+        if values.get("video_unusual") is None:
+            errors["video_unusual"] = "Please answer this question."
+        if values.get("expression_altered") is None:
+            errors["expression_altered"] = "Please answer this question."
+
+    return errors if errors else None
+    
 def creating_session(subsession):
   if 'TRANSFORMATION' not in subsession.session.vars:
     subsession.session.vars['TRANSFORMATION'] = generate_shuffled_transformation(TRANSFORMATION)
@@ -295,7 +308,7 @@ class Interact(Page):
     mozza_user_id = f'ns-{namespace}-n-{interaction_name}-u-{player.user_id}'
     default_props = f'name={video_fx_name} deform=plugins/smile10.dfm beta=0.001 fc=1.0 user-id={mozza_user_id}'
     if has_smile is None:
-      video_fx = ""  # No manipulation
+      video_fx = f'mozza alpha=0.0 {default_props}'  # No manipulation
     else:
         video_fx = (
             f'mozza alpha=0.8 {default_props}' if has_smile
@@ -343,7 +356,7 @@ class Interact(Page):
       ),
       # necessary for quality_control
       xpOptions=dict(
-        alpha='0.8' if has_smile else '-0.5' if has_smile is not None else ''
+        alpha='0.8' if has_smile else '-0.5' if has_smile is not None else '0.0'
       ),
     )
 
@@ -392,17 +405,23 @@ class BaselineQuestionnaire(Page):
 class PostInteractionQuestionnaire(Page):
     template_name = 'meeting_visual_smile_CK_brainstorm/templates/PostInteractionQuestionnaire.html'
     form_model = 'player'
-    form_fields = [
-        # Post-task assessments
-        'cognitive_focus', 'screen_attention', 'zoomed_in', 'peripheral_notice',
-        'idea_variety', 'idea_creativity', 'idea_struggle', 'mental_flexibility',
-        'positive_feeling', 'partner_friendly', 'natural_interaction', 'noticed_smile', 'smiled_self',
-        'video_unusual', 'expression_altered',
 
-        # I-PANAS-SF (Post-Session)
-        'post_mood_active', 'post_mood_attentive', 'post_mood_alert', 'post_mood_determined', 'post_mood_inspired',
-        'post_mood_hostile', 'post_mood_ashamed', 'post_mood_upset', 'post_mood_afraid', 'post_mood_nervous'
-    ]
+    def get_form_fields(player):
+        fields = [
+            # Post-task assessments
+            'cognitive_focus', 'screen_attention', 'zoomed_in', 'peripheral_notice',
+            'idea_variety', 'idea_creativity', 'idea_struggle', 'mental_flexibility',
+            'positive_feeling', 'partner_friendly', 'natural_interaction', 'noticed_smile', 'smiled_self',
+
+            # I-PANAS-SF (Post-Session)
+            'post_mood_active', 'post_mood_attentive', 'post_mood_alert', 'post_mood_determined', 'post_mood_inspired',
+            'post_mood_hostile', 'post_mood_ashamed', 'post_mood_upset', 'post_mood_afraid', 'post_mood_nervous'
+        ]
+
+        if player.round_number == 5:
+            fields += ['video_unusual', 'expression_altered']
+
+        return fields
 
     def is_displayed(player):
         return True

@@ -124,7 +124,8 @@
       </div>
       {% endfor %}
     </div>
-
+    
+{% if player.round_number == 5 %}
     <p class="fw-bold">How much did you notice your partner smiling during the interaction?<br>(1 = Not at all, 7 = Very)</p>
     <div class="app-range">
       {% for i in range(1,8) %}
@@ -141,6 +142,39 @@
       <div class="app-range-item">
         <label class="app-range-label-up" for="smiled_self_{{ i }}">{{ i }}</label>
         <input id="smiled_self_{{ i }}" type="radio" name="smiled_self" value="{{ i }}" required>
+      </div>
+      {% endfor %}
+    </div>
+{% endif %}
+
+    <p class="fw-bold">
+      I was surprised by the emotions of the other person.<br>
+      <small class="text-muted">
+        How predictable were the emotional reactions of the other person for you? Did the way they expressed themselves nonverbally or verbally surprise you?
+      </small><br>
+      (1 = Not at all, 4 = Moderately, 7 = Extremely)
+    </p>
+    <div class="app-range">
+      {% for i in range(1,8) %}
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="predictability_{{ i }}">{{ i }}</label>
+        <input id="predictability_{{ i }}" type="radio" name="predictability" value="{{ i }}" required>
+      </div>
+      {% endfor %}
+    </div>
+
+    <p class="fw-bold">
+      How much energy did interacting with this person require from you?<br>
+      <small class="text-muted">
+        When you interacted with this person, did it feel draining or require a lot of energy to brainstorm with them specifically?
+      </small><br>
+      (1 = None, 4 = A moderate amount, 7 = A great deal)
+    </p>
+    <div class="app-range">
+      {% for i in range(1,8) %}
+      <div class="app-range-item">
+        <label class="app-range-label-up" for="energy_{{ i }}">{{ i }}</label>
+        <input id="energy_{{ i }}" type="radio" name="energy" value="{{ i }}" required>
       </div>
       {% endfor %}
     </div>
@@ -176,8 +210,8 @@
   <div class="app-range">
     {% for i in range(1,6) %}
       <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_active_{{ i }}">{{ i }}</label>
-        <input id="mood_active_{{ i }}" type="radio" name="mood_active" value="{{ i }}" required>
+        <label class="app-range-label-up" for="post_mood_active_{{ i }}">{{ i }}</label>
+        <input id="post_mood_active_{{ i }}" type="radio" name="post_mood_active" value="{{ i }}" required>
       </div>
     {% endfor %}
   </div>
@@ -188,8 +222,8 @@
   <div class="app-range">
     {% for i in range(1,6) %}
       <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_attentive_{{ i }}">{{ i }}</label>
-        <input id="mood_attentive_{{ i }}" type="radio" name="mood_attentive" value="{{ i }}" required>
+        <label class="app-range-label-up" for="post_mood_attentive_{{ i }}">{{ i }}</label>
+        <input id="post_mood_attentive_{{ i }}" type="radio" name="post_mood_attentive" value="{{ i }}" required>
       </div>
     {% endfor %}
   </div>
@@ -200,8 +234,8 @@
   <div class="app-range">
     {% for i in range(1,6) %}
       <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_alert_{{ i }}">{{ i }}</label>
-        <input id="mood_alert_{{ i }}" type="radio" name="mood_alert" value="{{ i }}" required>
+        <label class="app-range-label-up" for="post_mood_alert_{{ i }}">{{ i }}</label>
+        <input id="post_mood_alert_{{ i }}" type="radio" name="post_mood_alert" value="{{ i }}" required>
       </div>
     {% endfor %}
   </div>
@@ -212,8 +246,8 @@
   <div class="app-range">
     {% for i in range(1,6) %}
       <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_determined_{{ i }}">{{ i }}</label>
-        <input id="mood_determined_{{ i }}" type="radio" name="mood_determined" value="{{ i }}" required>
+        <label class="app-range-label-up" for="post_mood_determined_{{ i }}">{{ i }}</label>
+        <input id="post_mood_determined_{{ i }}" type="radio" name="post_mood_determined" value="{{ i }}" required>
       </div>
     {% endfor %}
   </div>
@@ -224,8 +258,8 @@
   <div class="app-range">
     {% for i in range(1,6) %}
       <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_inspired_{{ i }}">{{ i }}</label>
-        <input id="mood_inspired_{{ i }}" type="radio" name="mood_inspired" value="{{ i }}" required>
+        <label class="app-range-label-up" for="post_mood_inspired_{{ i }}">{{ i }}</label>
+        <input id="post_mood_inspired_{{ i }}" type="radio" name="post_mood_inspired" value="{{ i }}" required>
       </div>
     {% endfor %}
   </div>
@@ -236,8 +270,8 @@
   <div class="app-range">
     {% for i in range(1,6) %}
       <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_hostile_{{ i }}">{{ i }}</label>
-        <input id="mood_hostile_{{ i }}" type="radio" name="mood_hostile" value="{{ i }}" required>
+        <label class="app-range-label-up" for="post_mood_hostile_{{ i }}">{{ i }}</label>
+        <input id="post_mood_hostile_{{ i }}" type="radio" name="post_mood_hostile" value="{{ i }}" required>
       </div>
     {% endfor %}
   </div>
@@ -248,8 +282,8 @@
   <div class="app-range">
     {% for i in range(1,6) %}
       <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_ashamed_{{ i }}">{{ i }}</label>
-        <input id="mood_ashamed_{{ i }}" type="radio" name="mood_ashamed" value="{{ i }}" required>
+        <label class="app-range-label-up" for="post_mood_ashamed_{{ i }}">{{ i }}</label>
+        <input id="post_mood_ashamed_{{ i }}" type="radio" name="post_mood_ashamed" value="{{ i }}" required>
       </div>
     {% endfor %}
   </div>
@@ -260,8 +294,8 @@
   <div class="app-range">
     {% for i in range(1,6) %}
       <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_upset_{{ i }}">{{ i }}</label>
-        <input id="mood_upset_{{ i }}" type="radio" name="mood_upset" value="{{ i }}" required>
+        <label class="app-range-label-up" for="post_mood_upset_{{ i }}">{{ i }}</label>
+        <input id="post_mood_upset_{{ i }}" type="radio" name="post_mood_upset" value="{{ i }}" required>
       </div>
     {% endfor %}
   </div>
@@ -272,8 +306,8 @@
   <div class="app-range">
     {% for i in range(1,6) %}
       <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_afraid_{{ i }}">{{ i }}</label>
-        <input id="mood_afraid_{{ i }}" type="radio" name="mood_afraid" value="{{ i }}" required>
+        <label class="app-range-label-up" for="post_mood_afraid_{{ i }}">{{ i }}</label>
+        <input id="post_mood_afraid_{{ i }}" type="radio" name="post_mood_afraid" value="{{ i }}" required>
       </div>
     {% endfor %}
   </div>
@@ -284,8 +318,8 @@
   <div class="app-range">
     {% for i in range(1,6) %}
       <div class="app-range-item">
-        <label class="app-range-label-up" for="mood_nervous_{{ i }}">{{ i }}</label>
-        <input id="mood_nervous_{{ i }}" type="radio" name="mood_nervous" value="{{ i }}" required>
+        <label class="app-range-label-up" for="post_mood_nervous_{{ i }}">{{ i }}</label>
+        <input id="post_mood_nervous_{{ i }}" type="radio" name="post_mood_nervous" value="{{ i }}" required>
       </div>
     {% endfor %}
   </div>
