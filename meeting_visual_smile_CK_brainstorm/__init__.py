@@ -217,17 +217,6 @@ def other_id_in_round(participant_id, round_index):
     elif pair[1] == participant_id:
       return pair[0]
 
-def error_message(self, values):
-    errors = {}
-
-    if self.round_number == 5:
-        if values.get("video_unusual") is None:
-            errors["video_unusual"] = "Please answer this question."
-        if values.get("expression_altered") is None:
-            errors["expression_altered"] = "Please answer this question."
-
-    return errors if errors else None
-    
 def creating_session(subsession):
   if 'TRANSFORMATION' not in subsession.session.vars:
     subsession.session.vars['TRANSFORMATION'] = generate_shuffled_transformation(TRANSFORMATION)
@@ -405,23 +394,17 @@ class BaselineQuestionnaire(Page):
 class PostInteractionQuestionnaire(Page):
     template_name = 'meeting_visual_smile_CK_brainstorm/templates/PostInteractionQuestionnaire.html'
     form_model = 'player'
+    form_fields = [
+        # Post-task assessments
+        'cognitive_focus', 'screen_attention', 'zoomed_in', 'peripheral_notice',
+        'idea_variety', 'idea_creativity', 'idea_struggle', 'mental_flexibility',
+        'positive_feeling', 'partner_friendly', 'natural_interaction', 'noticed_smile', 'smiled_self',
+        'video_unusual', 'expression_altered','energy' ,'predictability'
 
-    def get_form_fields(player):
-        fields = [
-            # Post-task assessments
-            'cognitive_focus', 'screen_attention', 'zoomed_in', 'peripheral_notice',
-            'idea_variety', 'idea_creativity', 'idea_struggle', 'mental_flexibility',
-            'positive_feeling', 'partner_friendly', 'natural_interaction', 'noticed_smile', 'smiled_self',
-
-            # I-PANAS-SF (Post-Session)
-            'post_mood_active', 'post_mood_attentive', 'post_mood_alert', 'post_mood_determined', 'post_mood_inspired',
-            'post_mood_hostile', 'post_mood_ashamed', 'post_mood_upset', 'post_mood_afraid', 'post_mood_nervous'
-        ]
-
-        if player.round_number == 5:
-            fields += ['video_unusual', 'expression_altered']
-
-        return fields
+        # I-PANAS-SF (Post-Session)
+        'post_mood_active', 'post_mood_attentive', 'post_mood_alert', 'post_mood_determined', 'post_mood_inspired',
+        'post_mood_hostile', 'post_mood_ashamed', 'post_mood_upset', 'post_mood_afraid', 'post_mood_nervous'
+    ]
 
     def is_displayed(player):
         return True
