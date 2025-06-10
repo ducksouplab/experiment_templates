@@ -3,6 +3,7 @@ from otree.api import *
 from config import Env
 import random
 import time
+import json
 
 CONNECTING_DURATION   = 1 # seconds (1 seconds in "connecting" state)
 INTERACTION_DURATION  = 90 # seconds (not including CONNECTING_DURATION)
@@ -12,41 +13,41 @@ TIMEOUT               = 12 # seconds, 12 is a minimum to temper with signaling p
 class C(BaseConstants):
     NAME_IN_URL = 'conversationalists'
     PLAYERS_PER_GROUP = 2
-    NUM_ROUNDS = 5  # Allow multiple rounds for participant matching
+    NUM_ROUNDS = 6  # Allow multiple rounds for participant matching
 
 def creating_session(subsession):
     num_participants = len(subsession.get_players())
 
-    if num_participants != 6:
+    if num_participants != 8:
         raise ValueError("This session requires exactly 6 participants.")
 
     round_index = subsession.round_number
     session_id = subsession.session.code  # Ensure unique session identifier
     players = subsession.get_players()
 
-    # Sort players by their ID to ensure consistent pairing
-    players.sort(key=lambda p: p.id_in_group)
+    # # Sort players by their ID to ensure consistent pairing
+    # players.sort(key=lambda p: p.id_in_group)
 
-    # Define round-robin pairings
-    pairing_sequence = [
-        [(0, 1), (2, 3), (4, 5)],  # Round 1
-        [(0, 2), (1, 4), (3, 5)],  # Round 2
-        [(0, 3), (1, 5), (2, 4)],  # Round 3
-        [(0, 4), (1, 3), (2, 5)],  # Round 4
-        [(0, 5), (1, 2), (3, 4)],  # Round 5
-    ]
+    # # Define round-robin pairings
+    # pairing_sequence = [
+    #     [(0, 1), (2, 3), (4, 5)],  # Round 1
+    #     [(0, 2), (1, 4), (3, 5)],  # Round 2
+    #     [(0, 3), (1, 5), (2, 4)],  # Round 3
+    #     [(0, 4), (1, 3), (2, 5)],  # Round 4
+    #     [(0, 5), (1, 2), (3, 4)],  # Round 5
+    # ]
 
-    # Get the correct pairing for this round
-    if round_index <= 5:
-        pairings = pairing_sequence[round_index - 1]
-    else:
-        pairings = pairing_sequence[(round_index - 1) % 5]  # Repeat if needed
+    # # Get the correct pairing for this round
+    # if round_index <= 5:
+    #     pairings = pairing_sequence[round_index - 1]
+    # else:
+    #     pairings = pairing_sequence[(round_index - 1) % 5]  # Repeat if needed
 
-    # Convert index-based pairs to actual Player objects
-    unique_pairs = [[players[i], players[j]] for i, j in pairings]
+    # # Convert index-based pairs to actual Player objects
+    # unique_pairs = [[players[i], players[j]] for i, j in pairings]
 
-    print(f'Round #{round_index} is made of pairs: {[[p.id_in_group for p in pair] for pair in unique_pairs]}')
-    subsession.set_group_matrix(unique_pairs)
+    # print(f'Round #{round_index} is made of pairs: {[[p.id_in_group for p in pair] for pair in unique_pairs]}')
+    # subsession.set_group_matrix(unique_pairs)
 
     # Assign session variables
     for player in players:
@@ -54,11 +55,38 @@ def creating_session(subsession):
         player.sid = session_id  # Unique session ID
         player.user_id = 'p' + str(player.participant.id_in_session)
 
-        # Find partner
-        other = player.get_others_in_group()[0]
-        player.other_id = 'p' + str(other.participant.id_in_session)
-        player.dyad = ''.join(map(str, sorted([player.user_id, player.other_id]))) 
+        # # Find partner
+        # other = player.get_others_in_group()[0]
+        # player.other_id = 'p' + str(other.participant.id_in_session)
+        # player.dyad = ''.join(map(str, sorted([player.user_id, player.other_id]))) 
         player.round_nb = round_index
+
+        if round_index == 1:
+            player.participant.vars['manipulation_order'] = random.sample(["dominant", "dominant", "dominant", "submissive", "submissive", "submissive"], k=C.NUM_ROUNDS)
+
+        player.manipulation = player.participant.vars['manipulation_order'][round_index - 1]
+
+
+def group_by_arrival_time_method(subsession, waiting_players):
+    for i, p1 in enumerate(waiting_players):
+        seen1 = set(p1.participant.vars.get("previous_partners", []))
+
+        for p2 in waiting_players[i + 1:]:
+            seen2 = set(p2.participant.vars.get("previous_partners", []))
+
+            # Check if they have not interacted before
+            if p2.participant.id_in_session not in seen1 and p1.participant.id_in_session not in seen2:
+                # Update both players’ previous partners
+                seen1.add(p2.participant.id_in_session)
+                seen2.add(p1.participant.id_in_session)
+                p1.participant.vars["previous_partners"] = list(seen1)
+                p2.participant.vars["previous_partners"] = list(seen2)
+                p1.previous_partners = json.dumps(list(seen1))  # store for export or display
+                p2.previous_partners = json.dumps(list(seen2))
+
+                return [p1, p2]
+
+    return None  # Wait until a new, valid pair can be formed
 
 
 
@@ -69,8 +97,10 @@ class Group(BaseGroup):
     pass
 
 class Player(BasePlayer):
+    previous_partners = models.LongStringField(initial='[]')
     sid = models.StringField() # session id
     num_rounds = models.IntegerField()
+    round_nb   = models.IntegerField()
     primary    = models.BooleanField() # acts as leading/primary participant in dyad (JS wise)
     user_id = models.StringField() # p1, p2...
     other_id = models.StringField()
@@ -79,7 +109,7 @@ class Player(BasePlayer):
     audio_source_id = models.StringField()
     inspect_visibility = models.LongStringField()
     
-    manipulation    = models.StringField(initial="no_manipulation")
+    manipulation    = models.StringField()
     partner_history = models.LongStringField()  # Keeps track of past partners
     start_time = models.FloatField()
     end_time = models.FloatField()
@@ -122,6 +152,8 @@ class Player(BasePlayer):
 
 
 # PAGES
+class Pairing(WaitPage):
+    group_by_arrival_time = True
 
 class DropoutCheck(Page):
   def is_displayed(player):
@@ -154,7 +186,8 @@ class AudioConfig(Page):
     
 class FirstRound(Page):
     timeout_seconds = 6
-
+    def is_displayed(player):
+        return player.round_nb == 1
 
 class InteractionWait(WaitPage):
   title_text = "Waiting room"
@@ -327,9 +360,8 @@ class Debrief_2(Page):
 
 
 class ProlificCompensation(Page):
-    form_model    = 'player'
-
+    form_model = 'player'
     def is_displayed(player):
         return player.round_number == C.NUM_ROUNDS
 
-page_sequence = [DropoutCheck, TechnicalSpecs, AudioConfig, Introduction, FirstRound, InteractionWait, Interact, PostConvo, NewRound, PostTest, Debrief_1, Debrief_2, ProlificCompensation]
+page_sequence = [Pairing, DropoutCheck, TechnicalSpecs, AudioConfig, Introduction, FirstRound, InteractionWait, Interact, PostConvo, NewRound, PostTest, Debrief_1, Debrief_2, ProlificCompensation]

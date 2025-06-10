@@ -115,9 +115,9 @@ SESSION_CONFIGS = [
 		dict(id = 'pitching_dyads',
 		name = 'pitching_dyads',
 		app_sequence = ['pitching_dyads'],
-		num_demo_participants = 1,
+		num_demo_participants = 8,
 		participant_label_file = '_rooms/n8.txt',
-		num_participants_allowed=[6],
+		num_participants_allowed=[8],
 		doc="The number of participants must be 1"),
             
 		dict(
