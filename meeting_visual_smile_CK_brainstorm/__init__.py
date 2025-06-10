@@ -399,7 +399,7 @@ class PostInteractionQuestionnaire(Page):
         'cognitive_focus', 'screen_attention', 'zoomed_in', 'peripheral_notice',
         'idea_variety', 'idea_creativity', 'idea_struggle', 'mental_flexibility',
         'positive_feeling', 'partner_friendly', 'natural_interaction', 'noticed_smile', 'smiled_self',
-        'video_unusual', 'expression_altered','energy' ,'predictability'
+        'video_unusual', 'expression_altered','energy' ,'predictability',
 
         # I-PANAS-SF (Post-Session)
         'post_mood_active', 'post_mood_attentive', 'post_mood_alert', 'post_mood_determined', 'post_mood_inspired',
