@@ -117,6 +117,17 @@ Regards, The Experiment Team
 
 ```
 
+## 4. Check that everything is ready to start the prescreening session
+Here are the different things that you have to make sure are in place and correct before starting your prescreening session:
+1. Check that the description of prescreeening description is correct in prolific
+2. Check that the link from prolific to mastok is working in prolific
+3. Check that the Mastok session for the prescreening session is running (link from prolific to Mastok is working) and that the Mastok session has all the correct parameters
+4. Try the prescreening session once, via the Mastok link, but without selecting the date at the very end of the experiment (but checking that date the date of the experiment is correct)
+5. When everything is checked, click in the "publish now" button, in prolific, to start the prescreening procedure!
+6. You can monitor how many participants are active in prolific, in your dashboard. You will see how many participants have returned the experiment (didn't finish for some reason) as well as how many were approved.
+7. You should also monitor the data in otree, in particular to know how many spots are left. This can be seen in the data of the prescreening session.
+8. As soon as all the spots are taken in otree, you can PAUSE the presceening procedure in prolific.
+
 ## 5. Running the Actual Experiment
 
 1. **Create a Session**  
@@ -131,7 +142,7 @@ Regards, The Experiment Team
    - If the session is filled or if participants fail the prescreen test, close the Prolific session to prevent over-recruitment.
 
 4. **Recover Prolific IDs**  
-   - For each time slot, gather the Prolific IDs of participants who have shown up and passed the prescreen.
+   - For each time slot, gather the Prolific IDs of participants who have shown up and passed the prescreen (this information is in otree).
 
 5. **Create Participant Group and Send Messages**  
    - Organize participants into groups based on their time slot.
@@ -144,6 +155,7 @@ Regards, The Experiment Team
 7. **Monitor Experiment Progress**  
    - Oversee how participants move through the stages.
    - Follow up if someone drops out or fails the technical requirements.
+
 
 
 ## 6. **End of Tutorial**  
