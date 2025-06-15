@@ -114,14 +114,15 @@ class Player(BasePlayer):
     start_time = models.FloatField()
     end_time = models.FloatField()
     
-    # Post-conversation rating questions
+    # Post-conversation questions
     post_convo_age = models.StringField(label="How old do you think this person is?", initial="")
 
     post_convo_height = models.IntegerField(min=150, max=210, blank = True) # customized slider
     post_convo_weight = models.IntegerField(min=50, max=120, blank = True) # customized slider
 
+    post_convo_social_dominance = models.IntegerField(label="To what extent do you get the impression that this person is respected, influential, often takes the lead, and tells others what to do?",choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
     post_convo_likeability = models.IntegerField(label= "How much did you enjoy talking to this person? (1 = not at all, 6 = very much)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    post_convo_masculinity = models.IntegerField(label="Hor masculine does this person seem to you? (1 = least masculine, 6 = most masculine)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
+    post_convo_masculinity = models.IntegerField(label="How masculine does this person seem to you? (1 = least masculine, 6 = most masculine)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
     post_convo_trustworthiness = models.IntegerField(label="How trustworthy does this person seem to you? (1 = least trustworthy, 6 = most trustworthy)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
     post_convo_dominance = models.IntegerField(label="If this man got in a fistfight with an average male undergraduate student, this man would probably win. (1 = strongly disagree, 10 = strongly agree)", choices=[1, 2, 3,4,5,6,7,8,9,10], widget=widgets.RadioSelect, blank = True)
 
@@ -313,7 +314,8 @@ class PostConvo(Page):
     form_fields     = [
         'post_convo_age', 
         'post_convo_weight', 
-        'post_convo_height', 
+        'post_convo_height',
+        'post_convo_social_dominance', 
         'post_convo_likeability',
         'post_convo_masculinity',
         'post_convo_trustworthiness',
