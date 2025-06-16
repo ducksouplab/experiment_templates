@@ -120,14 +120,14 @@ class Player(BasePlayer):
     post_convo_height = models.IntegerField(min=150, max=210, blank = True) # customized slider
     post_convo_weight = models.IntegerField(min=50, max=120, blank = True) # customized slider
 
-    post_convo_social_dominance = models.IntegerField(label="To what extent do you get the impression that this person is respected, influential, often takes the lead, and tells others what to do?",choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
     post_convo_likeability = models.IntegerField(label= "How much did you enjoy talking to this person? (1 = not at all, 6 = very much)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
     post_convo_masculinity = models.IntegerField(label="How masculine does this person seem to you? (1 = least masculine, 6 = most masculine)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
     post_convo_trustworthiness = models.IntegerField(label="How trustworthy does this person seem to you? (1 = least trustworthy, 6 = most trustworthy)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
     post_convo_dominance = models.IntegerField(label="If this man got in a fistfight with an average male undergraduate student, this man would probably win. (1 = strongly disagree, 10 = strongly agree)", choices=[1, 2, 3,4,5,6,7,8,9,10], widget=widgets.RadioSelect, blank = True)
+    post_convo_social_dominance = models.IntegerField(label="To what extent do you get the impression that this person is respected, influential, often takes the lead, and tells others what to do?",choices=[1, 2, 3,4,5,6,7,8,9,10], widget=widgets.RadioSelect, blank = True)
 
     
-    # Posttest questions
+    # Post-test questions
     age = models.StringField(label="How old are you?", initial="")
     # height = models.FloatField(label="How tall are you in centimeters?", widget=widgets.RadioSelect, choices=[150, 160, 170, 180, 190, 200, 210])
     # weight = models.FloatField(label="How much do you weigh in kilograms?", widget=widgets.RadioSelect, choices=[50, 60, 70, 80, 90, 100, 110, 120])
@@ -135,7 +135,8 @@ class Player(BasePlayer):
     weight = models.IntegerField(min=50, max=120, blank = True)
     masculinity = models.IntegerField(label="How masculine do you consider yourself to be? (1 = least masculine, 6 = most masculine)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
     trustworthiness = models.IntegerField(label="How trustworthy do you think you are? (1 = least trustworthy, 6 = most trustworthy)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
-    dominance = models.IntegerField(label="If I got in a fistfight with an average male undergraduate student, I would probably win. (1 = strongly disagree, 10 = strongly agree)", choices=[1,2,3,4,5,6,7,8,9,10], widget=widgets.RadioSelect, blank = True)
+    dominance = models.IntegerField(label="If you got in a fistfight with an average male undergraduate student, you would probably win. (1 = strongly disagree, 10 = strongly agree)", choices=[1,2,3,4,5,6,7,8,9,10], widget=widgets.RadioSelect, blank = True)
+    social_dominance = models.IntegerField(label="To what extent do you see yourself as someone who is respected, influential, often takes the lead, and tells others what to do?",choices=[1, 2, 3,4,5,6,7,8,9,10], widget=widgets.RadioSelect, blank = True)
 
 
     # Debiref variables
@@ -340,7 +341,8 @@ class PostTest(Page):
         'weight', 
         'trustworthiness',
         'masculinity',
-        'dominance']
+        'dominance',
+        'social_dominance']
   
     @staticmethod
     def is_displayed(player):
