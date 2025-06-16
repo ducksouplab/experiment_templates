@@ -62,11 +62,17 @@
     <div class="question-item" data-question="dominance">
         {{ formfield 'post_convo_dominance' }}
     </div>
+
+    <div class="question-item" data-question="friends">
+        {{ formfield 'post_convo_friends' }}
+    </div>
+
 </div>
 
-    <div style="text-align: center; margin-top: 30px;">
-        <button class="btn btn-primary" type="submit">Next</button>
+    <div style="text-align: center;">
+        <button class="btn btn-primary" type="submit" style = "font-size: 18px;">Next</button>
     </div>
+    <p style = "color:red; margin-top: 10px; text-align: center;" id = "validation_text"> You must interact with the sliders and answer all questions before you can click next.</p>
 </form>
 
 <script>
@@ -100,6 +106,59 @@ document.addEventListener('DOMContentLoaded', function() {
     questions.forEach(question => container.appendChild(question));
 });
 </script>
+
+<script>
+function checkAllFieldsComplete() {
+    let allComplete = true;
+    
+    // Check sliders
+    const heightSlider = document.getElementById('post_convo_height');
+    const weightSlider = document.getElementById('post_convo_weight');
+    
+    if (!heightSlider.value || !weightSlider.value) {
+        allComplete = false;
+    }
+    
+    // Check radio buttons
+    const radioGroups = [
+        'post_convo_likeability', 
+        'post_convo_masculinity', 
+        'post_convo_trustworthiness', 
+        'post_convo_dominance', 
+        'post_convo_social_dominance',
+        'post_convo_friends'
+    ];
+    
+    radioGroups.forEach(function(groupName) {
+        const radios = document.querySelectorAll(`input[name="${groupName}"]`);
+        const checked = Array.from(radios).some(radio => radio.checked);
+        if (!checked) {
+            allComplete = false;
+        }
+    });
+    
+    // Enable/disable submit button
+    const submitBtn = document.querySelector('button[type="submit"]');
+    submitBtn.disabled = !allComplete;
+    submitBtn.style.opacity = allComplete ? '1' : '0.5';
+    if (allComplete) {
+        document.getElementById("validation_text").style.display = "none"; // Hide validation text
+    }
+}
+
+// Add event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    checkAllFieldsComplete(); // Initial check
+    
+    // Listen for changes on all form inputs
+    const allInputs = document.querySelectorAll('input[type="range"], input[type="radio"]');
+    allInputs.forEach(input => {
+        input.addEventListener('change', checkAllFieldsComplete);
+        input.addEventListener('input', checkAllFieldsComplete); // For sliders
+    });
+});
+</script>
+
 
 <style>
     body {

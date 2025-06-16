@@ -10,6 +10,16 @@ INTERACTION_DURATION  = 90 # seconds (not including CONNECTING_DURATION)
 TIMEOUT               = 12 # seconds, 12 is a minimum to temper with signaling potential delay
 
 
+#Temporary solution for pairing
+PAIRING = [
+    [[1, 8], [2, 7], [3, 6], [4, 5]],
+    [[2, 8], [3, 1], [4, 7], [5, 6]],
+    [[3, 8], [4, 2], [5, 1], [6, 7]],
+    [[4, 8], [5, 3], [6, 2], [7, 1]],
+    [[5, 8], [6, 4], [7, 3], [1, 2]],
+    [[6, 8], [7, 5], [1, 4], [2, 3]],
+]
+
 class C(BaseConstants):
     NAME_IN_URL = 'conversationalists'
     PLAYERS_PER_GROUP = 2
@@ -19,11 +29,19 @@ def creating_session(subsession):
     num_participants = len(subsession.get_players())
 
     if num_participants != 8:
-        raise ValueError("This session requires exactly 6 participants.")
+        raise ValueError("This session requires exactly 8 participants.")
 
     round_index = subsession.round_number
     session_id = subsession.session.code  # Ensure unique session identifier
     players = subsession.get_players()
+
+    #create session
+    round_index = subsession.round_number - 1
+    #pairs = PAIRING_20[round_index] 
+    pairs  = PAIRING[round_index]
+    print(f'Round #{round_index+1} is made of pairs: {pairs}')
+
+    subsession.set_group_matrix(pairs)
 
     # # Sort players by their ID to ensure consistent pairing
     # players.sort(key=lambda p: p.id_in_group)
@@ -55,38 +73,38 @@ def creating_session(subsession):
         player.sid = session_id  # Unique session ID
         player.user_id = 'p' + str(player.participant.id_in_session)
 
-        # # Find partner
-        # other = player.get_others_in_group()[0]
-        # player.other_id = 'p' + str(other.participant.id_in_session)
-        # player.dyad = ''.join(map(str, sorted([player.user_id, player.other_id]))) 
+        # Find partner
+        other = player.get_others_in_group()[0]
+        player.other_id = 'p' + str(other.participant.id_in_session)
+        player.dyad = ''.join(map(str, sorted([player.user_id, player.other_id]))) 
         player.round_nb = round_index
 
-        if round_index == 1:
+        if round_index == 0:
             player.participant.vars['manipulation_order'] = random.sample(["dominant", "dominant", "dominant", "submissive", "submissive", "submissive"], k=C.NUM_ROUNDS)
 
-        player.manipulation = player.participant.vars['manipulation_order'][round_index - 1]
+        player.manipulation = player.participant.vars['manipulation_order'][round_index]
 
 
-def group_by_arrival_time_method(subsession, waiting_players):
-    for i, p1 in enumerate(waiting_players):
-        seen1 = set(p1.participant.vars.get("previous_partners", []))
+# def group_by_arrival_time_method(subsession, waiting_players):
+#     for i, p1 in enumerate(waiting_players):
+#         seen1 = set(p1.participant.vars.get("previous_partners", []))
 
-        for p2 in waiting_players[i + 1:]:
-            seen2 = set(p2.participant.vars.get("previous_partners", []))
+#         for p2 in waiting_players[i + 1:]:
+#             seen2 = set(p2.participant.vars.get("previous_partners", []))
 
-            # Check if they have not interacted before
-            if p2.participant.id_in_session not in seen1 and p1.participant.id_in_session not in seen2:
-                # Update both players’ previous partners
-                seen1.add(p2.participant.id_in_session)
-                seen2.add(p1.participant.id_in_session)
-                p1.participant.vars["previous_partners"] = list(seen1)
-                p2.participant.vars["previous_partners"] = list(seen2)
-                p1.previous_partners = json.dumps(list(seen1))  # store for export or display
-                p2.previous_partners = json.dumps(list(seen2))
+#             # Check if they have not interacted before
+#             if p2.participant.id_in_session not in seen1 and p1.participant.id_in_session not in seen2:
+#                 # Update both players’ previous partners
+#                 seen1.add(p2.participant.id_in_session)
+#                 seen2.add(p1.participant.id_in_session)
+#                 p1.participant.vars["previous_partners"] = list(seen1)
+#                 p2.participant.vars["previous_partners"] = list(seen2)
+#                 p1.previous_partners = json.dumps(list(seen1))  # store for export or display
+#                 p2.previous_partners = json.dumps(list(seen2))
 
-                return [p1, p2]
+#                 return [p1, p2]
 
-    return None  # Wait until a new, valid pair can be formed
+#     return None  # Wait until a new, valid pair can be formed
 
 
 
@@ -108,14 +126,17 @@ class Player(BasePlayer):
     dyad              = models.StringField() # contains user_id and other_id
     audio_source_id = models.StringField()
     inspect_visibility = models.LongStringField()
+    participant_videos         = models.StringField(initial="")
+    other_videos               = models.StringField(initial="")
     
     manipulation    = models.StringField()
-    partner_history = models.LongStringField()  # Keeps track of past partners
     start_time = models.FloatField()
     end_time = models.FloatField()
     
     # Post-conversation questions
-    post_convo_age = models.StringField(label="How old do you think this person is?", initial="")
+
+    post_convo_friends = models.BooleanField(label="Could you become friends with this person?", choices=[[True, "Yes"], [False, "No"]], blank = True)
+    post_convo_age = models.StringField(label="How old do you think this person is?", blank = True)
 
     post_convo_height = models.IntegerField(min=150, max=210, blank = True) # customized slider
     post_convo_weight = models.IntegerField(min=50, max=120, blank = True) # customized slider
@@ -128,9 +149,7 @@ class Player(BasePlayer):
 
     
     # Post-test questions
-    age = models.StringField(label="How old are you?", initial="")
-    # height = models.FloatField(label="How tall are you in centimeters?", widget=widgets.RadioSelect, choices=[150, 160, 170, 180, 190, 200, 210])
-    # weight = models.FloatField(label="How much do you weigh in kilograms?", widget=widgets.RadioSelect, choices=[50, 60, 70, 80, 90, 100, 110, 120])
+    age = models.StringField(label="How old are you?", blank = True)
     height = models.IntegerField(min=150, max=210, blank = True)
     weight = models.IntegerField(min=50, max=120, blank = True)
     masculinity = models.IntegerField(label="How masculine do you consider yourself to be? (1 = least masculine, 6 = most masculine)", choices=[1, 2, 3,4,5,6], widget=widgets.RadioSelect, blank = True)
@@ -154,8 +173,10 @@ class Player(BasePlayer):
 
 
 # PAGES
-class Pairing(WaitPage):
-    group_by_arrival_time = True
+# class Pairing(WaitPage):
+#     body_text  = "You are currently waiting to paired with a new participant. This may take a few minutes. If you are waiting for more than 5 minutes, please contact the experimenter."
+#     group_by_arrival_time = True
+
 
 class DropoutCheck(Page):
   def is_displayed(player):
@@ -193,7 +214,7 @@ class FirstRound(Page):
 
 class InteractionWait(WaitPage):
   title_text = "Waiting room"
-  body_text  = "Please wait for the interaction to start."
+  body_text  = "You are currently waiting for your conversation partner to arrive. The interaction will start shortly."
 
   def after_all_players_arrive(group):
     for player in group.get_players():
@@ -320,10 +341,11 @@ class PostConvo(Page):
         'post_convo_likeability',
         'post_convo_masculinity',
         'post_convo_trustworthiness',
-        'post_convo_dominance']
+        'post_convo_dominance',
+        'post_convo_friends']
 
 class NewRound(Page):
-  timeout_seconds = 6
+  timeout_seconds = 1
 
   def is_displayed(player):
     display = False if player.round_number == C.NUM_ROUNDS else True
@@ -368,4 +390,4 @@ class ProlificCompensation(Page):
     def is_displayed(player):
         return player.round_number == C.NUM_ROUNDS
 
-page_sequence = [Pairing, DropoutCheck, TechnicalSpecs, AudioConfig, Introduction, FirstRound, InteractionWait, Interact, PostConvo, NewRound, PostTest, Debrief_1, Debrief_2, ProlificCompensation]
+page_sequence = [DropoutCheck, TechnicalSpecs, AudioConfig, Introduction, FirstRound, InteractionWait, Interact, PostConvo, NewRound, PostTest, Debrief_1, Debrief_2, ProlificCompensation]
