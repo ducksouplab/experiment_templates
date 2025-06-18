@@ -77,7 +77,7 @@ def creating_session(subsession):
         other = player.get_others_in_group()[0]
         player.other_id = 'p' + str(other.participant.id_in_session)
         player.dyad = ''.join(map(str, sorted([player.user_id, player.other_id]))) 
-        player.round_nb = round_index
+        player.round_nb = round_index+1
 
         if round_index == 0:
             player.participant.vars['manipulation_order'] = random.sample(["dominant", "dominant", "dominant", "submissive", "submissive", "submissive"], k=C.NUM_ROUNDS)
@@ -115,7 +115,7 @@ class Group(BaseGroup):
     pass
 
 class Player(BasePlayer):
-    previous_partners = models.LongStringField(initial='[]')
+    # previous_partners = models.LongStringField(initial='[]')
     sid = models.StringField() # session id
     num_rounds = models.IntegerField()
     round_nb   = models.IntegerField()
@@ -130,8 +130,6 @@ class Player(BasePlayer):
     other_videos               = models.StringField(initial="")
     
     manipulation    = models.StringField()
-    start_time = models.FloatField()
-    end_time = models.FloatField()
     
     # Post-conversation questions
 
@@ -232,21 +230,20 @@ class Interact(Page):
         namespace         = player.sid
         interaction_name  = f'{str(player.round_number)}-{player.dyad}'
         manipulation      = player.manipulation
-        audio_fx = ""
 
-        # default_props = f'noise-bias = -100 ! audioamplify amplification=1.6'
+        default_props = f'noise-bias = -100 ! audioamplify amplification=1.6'
         
-        # if manipulation == "dominant":
-        # audio_fx  = f'avocoder env-freq-scaling=0.91 pitch=0.91 {default_props}'
+        if manipulation == "dominant":
+            audio_fx  = f'avocoder env-freq-scaling=0.91 pitch=0.91 {default_props}'
         
-        # elif manipulation == "submissive":
-        # audio_fx  = f'avocoder  env-freq-scaling=1.1 pitch=1.1 {default_props}'
+        elif manipulation == "submissive":
+            audio_fx  = f'avocoder  env-freq-scaling=1.1 pitch=1.1 {default_props}'
         
-        # elif manipulation == "no_manip":
-        # audio_fx  = f'avocoder env-freq-scaling=1 pitch=1 {default_props}'
+        elif manipulation == "no_manip":
+            audio_fx  = f'avocoder env-freq-scaling=1 pitch=1 {default_props}'
         
-        # else:
-        # audio_fx=""
+        else:
+            audio_fx=""
 
         return dict(
                     # common options used by several scripts
@@ -345,7 +342,7 @@ class PostConvo(Page):
         'post_convo_friends']
 
 class NewRound(Page):
-  timeout_seconds = 1
+  timeout_seconds = 5
 
   def is_displayed(player):
     display = False if player.round_number == C.NUM_ROUNDS else True
