@@ -1,112 +1,112 @@
+{% extends "global/Page.html" %}
+{% load static %}
+
+{% block title %}Memory assignment{% endblock %}
+
 {% block content %}
-<div class="memory-test">
-  <h2>Memory Test</h2>
 
-  <p>To finish the round, please answer the following questions about the image you just saw.</p>
+  {% comment %}
+    Fälten hamnar automatiskt i <form>-taggen från global/Page.html.
+  {% endcomment %}
 
-  <form id="memory-form">
-    <ol>
-      <li>
-        Was the image taken indoors or outdoors?<br>
-        <select name="q1" required>
-          <option value="">Select</option>
-          <option>Indoors</option>
-          <option>Outdoors</option>
-          <option>Not sure</option>
-        </select>
-      </li><br>
+  {% for q in questions %}
+    <div class="mb-3">
+      <label><strong>{{ q.prompt }}</strong></label><br>
 
-      <li>
-        How many colors were visible in the image?<br>
-        <select name="q2" required>
-          <option value="">Select</option>
-          <option>0</option>
-          <option>1</option>
-          <option>2–3</option>
-          <option>4 or more</option>
-        </select>
-      </li><br>
+      {# ───── Free recall ───── #}
+      {% if q.kind == 'free' %}
+        <textarea name="{{ q.name }}" rows="3"
+                  class="form-control" required></textarea>
 
-      <li>
-        Was there any form of transportation in the image (e.g. car, bike, bus)?<br>
-        <select name="q3" required>
-          <option value="">Select</option>
-          <option>Yes</option>
-          <option>No</option>
-          <option>Not sure</option>
-        </select>
-      </li><br>
+      {# ───── Single choice (radio) ───── #}
+      {% elif q.kind == 'mcq' %}
+        {% for opt in q.choices %}
+          <div class="form-check">
+            <input class="form-check-input" type="radio" required
+                   name="{{ q.name }}" value="{{ opt }}"
+                   id="{{ q.name }}_{{ forloop.counter }}">
+            <label class="form-check-label" for="{{ q.name }}_{{ forloop.counter }}">
+              {{ opt }}
+            </label>
+          </div>
+        {% endfor %}
+        {% if q.allow_other %}
+          <input class="form-control mt-2"
+                 placeholder="Other…" name="{{ q.name }}_other">
+        {% endif %}
 
-      <li>
-        Did the image contain any text or writing?<br>
-        <select name="q4" required>
-          <option value="">Select</option>
-          <option>Yes</option>
-          <option>No</option>
-          <option>Not sure</option>
-        </select>
-      </li><br>
+      {# ───── Multiple choice (checkbox) ───── #}
+      {% elif q.kind == 'checkbox' %}
+        {% for opt in q.choices %}
+          <div class="form-check">
+            <input class="form-check-input {{ q.name }}-chk"
+                   type="checkbox"
+                   name="{{ q.name }}" value="{{ opt }}"
+                   id="{{ q.name }}_{{ forloop.counter }}">
+            <label class="form-check-label" for="{{ q.name }}_{{ forloop.counter }}">
+              {{ opt }}
+            </label>
+          </div>
+        {% endfor %}
+        {% if q.allow_other %}
+          <input class="form-control mt-2"
+                 placeholder="Other…" name="{{ q.name }}_other">
+        {% endif %}
 
-      <li>
-        What time of day did the image appear to show?<br>
-        <select name="q5" required>
-          <option value="">Select</option>
-          <option>Day</option>
-          <option>Night</option>
-          <option>Unclear</option>
-        </select>
-      </li><br>
+      {# ───── Binary yes/no ───── #}
+      {% elif q.kind == 'binary' %}
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" required
+                 name="{{ q.name }}" value="Yes" id="{{ q.name }}_yes">
+          <label class="form-check-label" for="{{ q.name }}_yes">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" required
+                 name="{{ q.name }}" value="No" id="{{ q.name }}_no">
+          <label class="form-check-label" for="{{ q.name }}_no">No</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" required
+                 name="{{ q.name }}" value="Don’t remember" id="{{ q.name }}_dont">
+          <label class="form-check-label" for="{{ q.name }}_dont">Don’t remember</label>
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
 
-      <li>
-        Were animals present in the image?<br>
-        <select name="q6" required>
-          <option value="">Select</option>
-          <option>Yes</option>
-          <option>No</option>
-          <option>Not sure</option>
-        </select>
-      </li><br>
-
-      <li>
-        Did the image include any natural elements (e.g. trees, grass, sky)?<br>
-        <select name="q7" required>
-          <option value="">Select</option>
-          <option>Yes</option>
-          <option>No</option>
-          <option>Not sure</option>
-        </select>
-      </li><br>
-
-      <li>
-        Was the image realistic or abstract?<br>
-        <select name="q8" required>
-          <option value="">Select</option>
-          <option>Realistic</option>
-          <option>Abstract</option>
-          <option>Not sure</option>
-        </select>
-      </li>
-    </ol>
-
-    <br><button type="submit">Submit</button>
-  </form>
-
-  <div id="score-section" style="display:none; margin-top: 20px;">
-    <h3>Your Score</h3>
-    <p>You got <strong><span id="fake-score">6</span>/8</strong> correct!</p>
-    <p>Well done. Your performance has been recorded.</p>
-    <button onclick="alert('Continue to the next round')">Next</button>
+  <div class="d-flex justify-content-end mt-4">
+    <button class="btn btn-primary" type="submit" id="nextBtn" disabled>Next</button>
   </div>
 
-  <script>
-    document.getElementById("memory-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const score = Math.floor(5 + Math.random() * 3); // Fake score: 5–7
-      document.getElementById("fake-score").textContent = score;
-      document.getElementById("memory-form").style.display = "none";
-      document.getElementById("score-section").style.display = "block";
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form    = document.querySelector('form');
+  const btn     = document.getElementById('nextBtn');
+
+  // kolla initialt om alla required är uppfyllda
+  toggleButton();
+
+  // lyssna på alla input-händelser
+  form.addEventListener('input', toggleButton);
+
+  function toggleButton() {
+    // 1) native HTML5-validering (textarea + radio + required)
+    let valid = form.checkValidity();
+
+    // 2) specialfall: varje checkbox-grupp måste ha minst ett kryss
+    document.querySelectorAll('[class$="-chk"]').forEach(chk => {
+      const group = chk.name;
+      if (!document.querySelector('input[name="' + group + '"]:checked')) {
+        valid = false;
+      }
     });
-  </script>
-</div>
+
+    btn.disabled = !valid;
+  }
+});
+</script>
 {% endblock %}
 

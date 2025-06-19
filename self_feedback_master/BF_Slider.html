@@ -1,40 +1,146 @@
 {% extends "global/Page.html" %}
-{% block title %}Please indicate how you feel right now.{% endblock %}
+{% load static %}
 
-{% block content %}
-<p class="text-muted text-end" style="margin-top: -20px;">
-    Round {{ player.round_number }} of {{ C.NUM_ROUNDS }}
-  </p>
+{% block global_styles %}
+<style>
+/* ---------- Slider Appearance ---------- */
+input[type=range] {
+    -webkit-appearance: none;
+    accent-color: #d3d3d3;
+    background: transparent;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    height: 6px;
+    background: #d3d3d3;
+    border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #666;
+    margin-top: -6px;
+    cursor: pointer;
+}
+input[type=range]::-moz-range-track {
+    height: 6px;
+    background: #d3d3d3;
+    border-radius: 3px;
+}
+input[type=range]::-moz-range-progress {
+    background: #d3d3d3;
+}
+input[type=range]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #666;
+    cursor: pointer;
+}
 
-  <form method="post">
-    <div class="form-group" style="margin-top: 50px; margin-bottom: 65px;">
-       
-      <div class="d-flex justify-content-between">
-        <img src="{% static 'global/img/AS_unhappy.png' %}" alt="Unhappy" width="80">
-        <input type="range" name="bf_valence" id="id_bf_valence"
-           min="-100" max="100" value="0"
-           style="width: 60%;" />
-        <img src="{% static 'global/img/AS_happy.png' %}" alt="Happy" width="80">
-      </div>
-    </div>
+/* Hide thumb initially */
+input[type=range].unmoved::-webkit-slider-thumb {
+    visibility: hidden;
+}
+input[type=range].unmoved::-moz-range-thumb {
+    visibility: hidden;
+}
 
-    <br />
+/* ---------- Layout ---------- */
+.slider-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.slider-row input[type=range] {
+    flex: 1;
+    width: auto;
+}
+.slider-face {
+    width: 80px;
+    position: relative;
+    top: 4px;
+}
 
-    <div class="form-group">
-      <div class="d-flex justify-content-between">
-        <img src="{% static 'global/img/AS_sleepy.png' %}" alt="Sleepy" width="80">
-        <input type="range" name="bf_arousal" id="id_bf_arousal"
-       min="-100" max="100" value="0"
-       style="width: 60%;" />
-        <img src="{% static 'global/img/AS_wideawake.png' %}" alt="Wide Awake" width="80">
-      </div>
-    </div>
-
-    <br />
-
-    <div style="display: flex; justify-content: flex-end; margin-top: 40px;">
-        <button class="btn btn-primary">Next</button>
-      </div>
-  </form>
+.intensity-img {
+    width: calc(100% - 160px - 1rem + 12px);
+    margin-top: -40px;
+    pointer-events: none;  /* This makes the image mouse-transparent */
+    z-index: 1;
+}
+</style>
 {% endblock %}
 
+{% block content %}
+
+<p><strong>Please click on the Slides in order to indicate how the image made you feel.</strong></p>
+
+<p class="text-muted text-end" style="margin-top:-20px;">
+    Round {{ player.round_number }} of {{ C.NUM_ROUNDS }}
+</p>
+
+<form method="post">
+
+  <!-- -------- Valence -------- -->
+  <div class="form-group" style="margin-top:50px; margin-bottom:65px;">
+    <div class="slider-row">
+      <img src="{% static 'global/img/self-feedback/AS_unhappy.png' %}" class="slider-face" alt="Unhappy">
+      <input type="range" name="bf_valence" id="id_bf_valence"
+             min="-100" max="100" value="0">
+      <img src="{% static 'global/img/self-feedback/AS_happy.png' %}" class="slider-face" alt="Happy">
+    </div>
+    <div class="d-flex justify-content-center">
+      <img src="{% static 'global/img/self-feedback/AS_intensity_cue.png' %}" alt="Intensity cue" class="intensity-img">
+    </div>
+  </div>
+
+  <!-- -------- Arousal -------- -->
+  <div class="form-group">
+    <div class="slider-row">
+      <img src="{% static 'global/img/self-feedback/AS_sleepy.png' %}" class="slider-face" alt="Sleepy">
+      <input type="range" name="bf_arousal" id="id_bf_arousal"
+             min="-100" max="100" value="0">
+      <img src="{% static 'global/img/self-feedback/AS_wideawake.png' %}" class="slider-face" alt="Wide awake">
+    </div>
+    <div class="d-flex justify-content-center">
+      <img src="{% static 'global/img/self-feedback/AS_intensity_cue.png' %}" alt="Intensity cue" class="intensity-img">
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end align-items-center" style="margin-top:40px; gap: 10px;">
+  <button class="btn btn-primary" type="submit" disabled>Next</button>
+</div>
+<p style = "text-align: center;" id = "slider_text"> You must interact with both slider before you can click next.</p>
+
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const sliders = document.querySelectorAll('form input[type="range"]');
+  const submit = document.querySelector('form button[type="submit"]');
+
+  sliders.forEach(slider => {
+    slider.dataset.moved = 'false';
+    slider.classList.add('unmoved'); // hide the thumb initially
+  });
+
+  submit.disabled = true;
+
+  sliders.forEach(slider => {
+    slider.addEventListener('input', () => {
+      if (slider.dataset.moved === 'false') {
+        slider.dataset.moved = 'true';
+        slider.classList.remove('unmoved'); // show the thumb
+      }
+
+      const allMoved = [...sliders].every(s => s.dataset.moved === 'true');
+      submit.disabled = !allMoved;
+      if (allMoved){document.getElementById('slider_text').style.display = "none";}
+    });
+  });
+});
+</script>
+{% endblock %}

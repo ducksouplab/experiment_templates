@@ -1,17 +1,52 @@
-{% block title %}
-Please observe the image.
+{% extends "global/Page.html" %}
+
+{% block title %}{% endblock %}
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const t=document.querySelector('.otree-timer');
+  if(t){document.getElementById('timer-slot').appendChild(t);}
+});
+</script>
 {% endblock %}
 
-{% extends "global/Page.html" %}
-{% block title %}Image Presentation{% endblock %}
+{% block global_styles %}
+<style>
+/* gör sidan fullbredd och rubriken kant-i-kant */
+#otree-content{max-width:none !important;padding:0 !important;}
+h1.page-header{margin:0 0 0 0 !important;font-size:1.8rem;font-weight:700;}
+
+/* header-rad: titel vänster, runda höger */
+#stim-header{display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  padding:0 12px;
+  margin-left: 250px;
+  margin-top: -100px; 
+}
+
+/* bild – styr pixelstorlek här */
+#stim-img{
+    width:900px;      /* ändra pixelbredd vid behov */
+    height:500px;
+    max-width:none;
+    display:block;
+    margin:0 auto;
+}
+</style>
+{% endblock %}
 
 {% block content %}
-<p class="text-muted text-end" style="margin-top: -20px;">
-  Round {{ player.round_number }} of {{ C.NUM_ROUNDS }}
-</p>
 
-  <div class="text-center mt-5">
-    <img src="{% static image_path %}" alt="Stimulus Image" style="max-width: 100%; max-height: 70vh;">
-  </div>
+<div id="stim-header">
+    <span class="text-muted">Round&nbsp;{{ player.round_number }}&nbsp;of&nbsp;{{ C.NUM_ROUNDS }}</span>
+</div>
+
+<div class="text-center">
+    <img id="stim-img" src="{% static image_path %}" alt="Stimulus image">
+    <div id="timer-slot" class="mt-2"></div>
+</div>
+
 {% endblock %}
+
 
