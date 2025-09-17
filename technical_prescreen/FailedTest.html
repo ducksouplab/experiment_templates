@@ -1,0 +1,114 @@
+{{ block title }}
+   Technical test feedback
+{{ endblock }}
+
+
+{{block global styles}}
+
+<link rel="stylesheet" href="{{ static 'global/styles/interact.css' }}" type="text/css">
+<link rel="stylesheet" href="{{ static 'global/styles/introduction.css' }}" type="text/css">
+
+<style>
+
+#instr_div{
+    position: inherit;
+    height: inherit;
+    width: inherit;
+}
+
+#button_div{
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+{% if incompatable_device %}
+  <div style="border: 1px solid #ccc; background-color: #f9f9f9; padding: 16px; border-radius: 8px; max-width: 500px; font-family: sans-serif; margin: 20px auto;">
+    <p style="color: #d9534f; font-weight: bold; margin-bottom: 12px;">
+      ❌ Your microphone appears to be incompatible or not configured correctly with our software. 
+      We detected no volume output from your device.
+    </p>
+    <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
+      <li><strong>Your volume:</strong> {{ volume }}</li>
+      <li><strong>Required minimum volume:</strong> {{ volume_treshhold }}</li>
+      <li><strong>Your noise level:</strong> {{ noise }}</li>
+      <li><strong>Allowed maximum noise:</strong> {{ noise_threshhold }}</li>
+    </ul>
+    <p style="margin-top: 12px; font-style: italic; color: #555;">
+      Tip: You will be redirected to the audio settings page. Please select a different input device or ensure your current microphone is properly connected and functioning.
+    </p>
+  </div>
+
+{% elif both %}
+  <div style="border: 1px solid #ccc; background-color: #f9f9f9; padding: 16px; border-radius: 8px; max-width: 500px; font-family: sans-serif; margin: 20px auto;">
+    <p style="color: #d9534f; font-weight: bold; margin-bottom: 12px;">
+      ❌ You failed the test because your volume is too low and your background noise is too high.
+    </p>
+    <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
+      <li><strong>Your volume:</strong> {{ volume }}</li>
+      <li><strong>Required minimum volume:</strong> {{ volume_treshhold }}</li>
+      <li><strong>Your noise level:</strong> {{ noise }}</li>
+      <li><strong>Allowed maximum noise:</strong> {{ noise_threshhold }}</li>
+    </ul>
+    <p style="margin-top: 12px; font-style: italic; color: #555;">
+      Tip: Try increasing your microphone volume and move to a quieter environment to reduce background noise.
+    </p>
+  </div>
+
+{% elif too_low_volume %}
+  <div style="border: 1px solid #ccc; background-color: #f9f9f9; padding: 16px; border-radius: 8px; max-width: 500px; font-family: sans-serif; margin: 20px auto;">
+    <p style="color: #d9534f; font-weight: bold; margin-bottom: 12px;">
+      ❌ You failed the test because your microphone volume is too low.
+    </p>
+    <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
+      <li><strong>Your volume:</strong> {{ volume }}</li>
+      <li><strong>Required minimum volume:</strong> {{ volume_treshhold }}</li>
+      <li><strong>Your noise level:</strong> {{ noise }}</li>
+      <li><strong>Allowed maximum noise:</strong> {{ noise_threshhold }}</li>
+    </ul>
+    <p style="margin-top: 12px; font-style: italic; color: #555;">
+      Tip: Increase your microphone input level in your system or app settings and speak closer to the microphone.
+    </p>
+  </div>
+
+{% elif too_high_noise %}
+  <div style="border: 1px solid #ccc; background-color: #f9f9f9; padding: 16px; border-radius: 8px; max-width: 500px; font-family: sans-serif; margin: 20px auto;">
+    <p style="color: #d9534f; font-weight: bold; margin-bottom: 12px;">
+      ❌ You failed the test because your background noise level is too high.
+    </p>
+    <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
+      <li><strong>Your volume:</strong> {{ volume }}</li>
+      <li><strong>Required minimum volume:</strong> {{ volume_treshhold }}</li>
+      <li><strong>Your noise level:</strong> {{ noise }}</li>
+      <li><strong>Allowed maximum noise:</strong> {{ noise_threshhold }}</li>
+    </ul>
+    <p style="margin-top: 12px; font-style: italic; color: #555;">
+      Tip: Try to find a quieter place or reduce background sounds like fans, music, or conversations.
+    </p>
+  </div>
+{% endif %}
+
+    <div id = "button_div">
+        <button style = "
+        background: blue; 
+        color: white; 
+        padding: 15px 28px; 
+        text-align: center; 
+        width: 18%;
+        height:10%;
+        font-size: 16px; 
+        margin: 4px 2px; 
+        cursor: pointer;
+        border-radius: 20px; 
+        border: 4px solid transparent;
+        ">Next</button>
+    </div>
+</div>
+
+    
+{% endblock %}

@@ -80,7 +80,7 @@ We have a tutorial explaining how to use this repository, check it out [here](ht
 
 ## Front-end
 
-Each times the JS sources in `_front/src` are modified, it's necessary to:
+Each time the JS sources in `_front/src` are modified, it's necessary to:
 
 ```
 make buildfront

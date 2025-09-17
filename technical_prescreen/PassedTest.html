@@ -111,7 +111,8 @@ function createTimeslotElements() {
         const radioLabel = document.createElement('label');
         radioLabel.htmlFor = `timeslot_${index}`;
         radioLabel.className = 'app-range-label-up';
-        radioLabel.textContent = `I confirm I am available ${formattedDay}, ${date} at ${time} ${ampm} GMT`;
+        // radioLabel.textContent = ` I confirm I am available ${formattedDay}, ${date} at ${time} ${ampm} GMT`;
+        radioLabel.textContent = ` I confirm I am available ${formattedDay}, ${date} at ${time} ${ampm} BST`; // USE BST FOR BRITISH SUMMER TIME
         
         // Create the status label
         const statusLabel = document.createElement('label');

@@ -25,7 +25,7 @@ TIMEOUT = 18 # seconds, 12 is a minimum to temper with signaling potential delay
 class C(BaseConstants):
   NAME_IN_URL = 'technical_prescreen'
   PLAYERS_PER_GROUP = None
-  NUM_ROUNDS = 1
+  NUM_ROUNDS = 3
 
 
 #######################################################################
@@ -34,10 +34,11 @@ class C(BaseConstants):
 
 global TRACKTIMESLOT 
 TRACKTIMESLOT = {
-    '2025-05-23_Friday_10:00_AM': 3, 
-    '2025-05-22_Thursday_11:00_AM': 2 
+    '2025-07-30_Wednesday_10:00_AM': 20
 }
+
 # It is crucial to follow this coding scheme when defining your timeslots: 'DATE_DAY_TIME_AMPM' 
+# the integer is the number of slots you want for each session
 
 #######################################################################
 #########SPECIFY DATE(S) AND TIMESLOT(S) FOR YOUR EXPERIMENT###########
@@ -64,9 +65,11 @@ class Player(BasePlayer):
   audio_source_id = models.StringField()
 
   #audio test variables
-  medianVolume   = models.FloatField()
-  medianNoise    = models.FloatField()
-  passed_test    = models.BooleanField(initial=False)
+  medianVolumeThreshold = models.FloatField(initial = 4.5)
+  medianNoiseThreshold = models.FloatField(initial = 2)
+  medianVolume   = models.FloatField(initial = 0)
+  medianNoise    = models.FloatField(initial = 0)
+  passed_test    = models.BooleanField(initial=False) 
   available_times = models.StringField()
   prolific_id    = models.StringField(label = "Enter your prolific id.")
   times_left     = models.IntegerField()
@@ -76,10 +79,10 @@ class Player(BasePlayer):
 # ----------------------------------------
 
 def creating_session(subsession):
-    round_index = subsession.round_number
-    for player in subsession.get_players():
-      player.sid = subsession.session.config['id']
-      player.user_id = 'p' + str(player.participant.id_in_session)
+  round_index = subsession.round_number
+  for player in subsession.get_players():
+    player.sid = subsession.session.config['id']
+    player.user_id = 'p' + str(player.participant.id_in_session)
         
 
 # ----------------------------------------
@@ -102,8 +105,14 @@ class Instructions(Page):
 class Prolific_audio_Settings(Page):
   form_model  = 'player'
   form_fields = ['audio_source_id']
+
   def is_displayed(player):
-    return player.round_number == 1
+    if player.round_number == 1:
+      return True
+    else:
+      prev_round = player.in_round(player.round_number - 1)
+      return (prev_round.medianVolume == 0) and (prev_round.medianNoise == 0)
+
   def before_next_page(player, timeout_happened):
     player.participant.audio_source_id = player.audio_source_id
   def live_method(player, data):
@@ -112,7 +121,8 @@ class Prolific_audio_Settings(Page):
       return {player.id_in_group: 'start'}
 
 class PreTest(Page):
-  pass
+  def vars_for_template(player):
+    return dict(trials = C.NUM_ROUNDS)
 
 class Test(Page):
   timeout_seconds = INTERACTION_DURATION + TIMEOUT
@@ -161,7 +171,7 @@ class Test(Page):
                                       frameRate  = dict(ideal=Env.DUCKSOUP_FRAMERATE),
                                       facingMode = dict(ideal="user"),
                               ),
-                ),
+                  ),
                 
                 # necessary for quality_control
                 listenerOptions=dict(
@@ -171,6 +181,9 @@ class Test(Page):
                 xpOptions=dict(
                   alpha = 1.0,
                 ),
+
+                audioTestOptions = dict(medianVolumeThreshold = player.medianVolumeThreshold,
+                                        medianNoiseThreshold = player.medianNoiseThreshold)
               )
 
   def live_method(player, data):
@@ -200,6 +213,7 @@ class Test(Page):
         player.medianVolume = data['medianVolume']
         player.medianNoise = data['medianNoise']
         player.passed_test = data['passed_test']
+        player.participant.vars['global_passed_test'] = player.passed_test
 
         return {player.id_in_group: dict(kind="next")}
   
@@ -207,6 +221,25 @@ class Test(Page):
     return dict(
       ducksoupJsUrl=Env.DUCKSOUP_JS_URL,
     )
+
+class FailedTest(Page):
+  timeout_seconds = 15
+  def vars_for_template(player):
+    too_low_volume = player.medianVolume < player.medianVolumeThreshold
+    too_high_noise = player.medianNoise > player.medianNoiseThreshold
+    both = too_low_volume and too_high_noise
+    incompatable_device = (player.medianVolume == 0) and (player.medianNoise == 0)
+    return dict(volume = player.medianVolume,
+                noise  = player.medianNoise,
+                volume_treshhold = player.medianVolumeThreshold,
+                noise_threshhold = player.medianNoiseThreshold,
+                too_low_volume = too_low_volume,
+                too_high_noise = too_high_noise, 
+                both           = both, 
+                incompatable_device = incompatable_device)
+
+  def is_displayed(player):
+    return not player.participant.vars.get('global_passed_test', False)
 
 class PassedTest(Page):
   form_model  = 'player'
@@ -239,8 +272,10 @@ class PrescreenProlificCompensation(Page):
             unavailable=unavailable,
             date=date
         )
+    def is_displayed(player):
+      return player.participant.vars.get('global_passed_test', False) or (player.round_number == C.NUM_ROUNDS)
 # ----------------------------------------
 # Page sequence (shared and custom)
 # ----------------------------------------
 
-page_sequence = [Instructions, Prolific_audio_Settings, PreTest, Test, PassedTest, PrescreenProlificCompensation]
+page_sequence = [Instructions, Prolific_audio_Settings, PreTest, Test, FailedTest, PassedTest, PrescreenProlificCompensation]
